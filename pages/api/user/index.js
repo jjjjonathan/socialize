@@ -18,6 +18,7 @@ handler.post(async (req, res) => {
   return res.json(savedUser);
 });
 
+// this is for testing, if needed, move to api/users.js
 handler.get(async (req, res) => {
   const users = await User.find({});
   return res.json(users);
