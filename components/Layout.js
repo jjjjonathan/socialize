@@ -31,7 +31,7 @@ const Layout = ({ pageTitle, children }) => (
         </Container>
       </Navbar>
     </header>
-    <main className="mt-3">
+    <main className="main-container">
       <Container>{children}</Container>
     </main>
   </>
