@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+// TODO set email and password hash to required
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -8,6 +10,10 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+  },
+  email: {
+    type: String,
+    required: false,
   },
   passwordHash: {
     type: String,
