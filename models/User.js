@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
   },
   passwordHash: {
     type: String,
-    required: true,
+    required: false,
   },
   friends: [
     {
@@ -25,6 +25,15 @@ const UserSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
+});
+
+UserSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    ret.id = ret._id.toString();
+    delete ret._id;
+    delete ret.__v;
+    delete ret.passwordHash;
+  },
 });
 
 // this should avoid overwrite warning error
