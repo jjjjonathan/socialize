@@ -1,0 +1,21 @@
+@import './custom.scss';
+
+// Global css
+
+.navbar {
+  font-family: $headings-font-family;
+  font-weight: 700;
+}
+
+.navbar-brand {
+  font-weight: 800;
+  transform: rotate(-4deg);
+}
+
+.navbar-brand:after {
+  content: '.';
+}
+
+.main-container {
+  margin-top: 7em;
+}

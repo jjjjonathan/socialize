@@ -1,6 +1,4 @@
-// Bootstrap theme!
-
-// TODO consider swapping out this import for individual modules for performance
+// Bootstrap imports and variable overrides
 
 // Required
 @import '../node_modules/bootstrap/scss/functions';
@@ -12,16 +10,26 @@
 
 // EXPERIMENTS
 
-// $enable-shadows: true;
+$enable-shadows: true;
+$enable-gradients: true;
+
+///////
 
 $theme-colors: (
-  'primary': #ec058e,
+  'primary': #fde12d,
 );
 
-$headings-font-family: monospace, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+$font-family-base: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
   Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif,
-  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
-$headings-font-weight: 600;
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+$headings-font-family: Montserrat, 'Open Sans', -apple-system,
+  BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
+  'Liberation Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+  'Segoe UI Symbol', 'Noto Color Emoji';
+$headings-font-weight: 800;
+
+$navbar-brand-font-size: $h3-font-size;
 
 $body-bg: #fffbfc;
 

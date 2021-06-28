@@ -5,6 +5,7 @@ const Home = () => {
   return (
     <Layout pageTitle="Home">
       <h2>socialize here</h2>
+      <p>we have the best c o n t e n t . . .</p>
     </Layout>
   );
 };
