@@ -1,13 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { Navbar, Nav, Container } from 'react-bootstrap';
+import styles from './Layout.module.css';
 
 const Layout = ({ pageTitle, children }) => (
   <>
     <Head>
       <title>socialize | {pageTitle}</title>
-      <meta name="description" content="A new social network" />
-      <link rel="icon" href="/favicon.ico" />
     </Head>
     <header>
       <Navbar bg="primary" expand="md" fixed="top">
@@ -31,7 +30,7 @@ const Layout = ({ pageTitle, children }) => (
         </Container>
       </Navbar>
     </header>
-    <main className="main-container">
+    <main className={styles.mainContainer}>
       <Container>{children}</Container>
     </main>
   </>
