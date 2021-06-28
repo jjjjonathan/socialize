@@ -10,7 +10,7 @@ const Layout = ({ pageTitle, children }) => (
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <header>
-      <Navbar bg="info" variant="dark" expand="md" fixed="top">
+      <Navbar bg="primary" variant="dark" expand="md" fixed="top">
         <Container>
           <Link href="/" passHref>
             <Navbar.Brand>socialize</Navbar.Brand>
