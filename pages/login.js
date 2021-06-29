@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Splash from '../components/Splash';
+import CircleSpinner from '../components/CircleSpinner';
 import useCurrentUser from '../hooks/useCurrentUser';
 import styles from './login.module.css';
 
@@ -38,6 +39,7 @@ const Login = () => {
   return (
     <Splash pageTitle="Log In">
       <div className={styles.form}>
+        <CircleSpinner />
         <h1 className="logo text-center mb-5">socialize</h1>
 
         <Formik

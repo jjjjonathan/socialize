@@ -1,20 +1,45 @@
+import { useState } from 'react';
 import Link from 'next/link';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import axios from 'axios';
 import useCurrentUser from '../hooks/useCurrentUser';
+import FlatSpinner from './FlatSpinner';
 
 const NavMenu = () => {
-  const { currentUser } = useCurrentUser();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { currentUser, setCurrentUser } = useCurrentUser();
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      await axios.post('/api/auth/logout');
+      setCurrentUser(null);
+      setIsLoggingOut(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoggingOut(false);
+    }
+  };
 
   const userMenu = () => {
     if (currentUser) {
-      return (
+      return isLoggingOut ? (
+        <FlatSpinner />
+      ) : (
         <>
-          <Navbar.Text className="mr-3">
-            Welcome, {currentUser.name}
-          </Navbar.Text>
-          <Nav.Item>
-            <Nav.Link>Log out</Nav.Link>
-          </Nav.Item>
+          <NavDropdown title={`Welcome, ${currentUser.name}`} id="nav-dropdown">
+            <NavDropdown.Item href="#">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#">Another action</NavDropdown.Item>
+            <NavDropdown.Item href="#">Something</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleLogout}
+            >
+              Log out
+            </NavDropdown.Item>
+          </NavDropdown>
         </>
       );
     }
