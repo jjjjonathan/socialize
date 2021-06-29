@@ -1,18 +1,31 @@
+import { useEffect } from 'react';
 import axios from 'axios';
 import Splash from '../components/Splash';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import useCurrentUser from '../hooks/useCurrentUser';
 import styles from './login.module.css';
 
 const Login = () => {
+  const router = useRouter();
+  const { currentUser, setCurrentUser } = useCurrentUser();
+
+  // Redirect to '/' if logged in
+  useEffect(() => {
+    if (currentUser) router.push('/');
+  }, [currentUser]);
+
   const handleLogin = async ({ username, password }) => {
     try {
       const response = await axios.post('/api/auth/login', {
         username,
         password,
       });
-      console.log(response.data);
+      setCurrentUser(response.data);
+      console.log('userIs');
+      console.log(currentUser);
     } catch (error) {
       console.log(error);
     }
