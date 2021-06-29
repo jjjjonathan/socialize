@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Splash from '../components/Splash';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
@@ -5,7 +6,17 @@ import { Form, Button } from 'react-bootstrap';
 import styles from './login.module.css';
 
 const Login = () => {
-  const handleLogin = (values) => console.log(values);
+  const handleLogin = async ({ username, password }) => {
+    try {
+      const response = await axios.post('/api/auth/login', {
+        username,
+        password,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const validationSchema = yup.object().shape({
     username: yup.string().required('Username is required'),
