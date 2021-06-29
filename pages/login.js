@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
@@ -11,7 +11,8 @@ import styles from './login.module.css';
 
 const Login = () => {
   const router = useRouter();
-  const { currentUser, setCurrentUser } = useCurrentUser();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const { currentUser, setCurrentUser, isLoading } = useCurrentUser();
 
   // Redirect to '/' if logged in
   useEffect(() => {
@@ -20,12 +21,15 @@ const Login = () => {
 
   const handleLogin = async ({ username, password }) => {
     try {
+      setIsLoggingIn(true);
       const response = await axios.post('/api/auth/login', {
         username,
         password,
       });
       setCurrentUser(response.data);
+      setIsLoggingIn(false);
     } catch (error) {
+      setIsLoggingIn(false);
       console.error(error);
       // TODO add DOM error message
     }
@@ -37,75 +41,77 @@ const Login = () => {
   });
 
   return (
-    <Splash pageTitle="Log In">
-      <div className={styles.form}>
-        <CircleSpinner />
-        <h1 className="logo text-center mb-5">socialize</h1>
+    <Splash pageTitle="Log In" useGlassmorphicBox={!isLoggingIn && !isLoading}>
+      {isLoggingIn || isLoading ? (
+        <CircleSpinner size="70" />
+      ) : (
+        <div className={styles.form}>
+          <h1 className="logo text-center mb-5">socialize</h1>
+          <Formik
+            initialValues={{ username: '', password: '' }}
+            validationSchema={validationSchema}
+            onSubmit={handleLogin}
+          >
+            {({ isSubmitting, errors }) => (
+              <FormikForm noValidate>
+                <Form.Group className="mb-2" controlId="username">
+                  <Form.Label>
+                    <small>Username</small>
+                  </Form.Label>
+                  <Field
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                    as={Form.Control}
+                    isInvalid={!!errors.username}
+                  />
+                  <ErrorMessage
+                    name="username"
+                    component={Form.Control.Feedback}
+                    type="invalid"
+                  />
+                </Form.Group>
 
-        <Formik
-          initialValues={{ username: '', password: '' }}
-          validationSchema={validationSchema}
-          onSubmit={handleLogin}
-        >
-          {({ isSubmitting, errors }) => (
-            <FormikForm noValidate>
-              <Form.Group className="mb-2" controlId="username">
-                <Form.Label>
-                  <small>Username</small>
-                </Form.Label>
-                <Field
-                  type="text"
-                  name="username"
-                  placeholder="Enter username"
-                  as={Form.Control}
-                  isInvalid={!!errors.username}
-                />
-                <ErrorMessage
-                  name="username"
-                  component={Form.Control.Feedback}
-                  type="invalid"
-                />
-              </Form.Group>
+                <Form.Group controlId="password">
+                  <Form.Label>
+                    <small>Password</small>
+                  </Form.Label>
+                  <Field
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    as={Form.Control}
+                    isInvalid={!!errors.password}
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component={Form.Control.Feedback}
+                    type="invalid"
+                  />
+                </Form.Group>
+                <Button
+                  type="submit"
+                  variant="outline-dark"
+                  className={styles.button}
+                  disabled={isSubmitting}
+                >
+                  Log in
+                </Button>
+              </FormikForm>
+            )}
+          </Formik>
 
-              <Form.Group controlId="password">
-                <Form.Label>
-                  <small>Password</small>
-                </Form.Label>
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  as={Form.Control}
-                  isInvalid={!!errors.password}
-                />
-                <ErrorMessage
-                  name="password"
-                  component={Form.Control.Feedback}
-                  type="invalid"
-                />
-              </Form.Group>
-              <Button
-                type="submit"
-                variant="outline-dark"
-                className={styles.button}
-                disabled={isSubmitting}
-              >
-                Log in
-              </Button>
-            </FormikForm>
-          )}
-        </Formik>
-
-        <Button variant="outline-dark" className={`mt-5 ${styles.button}`}>
-          Log in with Facebook
-        </Button>
-        <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
-          Log in with Google
-        </Button>
-        <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
-          Sign up with Email
-        </Button>
-      </div>
+          <Button variant="outline-dark" className={`mt-5 ${styles.button}`}>
+            Log in with Facebook
+          </Button>
+          <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
+            Log in with Google
+          </Button>
+          <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
+            Sign up with Email
+          </Button>
+        </div>
+      )}
     </Splash>
   );
 };

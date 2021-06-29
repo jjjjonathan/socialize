@@ -1,3 +1,5 @@
+// Thanks to https://tobiasahlin.com/spinkit/
+
 import styles from './FlatSpinner.module.css';
 
 const FlatSpinner = () => (
