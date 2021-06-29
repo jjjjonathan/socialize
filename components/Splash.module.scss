@@ -1,4 +1,7 @@
+@import '../styles/mixins.scss';
+
 .container {
+  @include animated-bg;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -6,6 +9,7 @@
 }
 
 .center {
+  @include glassmorphic;
+  padding: 100px;
   max-width: 400px;
-  text-align: center;
 }

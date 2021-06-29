@@ -1,0 +1,63 @@
+@mixin animated-bg {
+  background: linear-gradient(253deg, #e5fb1f, #f4ad06);
+  background-size: 400% 400%;
+
+  -webkit-animation: bg 6s ease infinite;
+  -moz-animation: bg 6s ease infinite;
+  -o-animation: bg 6s ease infinite;
+  animation: bg 6s ease infinite;
+
+  @-webkit-keyframes bg {
+    0% {
+      background-position: 0% 46%;
+    }
+    50% {
+      background-position: 100% 55%;
+    }
+    100% {
+      background-position: 0% 46%;
+    }
+  }
+  @-moz-keyframes bg {
+    0% {
+      background-position: 0% 46%;
+    }
+    50% {
+      background-position: 100% 55%;
+    }
+    100% {
+      background-position: 0% 46%;
+    }
+  }
+  @-o-keyframes bg {
+    0% {
+      background-position: 0% 46%;
+    }
+    50% {
+      background-position: 100% 55%;
+    }
+    100% {
+      background-position: 0% 46%;
+    }
+  }
+  @keyframes bg {
+    0% {
+      background-position: 0% 46%;
+    }
+    50% {
+      background-position: 100% 55%;
+    }
+    100% {
+      background-position: 0% 46%;
+    }
+  }
+}
+
+@mixin glassmorphic {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12.5px);
+  -webkit-backdrop-filter: blur(12.5px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
