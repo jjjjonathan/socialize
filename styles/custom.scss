@@ -16,17 +16,17 @@ $red: #dc3545; // bootstrap default
 $orange: #f4ad06;
 $yellow: #e5fb1f;
 $green: #28a745; // bootstrap default
-$teal: #20c997; // bootstrap default
+$teal: #52ffb8;
 $cyan: #17a2b8; // bootstrap default
 
 $primary: $yellow;
 $secondary: $gray-600; // bootstrap default
 $success: $green; // bootstrap default
-$info: $cyan; // bootstrap default
+$info: $teal;
 $warning: $yellow; // bootstrap default
 $danger: $red; // bootstrap default
 $light: $gray-100; // bootstrap default
-$dark: $gray-800; // bootstrap default
+$dark: #202030; // was gray-800
 
 // Update maps
 
@@ -43,7 +43,8 @@ $colors: (
   'cyan': $cyan,
   'white': $white,
   'gray': $gray-600,
-  'gray-dark': $gray-800,
+  'gray-dark': $dark,
+  // was gray-800
 );
 
 $theme-colors: (
@@ -71,7 +72,11 @@ $headings-font-weight: 800;
 
 $navbar-brand-font-size: $h3-font-size;
 
-// $body-bg: #f6ffff;
+// $alert-bg-level: 0;
+// $alert-border-level: 0;
+// $alert-color-level: 0;
+
+$body-color: $dark;
 
 /////////////////////////////////////////////////////////////
 

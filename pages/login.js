@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { Form, Button } from 'react-bootstrap';
+import { Alert, Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
@@ -12,6 +12,7 @@ import styles from './login.module.css';
 const Login = () => {
   const router = useRouter();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { currentUser, setCurrentUser, isLoading } = useCurrentUser();
 
   // Redirect to '/' if logged in
@@ -21,6 +22,7 @@ const Login = () => {
 
   const handleLogin = async ({ username, password }) => {
     try {
+      setIsError(false);
       setIsLoggingIn(true);
       const response = await axios.post('/api/auth/login', {
         username,
@@ -31,7 +33,7 @@ const Login = () => {
     } catch (error) {
       setIsLoggingIn(false);
       console.error(error);
-      // TODO add DOM error message
+      setIsError(true);
     }
   };
 
@@ -40,6 +42,17 @@ const Login = () => {
     password: yup.string().label('Password').min(8).max(40).required(),
   });
 
+  const alert = () =>
+    isError ? (
+      <Alert className="soft-alert">
+        <Alert.Heading as="h5">Uh Oh!</Alert.Heading>
+        <p>
+          There was an error logging in! Please check your credentials and try
+          again.
+        </p>
+      </Alert>
+    ) : null;
+
   return (
     <Splash pageTitle="Log In" useGlassmorphicBox={!isLoggingIn && !isLoading}>
       {isLoggingIn || isLoading ? (
@@ -47,6 +60,7 @@ const Login = () => {
       ) : (
         <div className={styles.form}>
           <h1 className="logo text-center mb-5">socialize</h1>
+          {alert()}
           <Formik
             initialValues={{ username: '', password: '' }}
             validationSchema={validationSchema}
