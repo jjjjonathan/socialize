@@ -24,7 +24,7 @@ const Login = () => {
         >
           {({ isSubmitting, errors }) => (
             <FormikForm noValidate>
-              <Form.Group className="mb-2">
+              <Form.Group className="mb-2" controlId="username">
                 <Form.Label>
                   <small>Username</small>
                 </Form.Label>
@@ -42,7 +42,7 @@ const Login = () => {
                 />
               </Form.Group>
 
-              <Form.Group>
+              <Form.Group controlId="password">
                 <Form.Label>
                   <small>Password</small>
                 </Form.Label>
