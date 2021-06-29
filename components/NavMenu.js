@@ -53,7 +53,7 @@ const NavMenu = () => {
   };
 
   return (
-    <Navbar bg="primary" expand="md" fixed="top">
+    <Navbar bg="primary" expand="sm" fixed="top">
       <Container>
         <Link href="/" passHref>
           <Navbar.Brand>socialize</Navbar.Brand>

@@ -69,9 +69,7 @@ const Login = () => {
             {({ isSubmitting, errors }) => (
               <FormikForm noValidate>
                 <Form.Group className="mb-2" controlId="username">
-                  <Form.Label>
-                    <small>Username</small>
-                  </Form.Label>
+                  <Form.Label className="small mb-0 ml-2">Username</Form.Label>
                   <Field
                     type="text"
                     name="username"
@@ -87,9 +85,7 @@ const Login = () => {
                 </Form.Group>
 
                 <Form.Group controlId="password">
-                  <Form.Label>
-                    <small>Password</small>
-                  </Form.Label>
+                  <Form.Label className="small mb-0 ml-2">Password</Form.Label>
                   <Field
                     type="password"
                     name="password"
@@ -115,7 +111,7 @@ const Login = () => {
             )}
           </Formik>
 
-          <Button variant="outline-dark" className={`mt-5 ${styles.button}`}>
+          <Button variant="outline-dark" className={`mt-4 ${styles.button}`}>
             Log in with Facebook
           </Button>
           <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
