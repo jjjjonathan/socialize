@@ -31,8 +31,8 @@ const Login = () => {
   };
 
   const validationSchema = yup.object().shape({
-    username: yup.string().required('Username is required'),
-    password: yup.string().min(8).max(40).required('Password is required'),
+    username: yup.string().label('Username').required(),
+    password: yup.string().label('Password').min(8).max(40).required(),
   });
 
   return (

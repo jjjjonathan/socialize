@@ -1,13 +1,12 @@
 import nc from 'next-connect';
 import middleware from '../../../middleware';
-import passport from '../../../middleware/passport';
 
 const handler = nc();
 handler.use(middleware);
 
-handler.use(passport.authenticate('local'));
 handler.post((req, res) => {
-  res.json(req.user);
+  req.logout();
+  res.status(204).end();
 });
 
 export default handler;
