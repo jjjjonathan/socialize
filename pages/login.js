@@ -1,33 +1,76 @@
 import Splash from '../components/Splash';
+import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
+import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import styles from './login.module.css';
 
 const Login = () => {
+  const handleLogin = (values) => console.log(values);
+
+  const validationSchema = yup.object().shape({
+    username: yup.string().required('Username is required'),
+    password: yup.string().min(8).max(40).required('Password is required'),
+  });
+
   return (
     <Splash pageTitle="Log In">
       <div className={styles.form}>
-        <h1 className="logo text-center">socialize</h1>
-        <Form className="mt-5">
-          <Form.Group controlId="username" className="mb-2">
-            <Form.Label>
-              <small>Username</small>
-            </Form.Label>
-            <Form.Control type="text" placeholder="Enter username" />
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label>
-              <small>Password</small>
-            </Form.Label>
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Button
-            type="submit"
-            variant="outline-dark"
-            className={styles.button}
-          >
-            Log in
-          </Button>
-        </Form>
+        <h1 className="logo text-center mb-5">socialize</h1>
+
+        <Formik
+          initialValues={{ username: '', password: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleLogin}
+        >
+          {({ isSubmitting, errors }) => (
+            <FormikForm noValidate>
+              <Form.Group className="mb-2">
+                <Form.Label>
+                  <small>Username</small>
+                </Form.Label>
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="Enter username"
+                  as={Form.Control}
+                  isInvalid={!!errors.username}
+                />
+                <ErrorMessage
+                  name="username"
+                  component={Form.Control.Feedback}
+                  type="invalid"
+                />
+              </Form.Group>
+
+              <Form.Group>
+                <Form.Label>
+                  <small>Password</small>
+                </Form.Label>
+                <Field
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  as={Form.Control}
+                  isInvalid={!!errors.password}
+                />
+                <ErrorMessage
+                  name="password"
+                  component={Form.Control.Feedback}
+                  type="invalid"
+                />
+              </Form.Group>
+              <Button
+                type="submit"
+                variant="outline-dark"
+                className={styles.button}
+                disabled={isSubmitting}
+              >
+                Log in
+              </Button>
+            </FormikForm>
+          )}
+        </Formik>
+
         <Button variant="outline-dark" className={`mt-5 ${styles.button}`}>
           Log in with Facebook
         </Button>
