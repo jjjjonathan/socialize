@@ -1,8 +1,10 @@
 @import './custom.scss';
+@import './mixins.scss';
 
 // Global css
 
 .navbar {
+  @include drop-shadow;
   font-family: $headings-font-family;
   font-weight: 700;
 }
