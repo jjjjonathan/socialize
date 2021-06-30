@@ -1,9 +1,17 @@
+import { Row, Col } from 'react-bootstrap';
 import Layout from '../components/Layout';
+import Newsfeed from '../components/Newsfeed';
 
 const Home = () => (
   <Layout pageTitle="Home">
-    <h2>socialize here</h2>
-    <p>we have the best c o n t e n t . . .</p>
+    <Row>
+      <Col md={{ span: 4, order: 'last' }} style={{ background: 'lightgray' }}>
+        <h3>sidebar</h3>
+      </Col>
+      <Col>
+        <Newsfeed />
+      </Col>
+    </Row>
   </Layout>
 );
 

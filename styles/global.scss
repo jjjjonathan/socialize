@@ -34,3 +34,8 @@
 .form-control.is-invalid {
   border-width: 1px;
 }
+
+.glass-card {
+  @include glassmorphic;
+  border-radius: 30px;
+}
