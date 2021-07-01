@@ -4,15 +4,23 @@ import uniqueValidator from 'mongoose-unique-validator';
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
+    minLength: 2,
+    maxLength: 50,
     required: true,
   },
   username: {
     type: String,
+    minLength: 3,
+    maxLength: 30,
     required: true,
+    unique: true,
   },
   email: {
     type: String,
+    minLength: 5,
+    maxLength: 100,
     required: true,
+    unique: true,
   },
   passwordHash: {
     type: String,
