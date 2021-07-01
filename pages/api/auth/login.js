@@ -5,8 +5,7 @@ import passport from '../../../middleware/passport';
 const handler = nc();
 handler.use(middleware);
 
-handler.use(passport.authenticate('local'));
-handler.post((req, res) => {
+handler.post(passport.authenticate('local'), (req, res) => {
   res.json(req.user);
 });
 
