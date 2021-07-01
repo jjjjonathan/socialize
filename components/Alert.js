@@ -8,7 +8,7 @@ const Alert = ({ type, children }) => {
   return (
     <BootstrapAlert className="soft-alert">
       <BootstrapAlert.Heading as="h5">{heading()}</BootstrapAlert.Heading>
-      <p>{children}</p>
+      <p className="mb-0">{children}</p>
     </BootstrapAlert>
   );
 };
