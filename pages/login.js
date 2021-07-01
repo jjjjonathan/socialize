@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { Alert, Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Alert from '../components/Alert';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 import useCurrentUser from '../hooks/useCurrentUser';
-import styles from './login.module.css';
+import styles from './loginsignup.module.css';
 
 const Login = () => {
   const router = useRouter();
@@ -45,17 +46,14 @@ const Login = () => {
 
   const alert = () =>
     isError ? (
-      <Alert className="soft-alert">
-        <Alert.Heading as="h5">Uh Oh!</Alert.Heading>
-        <p>
-          There was an error logging in! Please check your credentials and try
-          again.
-        </p>
+      <Alert type="error">
+        There was an error logging in! Please check your credentials and try
+        again.
       </Alert>
     ) : null;
 
   return (
-    <Splash pageTitle="Log In" useGlassmorphicBox={!isLoggingIn && !isLoading}>
+    <Splash pageTitle="Log in" useGlassmorphicBox={!isLoggingIn && !isLoading}>
       {isLoggingIn || isLoading ? (
         <CircleSpinner size="70" />
       ) : (
