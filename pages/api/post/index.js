@@ -1,25 +1,38 @@
 import nc from 'next-connect';
+import { body, validationResult } from 'express-validator';
 import middleware from '../../../middleware';
 import Post from '../../../models/Post';
 
 const handler = nc();
 handler.use(middleware);
 
-handler.post(async (req, res) => {
-  if (!req.user) return res.status(401).end();
+handler.post(
+  body('body')
+    .trim()
+    .isLength({ min: 3, max: 2000 })
+    .withMessage('Posts must be between 3 and 2000 characters!')
+    .escape(),
+  async (req, res) => {
+    if (!req.user) return res.status(401).end();
 
-  const { body } = req.body;
-  const timestamp = new Date();
-  const user = req.user.id;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  const post = new Post({
-    body,
-    timestamp,
-    user,
-  });
+    const postBody = req.body.body;
+    const timestamp = new Date();
+    const user = req.user.id;
 
-  const savedPost = await post.save();
-  return res.json(savedPost);
-});
+    const post = new Post({
+      body: postBody,
+      timestamp,
+      user,
+    });
+
+    const savedPost = await post.save();
+    return res.json(savedPost);
+  },
+);
 
 export default handler;
