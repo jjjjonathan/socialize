@@ -1,4 +1,5 @@
 import nc from 'next-connect';
+import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import middleware from '../../../middleware';
 import User from '../../../models/User';
@@ -6,22 +7,58 @@ import User from '../../../models/User';
 const handler = nc();
 handler.use(middleware);
 
-handler.post(async (req, res) => {
-  const { name, email, username, password } = req.body;
-  const userSince = new Date();
-  const passwordHash = await bcrypt.hash(password, 11);
+handler.post(
+  body('name')
+    .trim()
+    .isLength({ min: 2, max: 50 })
+    .withMessage('Name must be between 2 and 50 characters!')
+    .escape(),
 
-  const user = new User({
-    name,
-    email,
-    username,
-    passwordHash,
-    userSince,
-  });
+  body('email')
+    .trim()
+    .isLength({ min: 5, max: 100 })
+    .withMessage('Email must be between 5 and 100 characters!')
+    .isEmail()
+    .withMessage('Email must be in a valid format')
+    .escape(),
 
-  const savedUser = await user.save();
-  return res.json(savedUser);
-});
+  body('username')
+    .trim()
+    .isLength({ min: 3, max: 30 })
+    .withMessage('Username must be between 3 and 30 characters!')
+    .escape(),
+
+  body('password')
+    .isLength({ min: 8, max: 40 })
+    .withMessage('Password must be between 8 and 40 characters.'),
+
+  body('passwordConf')
+    .exists()
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage('Passwords must match'),
+
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { name, email, username, password } = req.body;
+    const userSince = new Date();
+    const passwordHash = await bcrypt.hash(password, 11);
+
+    const user = new User({
+      name,
+      email,
+      username,
+      passwordHash,
+      userSince,
+    });
+
+    const savedUser = await user.save();
+    return res.json(savedUser);
+  },
+);
 
 handler.get(async (req, res) => {
   if (!req.user) return res.json({ user: null });
