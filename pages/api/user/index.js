@@ -8,7 +8,7 @@ handler.use(middleware);
 
 handler.post(async (req, res) => {
   const { name, email, username, password } = req.body;
-
+  const userSince = new Date();
   const passwordHash = await bcrypt.hash(password, 11);
 
   const user = new User({
@@ -16,6 +16,7 @@ handler.post(async (req, res) => {
     email,
     username,
     passwordHash,
+    userSince,
   });
 
   const savedUser = await user.save();

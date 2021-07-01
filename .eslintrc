@@ -3,6 +3,7 @@
   "rules": {
     "react-hooks/exhaustive-deps": "off",
     "class-methods-use-this": "off",
+    "no-underscore-dangle": "off",
     "no-console": "off"
   }
 }

@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-
-// TODO set email and password hash to required
+import uniqueValidator from 'mongoose-unique-validator';
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -19,6 +18,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  userSince: {
+    type: Date,
+    required: true,
+  },
   friends: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -33,6 +36,7 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
+/* eslint-disable no-param-reassign */
 UserSchema.set('toJSON', {
   transform: (doc, ret) => {
     ret.id = ret._id.toString();
@@ -42,7 +46,9 @@ UserSchema.set('toJSON', {
   },
 });
 
-// this should avoid overwrite warning error
+UserSchema.plugin(uniqueValidator);
+
+// this avoids overwrite warning error
 mongoose.models = {};
 
 export default mongoose.model('User', UserSchema);
