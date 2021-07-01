@@ -9,10 +9,19 @@ const Signup = () => {
   const handleSignup = console.log;
 
   const validationSchema = yup.object().shape({
-    name: yup.string().label('Full name').required(),
-    username: yup.string().label('Username').required(),
-    email: yup.string().email().label('Email address').required(),
+    name: yup.string().label('Full name').min(2).max(50).required(),
+    username: yup.string().label('Username').min(3).max(30).required(),
+    email: yup
+      .string()
+      .email()
+      .label('Email address')
+      .min(5)
+      .max(100)
+      .required(),
     password: yup.string().label('Password').min(8).max(40).required(),
+    passwordConf: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Passwords must match'),
   });
 
   const alert = () => (
@@ -25,7 +34,13 @@ const Signup = () => {
         <h1 className="logo text-center mb-5">socialize</h1>
         {alert()}
         <Formik
-          initialValues={{ name: '', username: '', email: '', password: '' }}
+          initialValues={{
+            name: '',
+            username: '',
+            email: '',
+            password: '',
+            passwordConf: '',
+          }}
           validationSchema={validationSchema}
           onSubmit={handleSignup}
         >
@@ -81,7 +96,7 @@ const Signup = () => {
                 />
               </Form.Group>
 
-              <Form.Group controlId="password">
+              <Form.Group className="mb-2" controlId="password">
                 <Form.Label className="small mb-0 ml-2">Password</Form.Label>
                 <Field
                   type="password"
@@ -92,6 +107,24 @@ const Signup = () => {
                 />
                 <ErrorMessage
                   name="password"
+                  component={Form.Control.Feedback}
+                  type="invalid"
+                />
+              </Form.Group>
+
+              <Form.Group controlId="passwordConf">
+                <Form.Label className="small mb-0 ml-2">
+                  Confirm Password
+                </Form.Label>
+                <Field
+                  type="password"
+                  name="passwordConf"
+                  placeholder="Confirm Password"
+                  as={Form.Control}
+                  isInvalid={!!errors.passwordConf}
+                />
+                <ErrorMessage
+                  name="passwordConf"
                   component={Form.Control.Feedback}
                   type="invalid"
                 />
