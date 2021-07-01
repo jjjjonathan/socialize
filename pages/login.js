@@ -4,6 +4,7 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Alert, Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 import useCurrentUser from '../hooks/useCurrentUser';
@@ -117,9 +118,15 @@ const Login = () => {
           <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
             Log in with Google
           </Button>
-          <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
-            Sign up with Email
-          </Button>
+          <Link href="/signup" passHref>
+            <Button
+              variant="outline-dark"
+              className={`mt-2 ${styles.button}`}
+              as="a"
+            >
+              Sign up with Email
+            </Button>
+          </Link>
         </div>
       )}
     </Splash>
