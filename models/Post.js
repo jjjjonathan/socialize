@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
 
 const PostSchema = new mongoose.Schema({
   body: {
@@ -31,8 +30,6 @@ PostSchema.set('toJSON', {
     delete ret.__v;
   },
 });
-
-PostSchema.plugin(uniqueValidator);
 
 // this avoids overwrite warning error
 mongoose.models = {};
