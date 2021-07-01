@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 const PostSchema = new mongoose.Schema({
   body: {
     type: String,
+    minLength: 3,
+    maxLength: 2000,
     required: true,
   },
   timestamp: {
