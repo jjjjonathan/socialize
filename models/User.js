@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     minLength: 3,
     maxLength: 30,
-    required: true,
+    required: false,
     unique: true,
   },
   email: {
@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
   },
   passwordHash: {
     type: String,
-    required: true,
+    required: false,
   },
   userSince: {
     type: Date,

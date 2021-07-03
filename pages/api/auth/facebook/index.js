@@ -5,6 +5,11 @@ import passport from '../../../../middleware/passport';
 const handler = nc();
 handler.use(middleware);
 
-handler.get(passport.authenticate('facebook'));
+handler.get(
+  passport.authenticate('facebook', {
+    authType: 'reauthenticate',
+    scope: ['email'],
+  }),
+);
 
 export default handler;
