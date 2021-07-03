@@ -10,9 +10,9 @@ const Profile = () => {
   const { user } = router.query;
   const {
     postsByUser,
-    isPostsByUserError,
+    // isPostsByUserError, TODO add error handling
     isPostsByUserLoading,
-    setPostsByUser,
+    // setPostsByUser, TODO add ability to add new posts
   } = usePostsByUser(user);
 
   return (
@@ -27,7 +27,7 @@ const Profile = () => {
           {isPostsByUserLoading ? (
             <CircleSpinner />
           ) : (
-            <Newsfeed posts={postsByUser} />
+            <Newsfeed posts={postsByUser.posts} />
           )}
         </Col>
       </Row>

@@ -9,7 +9,9 @@ const Home = () => (
         <h3>sidebar</h3>
       </Col>
       <Col>
-        <Newsfeed />
+        <Newsfeed
+          posts={[{ user: { name: 'Jonny baby' }, body: 'idk', likes: [] }]}
+        />
       </Col>
     </Row>
   </Layout>

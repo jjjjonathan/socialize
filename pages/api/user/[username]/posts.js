@@ -8,10 +8,13 @@ handler.use(middleware);
 handler.get(async (req, res) => {
   const { username } = req.query;
 
-  const posts = await User.findOne({ username }, 'posts').populate(
-    'posts',
-    'body likes timestamp -user',
-  );
+  const posts = await User.findOne({ username }, 'posts').populate({
+    path: 'posts',
+    populate: {
+      path: 'user',
+      select: 'name username',
+    },
+  });
   res.json(posts);
 });
 
