@@ -31,7 +31,6 @@ const Login = () => {
         password,
       });
       setCurrentUser(response.data);
-      setIsLoggingIn(false);
     } catch (error) {
       setIsLoggingIn(false);
       console.error(error);
