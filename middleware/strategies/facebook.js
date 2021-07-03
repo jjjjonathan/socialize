@@ -19,7 +19,6 @@ const facebook = new FacebookStrategy(
           const newUser = new User({
             name: profile.displayName,
             email: profile.emails[0].value,
-            userSince: new Date(),
             facebookId: profile.id,
           });
           const savedNewUser = await newUser.save();

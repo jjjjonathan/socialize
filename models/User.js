@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import defaultUsername from '../utils/defaultUsername';
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -12,8 +13,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     minLength: 3,
     maxLength: 30,
-    required: false,
     unique: true,
+    default() {
+      return defaultUsername(this.name);
+    },
   },
   email: {
     type: String,
@@ -28,7 +31,7 @@ const UserSchema = new mongoose.Schema({
   },
   userSince: {
     type: Date,
-    required: true,
+    default: Date.now,
   },
   facebookId: {
     type: String,
