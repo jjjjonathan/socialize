@@ -47,8 +47,10 @@ const Login = () => {
   const alert = () =>
     isError ? (
       <Alert type="error">
-        There was an error logging in! Please check your credentials and try
-        again.
+        <p className="mb-0">
+          There was an error logging in! Please check your credentials and try
+          again.
+        </p>
       </Alert>
     ) : null;
 

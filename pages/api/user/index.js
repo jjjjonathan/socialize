@@ -11,31 +11,33 @@ handler.post(
   body('name')
     .trim()
     .isLength({ min: 2, max: 50 })
-    .withMessage('Name must be between 2 and 50 characters!')
+    .withMessage('Name must be between 2 and 50 characters')
     .escape(),
 
   body('email')
     .trim()
     .isLength({ min: 5, max: 100 })
-    .withMessage('Email must be between 5 and 100 characters!')
+    .withMessage('Email must be between 5 and 100 characters')
     .isEmail()
-    .withMessage('Email must be in a valid format!')
+    .withMessage('Email must be in a valid format')
     .escape(),
 
   body('username')
     .trim()
     .isLength({ min: 3, max: 30 })
-    .withMessage('Username must be between 3 and 30 characters!')
+    .withMessage('Username must be between 3 and 30 characters')
     .escape(),
 
   body('password')
     .isLength({ min: 8, max: 40 })
-    .withMessage('Password must be between 8 and 40 characters!'),
+    .withMessage('Password must be between 8 and 40 characters'),
 
-  body('passwordConf')
-    .exists()
-    .custom((value, { req }) => value === req.body.password)
-    .withMessage('Passwords must match!'),
+  body('passwordConf').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Passwords must match');
+    }
+    return true;
+  }),
 
   async (req, res) => {
     const errors = validationResult(req);
