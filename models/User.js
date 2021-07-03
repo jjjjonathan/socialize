@@ -44,8 +44,15 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
+UserSchema.virtual('posts', {
+  ref: 'Post',
+  localField: '_id',
+  foreignField: 'user',
+});
+
 /* eslint-disable no-param-reassign */
 UserSchema.set('toJSON', {
+  virtuals: true,
   transform: (doc, ret) => {
     ret.id = ret._id.toString();
     delete ret._id;
