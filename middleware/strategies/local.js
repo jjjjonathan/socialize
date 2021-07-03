@@ -1,6 +1,5 @@
 import LocalStrategy from 'passport-local';
 import bcrypt from 'bcryptjs';
-
 import User from '../../models/User';
 
 const local = new LocalStrategy((username, password, done) => {
