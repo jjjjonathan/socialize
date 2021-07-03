@@ -8,7 +8,7 @@ handler.use(middleware);
 handler.get(
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => {
-    res.json({ msg: 'yeet' });
+    res.json(req.user);
   },
 );
 
