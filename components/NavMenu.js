@@ -32,13 +32,7 @@ const NavMenu = () => {
             <NavDropdown.Item href="#">Another action</NavDropdown.Item>
             <NavDropdown.Item href="#">Something</NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleLogout}
-            >
-              Log out
-            </NavDropdown.Item>
+            <NavDropdown.Item onClick={handleLogout}>Log out</NavDropdown.Item>
           </NavDropdown>
         </>
       );
