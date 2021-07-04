@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { Row, Col } from 'react-bootstrap';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
@@ -37,8 +38,18 @@ const Profile = ({ profile }) => {
 
   return (
     <Layout pageTitle="Home">
-      <h3>{profile.name}</h3>
-      <h4>@{user}</h4>
+      <div className="mb-4 d-flex align-items-center">
+        <Image
+          src={profile.profilePicture}
+          alt={`Profile picture of ${profile.name}`}
+          width="100"
+          height="100"
+        />
+        <div className="ml-3">
+          <h2 className="mb-1">{profile.name}</h2>
+          <h3 className="text-muted h6">@{user}</h3>
+        </div>
+      </div>
       <Row>
         <Col md={{ span: 4 }} style={{ background: 'lightgray' }}>
           <h3>friends list, about me, links, photos?</h3>
