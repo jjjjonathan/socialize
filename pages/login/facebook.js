@@ -6,7 +6,7 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 
 const FacebookLogin = () => {
   const router = useRouter();
-  const { currentUser, setCurrentUser } = useCurrentUser();
+  const { currentUser, setCurrentUser, isLoading } = useCurrentUser();
 
   useEffect(() => {
     setCurrentUser();
@@ -15,6 +15,10 @@ const FacebookLogin = () => {
   useEffect(() => {
     if (currentUser) router.push('/');
   }, [currentUser]);
+
+  useEffect(() => {
+    if (!isLoading && !currentUser) router.push('/login');
+  }, [isLoading]);
 
   return (
     <Splash pageTitle="Log in">
