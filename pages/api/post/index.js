@@ -1,10 +1,6 @@
-import nc from 'next-connect';
 import { body, validationResult } from 'express-validator';
-import middleware from '../../../middleware';
+import handler from '../../../middleware';
 import Post from '../../../models/Post';
-
-const handler = nc();
-handler.use(middleware);
 
 handler.post(
   body('body')

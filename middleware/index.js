@@ -6,9 +6,10 @@ import mongo from './mongo';
 import passport from './passport';
 import session from './session';
 
+// eslint-disable-next-line no-unused-vars
 function onError(err, req, res, _next) {
   console.log('------ Middleware caught error: ------');
-  console.log({ err });
+  console.log(err);
   console.log('--------------------------------------');
 
   res.status(500).end(err.toString());

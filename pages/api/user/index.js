@@ -1,11 +1,7 @@
-import nc from 'next-connect';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import middleware from '../../../middleware';
+import handler from '../../../middleware';
 import User from '../../../models/User';
-
-const handler = nc();
-handler.use(middleware);
 
 handler.post(
   body('name')

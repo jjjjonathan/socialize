@@ -1,8 +1,7 @@
-import nc from 'next-connect';
-import router from '../../../../middleware';
+import handler from '../../../../middleware';
 import User from '../../../../models/User';
 
-router.get(async (req, res) => {
+handler.get(async (req, res) => {
   try {
     const { username } = req.query;
 
@@ -20,4 +19,4 @@ router.get(async (req, res) => {
   }
 });
 
-export default router;
+export default handler;
