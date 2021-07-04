@@ -28,9 +28,9 @@ const NavMenu = () => {
       ) : (
         <>
           <NavDropdown title={`Welcome, ${currentUser.name}`} id="nav-dropdown">
-            <NavDropdown.Item href="#">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#">Something</NavDropdown.Item>
+            <Link href={`/profile/${currentUser.username}`} passHref>
+              <NavDropdown.Item>Profile</NavDropdown.Item>
+            </Link>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={handleLogout}>Log out</NavDropdown.Item>
           </NavDropdown>
