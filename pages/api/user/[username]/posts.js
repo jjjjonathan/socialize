@@ -1,21 +1,23 @@
 import nc from 'next-connect';
-import middleware from '../../../../middleware';
+import router from '../../../../middleware';
 import User from '../../../../models/User';
 
-const handler = nc();
-handler.use(middleware);
+router.get(async (req, res) => {
+  try {
+    const { username } = req.query;
 
-handler.get(async (req, res) => {
-  const { username } = req.query;
-
-  const posts = await User.findOne({ username }, 'posts').populate({
-    path: 'posts',
-    populate: {
-      path: 'user',
-      select: 'name username',
-    },
-  });
-  res.json(posts);
+    const posts = await User.findOne({ username }, 'posts').populate({
+      path: 'posts',
+      populate: {
+        path: 'user',
+        select: 'name username',
+      },
+    });
+    if (!posts) throw new Error('User not found');
+    res.json(posts);
+  } catch (error) {
+    throw new Error('error');
+  }
 });
 
-export default handler;
+export default router;

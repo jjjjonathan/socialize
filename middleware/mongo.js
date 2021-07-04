@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// eslint-disable-next-line prefer-destructuring
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
@@ -27,7 +28,7 @@ const mongoConnect = async () => {
 
     cached.promise = mongoose
       .connect(MONGODB_URI, options)
-      .then((mongoose) => mongoose);
+      .then((mongooseConn) => mongooseConn);
   }
   cached.conn = await cached.promise;
   return cached.conn;
