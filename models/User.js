@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
-import defaultUsername from '../utils/defaultUsername';
+import {
+  defaultProfilePicture,
+  defaultUsername,
+} from '../utils/profileDefaults';
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -36,6 +39,12 @@ const UserSchema = new mongoose.Schema({
   facebookId: {
     type: String,
     required: false,
+  },
+  profilePicture: {
+    type: String,
+    default() {
+      return defaultProfilePicture(this.username, this.name);
+    },
   },
   friends: [
     {

@@ -1,14 +1,17 @@
 import FacebookStrategy from 'passport-facebook';
 import User from '../../models/User';
+import { getFacebookProfilePicture } from '../../utils/profileDefaults';
 
 const facebook = new FacebookStrategy(
   {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
     callbackURL: '/api/auth/facebook/callback',
-    profileFields: ['id', 'email', 'displayName', 'picture'],
+    profileFields: ['id', 'email', 'displayName'],
   },
   async (accessToken, refreshToken, profile, done) => {
+    console.log(profile);
+    console.log(accessToken);
     try {
       const existingUser = await User.findOne({ facebookId: profile.id });
       if (!existingUser) {
@@ -23,6 +26,7 @@ const facebook = new FacebookStrategy(
             name: profile.displayName,
             email: profile.emails[0].value,
             facebookId: profile.id,
+            profilePicture: getFacebookProfilePicture(profile.id, accessToken),
           });
           const savedNewUser = await newUser.save();
           return done(null, savedNewUser);
