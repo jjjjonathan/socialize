@@ -6,6 +6,7 @@ import facebook from './strategies/facebook';
 // Serialize/deserialize with user ID
 
 passport.serializeUser((user, done) => {
+  console.log(user);
   done(null, user.id);
 });
 

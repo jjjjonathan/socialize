@@ -5,11 +5,11 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Alert from '../components/Alert';
-import Splash from '../components/Splash';
-import CircleSpinner from '../components/CircleSpinner';
-import useCurrentUser from '../hooks/useCurrentUser';
-import styles from './loginsignup.module.css';
+import Alert from '../../components/Alert';
+import Splash from '../../components/Splash';
+import CircleSpinner from '../../components/CircleSpinner';
+import useCurrentUser from '../../hooks/useCurrentUser';
+import styles from '../loginsignup.module.css';
 
 const Login = () => {
   const router = useRouter();
@@ -111,9 +111,15 @@ const Login = () => {
             )}
           </Formik>
 
-          <Button variant="outline-dark" className={`mt-4 ${styles.button}`}>
-            Log in with Facebook
-          </Button>
+          <Link href="/api/auth/facebook" passHref>
+            <Button
+              variant="outline-dark"
+              className={`mt-4 ${styles.button}`}
+              as="a"
+            >
+              Log in with Facebook
+            </Button>
+          </Link>
           <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
             Log in with Google
           </Button>
