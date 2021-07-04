@@ -4,8 +4,27 @@ import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
 import Newsfeed from '../../../components/Newsfeed';
 import CircleSpinner from '../../../components/CircleSpinner';
+import User from '../../../models/User';
 
-const Profile = () => {
+export async function getServerSideProps(context) {
+  const { user: username } = context.query;
+  const user = await User.findOne({ username }, '-friendRequests');
+  const profile = JSON.parse(JSON.stringify(user));
+
+  if (!profile) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      profile,
+    },
+  };
+}
+
+const Profile = ({ profile }) => {
   const router = useRouter();
   const { user } = router.query;
   const {
@@ -17,7 +36,7 @@ const Profile = () => {
 
   return (
     <Layout pageTitle="Home">
-      <h3>Jonathan Horn</h3>
+      <h3>{profile?.name}</h3>
       <h4>@{user}</h4>
       <Row>
         <Col md={{ span: 4 }} style={{ background: 'lightgray' }}>
