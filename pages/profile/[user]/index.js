@@ -5,6 +5,7 @@ import Layout from '../../../components/Layout';
 import Newsfeed from '../../../components/Newsfeed';
 import CircleSpinner from '../../../components/CircleSpinner';
 import User from '../../../models/User';
+import { monthYear } from '../../../utils/dateHelpers';
 
 export async function getServerSideProps(context) {
   const { user: username } = context.query;
@@ -41,7 +42,7 @@ const Profile = ({ profile }) => {
       <Row>
         <Col md={{ span: 4 }} style={{ background: 'lightgray' }}>
           <h3>friends list, about me, links, photos?</h3>
-          <p>User since: {profile.userSince}</p>
+          <p>socializing since {monthYear(profile.userSince)}</p>
         </Col>
         <Col>
           {isPostsByUserLoading ? (
