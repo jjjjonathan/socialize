@@ -4,6 +4,7 @@ import {
   defaultProfilePicture,
   defaultUsername,
 } from '../utils/profileDefaults';
+import Post from './Post';
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -61,7 +62,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.virtual('posts', {
-  ref: 'Post',
+  ref: Post,
   localField: '_id',
   foreignField: 'user',
 });
