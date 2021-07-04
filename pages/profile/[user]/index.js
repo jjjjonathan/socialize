@@ -36,15 +36,18 @@ const Profile = ({ profile }) => {
 
   return (
     <Layout pageTitle="Home">
-      <h3>{profile?.name}</h3>
+      <h3>{profile.name}</h3>
       <h4>@{user}</h4>
       <Row>
         <Col md={{ span: 4 }} style={{ background: 'lightgray' }}>
           <h3>friends list, about me, links, photos?</h3>
+          <p>User since: {profile.userSince}</p>
         </Col>
         <Col>
           {isPostsByUserLoading ? (
-            <CircleSpinner />
+            <div className="d-flex justify-content-center mt-3">
+              <CircleSpinner size="50" />
+            </div>
           ) : (
             <Newsfeed posts={postsByUser.posts} />
           )}
