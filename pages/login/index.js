@@ -9,7 +9,6 @@ import Alert from '../../components/Alert';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
 import useCurrentUser from '../../hooks/useCurrentUser';
-import styles from '../loginsignup.module.css';
 
 const Login = () => {
   const router = useRouter();
@@ -58,7 +57,7 @@ const Login = () => {
       {isLoggingIn || isLoading ? (
         <CircleSpinner size="70" />
       ) : (
-        <div className={styles.form}>
+        <div className="auth-form">
           <h1 className="logo text-center mb-5">socialize</h1>
           {alert()}
           <Formik
@@ -102,7 +101,7 @@ const Login = () => {
                 <Button
                   type="submit"
                   variant="outline-dark"
-                  className={styles.button}
+                  className="auth-button"
                   disabled={isSubmitting}
                 >
                   Log in
@@ -112,23 +111,15 @@ const Login = () => {
           </Formik>
 
           <Link href="/api/auth/facebook" passHref>
-            <Button
-              variant="outline-dark"
-              className={`mt-4 ${styles.button}`}
-              as="a"
-            >
+            <Button variant="outline-dark" className="mt-4 auth-button" as="a">
               Log in with Facebook
             </Button>
           </Link>
-          <Button variant="outline-dark" className={`mt-2 ${styles.button}`}>
+          <Button variant="outline-dark" className="mt-2 auth-button">
             Log in with Google
           </Button>
           <Link href="/signup" passHref>
-            <Button
-              variant="outline-dark"
-              className={`mt-2 ${styles.button}`}
-              as="a"
-            >
+            <Button variant="outline-dark" className="mt-2 auth-button" as="a">
               Sign up with Email
             </Button>
           </Link>

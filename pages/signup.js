@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import Alert from '../components/Alert';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
-import styles from './loginsignup.module.css';
 
 const Signup = () => {
   const router = useRouter();
@@ -64,7 +63,7 @@ const Signup = () => {
       {isSigningUp ? (
         <CircleSpinner size="70" />
       ) : (
-        <div className={styles.form}>
+        <div className="auth-form">
           <h1 className="logo text-center mb-5">socialize</h1>
           {alert()}
           <Formik
@@ -166,7 +165,7 @@ const Signup = () => {
                 <Button
                   type="submit"
                   variant="outline-dark"
-                  className={styles.button}
+                  className="auth-button"
                   disabled={isSubmitting}
                 >
                   Sign up

@@ -10,8 +10,6 @@ const facebook = new FacebookStrategy(
     profileFields: ['id', 'email', 'displayName'],
   },
   async (accessToken, refreshToken, profile, done) => {
-    console.log(profile);
-    console.log(accessToken);
     try {
       const existingUser = await User.findOne({ facebookId: profile.id });
       if (!existingUser) {
