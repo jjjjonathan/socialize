@@ -40,6 +40,16 @@
   border-radius: 30px;
 }
 
+.gradient-glass-card {
+  @extend .soft-alert;
+  background: linear-gradient(
+    253deg,
+    rgba(229, 251, 31, 0.4),
+    rgba(244, 173, 6, 0.4)
+  );
+  border-width: 0;
+}
+
 .auth-form {
   width: 300px;
 }

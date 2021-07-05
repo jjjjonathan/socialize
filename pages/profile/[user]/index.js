@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
 import Newsfeed from '../../../components/Newsfeed';
@@ -51,9 +51,11 @@ const Profile = ({ profile }) => {
         </div>
       </div>
       <Row>
-        <Col md={{ span: 4 }} style={{ background: 'lightgray' }}>
-          <h3>friends list, about me, links, photos?</h3>
-          <p>socializing since {monthYear(profile.userSince)}</p>
+        <Col md={{ span: 4 }}>
+          <Card className="gradient-glass-card p-3">
+            <h4 className="h5">About me</h4>
+            <p>socializing since {monthYear(profile.userSince)}</p>
+          </Card>
         </Col>
         <Col>
           {isPostsByUserLoading ? (
