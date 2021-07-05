@@ -4,7 +4,7 @@
 // Global css
 
 .navbar {
-  @include drop-shadow;
+  @include drop-shadow-lg;
   font-family: $headings-font-family;
   font-weight: 700;
 }
@@ -20,12 +20,6 @@
   content: '.';
 }
 
-.soft-alert {
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.14);
-  border-radius: 15px;
-}
-
 .form-label {
   font-family: $headings-font-family;
   font-weight: 600 !important;
@@ -33,21 +27,6 @@
 
 .form-control.is-invalid {
   border-width: 1px;
-}
-
-.glass-card {
-  @include glassmorphic;
-  border-radius: 30px;
-}
-
-.gradient-glass-card {
-  @extend .soft-alert;
-  background: linear-gradient(
-    253deg,
-    rgba(229, 251, 31, 0.4),
-    rgba(244, 173, 6, 0.4)
-  );
-  border-width: 0;
 }
 
 .auth-form {
@@ -60,4 +39,44 @@
 
 .auth-button {
   width: 100%;
+}
+
+// GLASS CARD STUFF
+
+$glass-card-radius: 15px;
+
+.glass-card {
+  @include glassmorphic;
+  @include drop-shadow-sm;
+  border-radius: $glass-card-radius;
+  border-width: 0;
+}
+
+.glass-card > .card-header {
+  border-top-left-radius: $glass-card-radius;
+  border-top-right-radius: $glass-card-radius;
+  border-width: 0;
+}
+
+.glass-card > .card-footer {
+  border-bottom-left-radius: $glass-card-radius;
+  border-bottom-right-radius: $glass-card-radius;
+  border-width: 0;
+}
+
+.gradient-glass-card {
+  @extend .glass-card;
+  background: linear-gradient(
+    253deg,
+    rgba(229, 251, 31, 0.4),
+    rgba(244, 173, 6, 0.4)
+  );
+  border-width: 0;
+}
+
+.soft-alert {
+  // Mostly transparent, for splash page
+  @include drop-shadow-sm;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: $glass-card-radius;
 }

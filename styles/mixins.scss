@@ -53,15 +53,19 @@
   }
 }
 
+@mixin drop-shadow-lg {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.27);
+}
+
+@mixin drop-shadow-sm {
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.14);
+}
+
 @mixin glassmorphic {
+  @include drop-shadow-lg;
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(12.5px);
   -webkit-backdrop-filter: blur(12.5px);
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-@mixin drop-shadow {
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }

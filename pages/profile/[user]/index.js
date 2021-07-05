@@ -52,9 +52,15 @@ const Profile = ({ profile }) => {
       </div>
       <Row>
         <Col md={{ span: 4 }}>
-          <Card className="gradient-glass-card p-3">
-            <h4 className="h5">About me</h4>
-            <p>socializing since {monthYear(profile.userSince)}</p>
+          <Card className="gradient-glass-card">
+            <Card.Header>
+              <h4 className="h5 mb-0">About me</h4>
+            </Card.Header>
+            <Card.Body>
+              <p className="my-0">
+                socializing since {monthYear(profile.userSince)}
+              </p>
+            </Card.Body>
           </Card>
         </Col>
         <Col>
