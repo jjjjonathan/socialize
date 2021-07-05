@@ -1,12 +1,14 @@
 import { Row, Col } from 'react-bootstrap';
 import Layout from '../components/Layout';
+import NewUsers from '../components/NewUsers';
 import Newsfeed from '../components/Newsfeed';
 
 const Home = () => (
   <Layout pageTitle="Home">
     <Row>
-      <Col md={{ span: 4, order: 'last' }} style={{ background: 'lightgray' }}>
-        <h3>sidebar</h3>
+      <Col md={{ span: 4, order: 'last' }}>
+        <h4>New users</h4>
+        <NewUsers />
       </Col>
       <Col>
         <Newsfeed
