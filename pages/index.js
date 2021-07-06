@@ -7,7 +7,7 @@ const Home = () => (
   <Layout pageTitle="Home">
     <Row>
       <Col md={{ span: 4, order: 'last' }}>
-        <h4>New users</h4>
+        <h4 className="mb-3">New users</h4>
         <NewUsers />
       </Col>
       <Col>

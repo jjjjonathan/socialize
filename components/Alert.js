@@ -2,12 +2,13 @@ import { Alert as BootstrapAlert } from 'react-bootstrap';
 
 const Alert = ({ type, children }) => {
   const heading = () => {
-    if (type === 'error') return 'Uh oh!';
+    if (type === 'error')
+      return <BootstrapAlert.Heading as="h5">Uh oh!</BootstrapAlert.Heading>;
     return null;
   };
   return (
     <BootstrapAlert className="soft-alert">
-      <BootstrapAlert.Heading as="h5">{heading()}</BootstrapAlert.Heading>
+      {heading()}
       {children}
     </BootstrapAlert>
   );

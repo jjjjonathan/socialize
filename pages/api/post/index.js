@@ -21,12 +21,10 @@ handler.post(
     }
 
     const postBody = req.body.body;
-    const timestamp = new Date();
     const user = req.user.id;
 
     const post = new Post({
       body: postBody,
-      timestamp,
       user,
     });
 
