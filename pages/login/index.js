@@ -1,35 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import middleware from '../../middleware';
 import Alert from '../../components/Alert';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
-import useCurrentUser from '../../hooks/useCurrentUser';
+
+export async function getServerSideProps({ req, res }) {
+  await middleware.run(req, res);
+
+  if (req.user) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
 
 const Login = () => {
   const router = useRouter();
+  console.log(router);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { currentUser, setCurrentUser, isLoading } = useCurrentUser();
-
-  // Redirect to '/' if logged in
-  useEffect(() => {
-    if (currentUser) router.push('/');
-  }, [currentUser]);
 
   const handleLogin = async ({ username, password }) => {
     try {
       setIsError(false);
       setIsLoggingIn(true);
-      const response = await axios.post('/api/auth/login', {
+      await axios.post('/api/auth/login', {
         username,
         password,
       });
-      setCurrentUser(response.data);
+      router.push('/');
     } catch (error) {
       setIsLoggingIn(false);
       console.error(error);
@@ -53,8 +63,8 @@ const Login = () => {
     ) : null;
 
   return (
-    <Splash pageTitle="Log in" useGlassmorphicBox={!isLoggingIn && !isLoading}>
-      {isLoggingIn || isLoading ? (
+    <Splash pageTitle="Log in" useGlassmorphicBox={!isLoggingIn}>
+      {isLoggingIn ? (
         <CircleSpinner size="70" />
       ) : (
         <div className="auth-form">

@@ -4,9 +4,25 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import middleware from '../middleware';
 import Alert from '../components/Alert';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
+
+export async function getServerSideProps({ req, res }) {
+  await middleware.run(req, res);
+
+  if (req.user) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
 
 const Signup = () => {
   const router = useRouter();
@@ -29,7 +45,7 @@ const Signup = () => {
   };
 
   const validationSchema = yup.object().shape({
-    name: yup.string(), // .label('Full name').min(2).max(50).required(),
+    name: yup.string().label('Full name').min(2).max(50).required(),
     username: yup.string().label('Username').min(3).max(30).required(),
     email: yup
       .string()
