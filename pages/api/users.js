@@ -5,10 +5,11 @@ import User from '../../models/User';
 const handler = nc();
 handler.use(middleware);
 
-// TODO sort by newness
-
 handler.get(async (req, res) => {
-  const users = await User.find({}, '-friendRequests');
+  const users = await User.find(
+    {},
+    'name username userSince profilePicture',
+  ).sort('-userSince');
   return res.json(users);
 });
 
