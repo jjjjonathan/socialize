@@ -29,7 +29,11 @@ handler.post(
     });
 
     const savedPost = await post.save();
-    return res.json(savedPost);
+
+    const populatedPost = await savedPost
+      .populate('user', 'name username profilePicture')
+      .execPopulate();
+    return res.json(populatedPost);
   },
 );
 
