@@ -8,7 +8,7 @@ handler.use(middleware);
 handler.get(
   passport.authenticate('facebook', {
     failureRedirect: '/login',
-    successRedirect: '/login/facebook',
+    successRedirect: '/',
   }),
 );
 

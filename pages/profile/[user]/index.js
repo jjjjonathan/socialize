@@ -33,18 +33,20 @@ export async function getServerSideProps({ req, res, query }) {
     };
   }
 
+  const isOwnProfile = reqUser.id === user.id;
   const profile = JSON.parse(JSON.stringify(user));
   const currentUser = JSON.parse(JSON.stringify(reqUser));
 
   return {
     props: {
+      isOwnProfile,
       profile,
       currentUser,
     },
   };
 }
 
-const Profile = ({ profile, currentUser }) => {
+const Profile = ({ profile, currentUser, isOwnProfile }) => {
   const router = useRouter();
   const { user } = router.query;
   const {
@@ -82,7 +84,7 @@ const Profile = ({ profile, currentUser }) => {
           </Card>
         </Col>
         <Col>
-          <NewPost />
+          {isOwnProfile ? <NewPost /> : null}
           {isPostsByUserLoading ? (
             <div className="d-flex justify-content-center mt-3">
               <CircleSpinner size="50" />

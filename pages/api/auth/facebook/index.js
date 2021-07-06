@@ -7,7 +7,6 @@ handler.use(middleware);
 
 handler.get(
   passport.authenticate('facebook', {
-    authType: 'reauthenticate',
     scope: ['email'],
   }),
 );
