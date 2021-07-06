@@ -10,7 +10,7 @@ const NewPost = () => {
   });
 
   return (
-    <Card className="glass-card mb-4">
+    <Card className="glass-card-form mb-4">
       <Card.Body>
         <Formik
           initialValues={{ body: '' }}
@@ -19,12 +19,18 @@ const NewPost = () => {
         >
           {({ isSubmitting, errors }) => (
             <FormikForm noValidate>
-              <Form.Group className="mb-2" controlId="body">
+              <Form.Group className="mb-0" controlId="body">
                 <Field
                   type="text"
                   name="body"
-                  placeholder="What's on your mind?"
-                  as={Form.Control}
+                  as={() => (
+                    <Form.Control
+                      as="textarea"
+                      rows={5}
+                      className="glass-card-textarea p-3"
+                      placeholder="What's on your mind?"
+                    />
+                  )}
                   isInvalid={!!errors.body}
                 />
                 <ErrorMessage
@@ -35,9 +41,8 @@ const NewPost = () => {
               </Form.Group>
               <Button
                 type="submit"
-                variant="outline-dark"
-                className="auth-button"
                 disabled={isSubmitting}
+                style={{ position: 'absolute', right: '10px', bottom: '10px' }}
               >
                 Post
               </Button>

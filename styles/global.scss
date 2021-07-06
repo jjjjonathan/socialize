@@ -74,6 +74,20 @@ $glass-card-radius: 15px;
   border-width: 0;
 }
 
+.glass-card-form {
+  @extend .glass-card;
+}
+
+.glass-card-form > .card-body {
+  margin: 0;
+  padding: 0;
+}
+
+.glass-card-textarea {
+  border-radius: $glass-card-radius;
+  padding-bottom: 100px;
+}
+
 .soft-alert {
   // Mostly transparent, for splash page
   @include drop-shadow-sm;
