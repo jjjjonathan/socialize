@@ -5,10 +5,26 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import middleware from '../../middleware';
 import Alert from '../../components/Alert';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
 import useCurrentUser from '../../hooks/useCurrentUser';
+
+export async function getServerSideProps({ req, res }) {
+  await middleware.run(req, res);
+
+  if (req.user) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
 
 const Login = () => {
   const router = useRouter();
