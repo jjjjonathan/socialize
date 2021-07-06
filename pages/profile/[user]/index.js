@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Row, Col, Card } from 'react-bootstrap';
+import middleware from '../../../middleware';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
 import Newsfeed from '../../../components/Newsfeed';
@@ -9,25 +10,41 @@ import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import NewPost from '../../../components/NewPost';
 
-export async function getServerSideProps(context) {
-  const { user: username } = context.query;
-  const user = await User.findOne({ username }, '-friendRequests');
-  const profile = JSON.parse(JSON.stringify(user));
+export async function getServerSideProps({ req, res, query }) {
+  await middleware.run(req, res);
 
-  if (!profile) {
+  const reqUser = req.user;
+
+  if (!reqUser) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const { user: username } = query;
+  const user = await User.findOne({ username }, '-friendRequests');
+
+  if (!user) {
     return {
       notFound: true,
     };
   }
 
+  const profile = JSON.parse(JSON.stringify(user));
+  const currentUser = JSON.parse(JSON.stringify(reqUser));
+
   return {
     props: {
       profile,
+      currentUser,
     },
   };
 }
 
-const Profile = ({ profile }) => {
+const Profile = ({ profile, currentUser }) => {
   const router = useRouter();
   const { user } = router.query;
   const {
@@ -38,7 +55,7 @@ const Profile = ({ profile }) => {
   } = usePostsByUser(user);
 
   return (
-    <Layout pageTitle="Home">
+    <Layout pageTitle="Home" currentUser={currentUser}>
       <div className="mb-4 d-flex align-items-center">
         <Image
           src={profile.profilePicture}
