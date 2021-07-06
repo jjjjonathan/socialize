@@ -57,7 +57,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
   } = usePostsByUser(user);
 
   return (
-    <Layout pageTitle="Home" currentUser={currentUser}>
+    <Layout pageTitle={profile.name} currentUser={currentUser}>
       <div className="mb-4 d-flex align-items-center">
         <Image
           src={profile.profilePicture}

@@ -4,6 +4,7 @@ import styles from './NewUsers.module.css';
 import useNewUsers from '../hooks/useNewUsers';
 import FlatSpinner from './FlatSpinner';
 import Alert from './Alert';
+import AddFriendButton from './AddFriendButton';
 
 const NewUsers = () => {
   const { newUsers, isNewUsersLoading, isNewUsersError } = useNewUsers();
@@ -28,7 +29,7 @@ const NewUsers = () => {
           <Link href={`/profile/${user.username}`} passHref>
             <a className={`h6 ml-3 pt-2 ${styles.name}`}>{user.name}</a>
           </Link>
-          <p className="ml-auto">+</p>
+          <AddFriendButton variant="mini" className="ml-auto" />
         </div>
       ))}
     </>
