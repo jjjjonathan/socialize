@@ -15,7 +15,7 @@ const NewUsers = () => {
   return (
     <>
       {newUsers.map((user) => (
-        <div className="d-flex align-items-center mb-2" key={user.id}>
+        <div className="d-flex align-items-center mb-2 mb-0" key={user.id}>
           <Link href={`/profile/${user.username}`} passHref>
             <a>
               <Image
@@ -27,7 +27,7 @@ const NewUsers = () => {
             </a>
           </Link>
           <Link href={`/profile/${user.username}`} passHref>
-            <a className={`h6 ml-3 pt-2 ${styles.name}`}>{user.name}</a>
+            <a className={`h6 ml-3 ${styles.name}`}>{user.name}</a>
           </Link>
           <AddFriendButton variant="mini" className="ml-auto" />
         </div>
