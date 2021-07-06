@@ -7,6 +7,7 @@ import Newsfeed from '../../../components/Newsfeed';
 import CircleSpinner from '../../../components/CircleSpinner';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
+import NewPost from '../../../components/NewPost';
 
 export async function getServerSideProps(context) {
   const { user: username } = context.query;
@@ -64,6 +65,7 @@ const Profile = ({ profile }) => {
           </Card>
         </Col>
         <Col>
+          <NewPost />
           {isPostsByUserLoading ? (
             <div className="d-flex justify-content-center mt-3">
               <CircleSpinner size="50" />
