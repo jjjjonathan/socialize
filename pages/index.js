@@ -32,23 +32,46 @@ export async function getServerSideProps({ req, res }) {
 const Home = ({ currentUser }) => {
   const [newUsersOpen, setNewUsersOpen] = useState(false);
 
-  return (
-    <Layout pageTitle="Home" currentUser={currentUser}>
-      <Row>
-        <Col md={{ span: 4, order: 'last' }}>
-          <h4 className="mb-3">New users</h4>
+  const topMenu = () => (
+    <>
+      <div className="d-md-none">
+        <div className="mb-4 d-flex justify-content-around">
           <Button
             onClick={() => setNewUsersOpen(!newUsersOpen)}
             aria-expanded={newUsersOpen}
             aria-controls="collapse-new-users"
           >
-            SHOW
+            <i className="bi bi-file-earmark-person"></i>
           </Button>
-          <Collapse in={newUsersOpen}>
-            <div id="collapse-new-users">
+          <Button>
+            <i className="bi bi-file-earmark-plus-fill"></i>
+          </Button>
+        </div>
+        <Collapse in={newUsersOpen}>
+          <div id="collapse-new-users">
+            <div className="mb-4 mx-5">
+              <h4 className="mb-3 text-center">New users</h4>
               <NewUsers />
             </div>
-          </Collapse>
+          </div>
+        </Collapse>
+      </div>
+    </>
+  );
+
+  const sidebar = () => (
+    <div className="d-none d-md-block">
+      <h4 className="mb-3">New users</h4>
+      <NewUsers />
+    </div>
+  );
+
+  return (
+    <Layout pageTitle="Home" currentUser={currentUser}>
+      <Row>
+        <Col md={{ span: 4, order: 'last' }}>
+          {topMenu()}
+          {sidebar()}
         </Col>
         <Col>
           <NewPost />
