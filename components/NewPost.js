@@ -3,11 +3,14 @@ import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import axios from 'axios';
+import FlatSpinner from './FlatSpinner';
 
-const NewPost = () => {
+const NewPost = ({ addNewPostToFeed }) => {
   const handleNewPost = async ({ newPost }) => {
     try {
-      await axios.post('/api/post');
+      const postedPost = await axios.post('/api/post', { body: newPost });
+      console.log(postedPost);
+      addNewPostToFeed(postedPost);
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +54,7 @@ const NewPost = () => {
                   disabled={isSubmitting}
                   className="new-post-submit-button"
                 >
-                  Post
+                  {isSubmitting ? <FlatSpinner size="20" /> : 'Post'}
                 </Button>
               </FormikForm>
             </Card.Body>
