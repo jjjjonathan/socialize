@@ -3,6 +3,10 @@
 
 // Global css
 
+textarea {
+  resize: none;
+}
+
 .navbar {
   @include drop-shadow-lg;
   font-family: $headings-font-family;
@@ -85,7 +89,7 @@ $glass-card-radius: 15px;
 
 .glass-card-textarea {
   border-radius: $glass-card-radius;
-  padding-bottom: 100px;
+  padding: 12px 20px 48px 20px;
 }
 
 .soft-alert {

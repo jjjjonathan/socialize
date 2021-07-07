@@ -1,5 +1,6 @@
 import { Card, Form, Button } from 'react-bootstrap';
-import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
+import { Formik, Form as FormikForm, ErrorMessage } from 'formik';
+import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 
 const NewPost = () => {
@@ -10,47 +11,48 @@ const NewPost = () => {
   });
 
   return (
-    <Card className="glass-card-form mb-4">
-      <Card.Body>
-        <Formik
-          initialValues={{ body: '' }}
-          validationSchema={validationSchema}
-          onSubmit={handleNewPost}
-        >
-          {({ isSubmitting, errors }) => (
-            <FormikForm noValidate>
-              <Form.Group className="mb-0" controlId="body">
-                <Field
-                  type="text"
+    <Formik
+      initialValues={{ body: '' }}
+      validationSchema={validationSchema}
+      onSubmit={handleNewPost}
+    >
+      {({ isSubmitting, errors }) => (
+        <>
+          <Card className="glass-card-form mb-4">
+            <Card.Body>
+              <FormikForm noValidate>
+                <Form.Control
+                  as={TextareaAutosize}
+                  minRows={3}
+                  className={`glass-card-textarea ${
+                    errors.body ? 'is-invalid' : null
+                  }`}
+                  placeholder="What's on your mind?"
                   name="body"
-                  as={() => (
-                    <Form.Control
-                      as="textarea"
-                      rows={5}
-                      className="glass-card-textarea p-3"
-                      placeholder="What's on your mind?"
-                    />
-                  )}
-                  isInvalid={!!errors.body}
+                  id="body"
                 />
-                <ErrorMessage
-                  name="body"
-                  component={Form.Control.Feedback}
-                  type="invalid"
-                />
-              </Form.Group>
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                style={{ position: 'absolute', right: '10px', bottom: '10px' }}
-              >
-                Post
-              </Button>
-            </FormikForm>
-          )}
-        </Formik>
-      </Card.Body>
-    </Card>
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={{
+                    position: 'absolute',
+                    right: '10px',
+                    bottom: '10px',
+                  }}
+                >
+                  Post
+                </Button>
+              </FormikForm>
+            </Card.Body>
+          </Card>
+          <ErrorMessage
+            name="body"
+            component={Form.Control.Feedback}
+            type="invalid"
+          />
+        </>
+      )}
+    </Formik>
   );
 };
 
