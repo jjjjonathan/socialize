@@ -1,4 +1,5 @@
-import { Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
+import { Row, Col, Button, Collapse } from 'react-bootstrap';
 import middleware from '../middleware';
 import Layout from '../components/Layout';
 import NewUsers from '../components/NewUsers';
@@ -28,30 +29,45 @@ export async function getServerSideProps({ req, res }) {
   };
 }
 
-const Home = ({ currentUser }) => (
-  <Layout pageTitle="Home" currentUser={currentUser}>
-    <Row>
-      <Col md={{ span: 4, order: 'last' }}>
-        <h4 className="mb-3">New users</h4>
-        <NewUsers />
-      </Col>
-      <Col>
-        <NewPost />
-        <Newsfeed
-          posts={[
-            {
-              user: {
-                name: 'Jonny baby',
-                profilePicture: 'https://avatar.tobi.sh/random?size=512&',
+const Home = ({ currentUser }) => {
+  const [newUsersOpen, setNewUsersOpen] = useState(false);
+
+  return (
+    <Layout pageTitle="Home" currentUser={currentUser}>
+      <Row>
+        <Col md={{ span: 4, order: 'last' }}>
+          <h4 className="mb-3">New users</h4>
+          <Button
+            onClick={() => setNewUsersOpen(!newUsersOpen)}
+            aria-expanded={newUsersOpen}
+            aria-controls="collapse-new-users"
+          >
+            SHOW
+          </Button>
+          <Collapse in={newUsersOpen}>
+            <div id="collapse-new-users">
+              <NewUsers />
+            </div>
+          </Collapse>
+        </Col>
+        <Col>
+          <NewPost />
+          <Newsfeed
+            posts={[
+              {
+                user: {
+                  name: 'Jonny baby',
+                  profilePicture: 'https://avatar.tobi.sh/random?size=512&',
+                },
+                body: 'idk',
+                likes: [],
               },
-              body: 'idk',
-              likes: [],
-            },
-          ]}
-        />
-      </Col>
-    </Row>
-  </Layout>
-);
+            ]}
+          />
+        </Col>
+      </Row>
+    </Layout>
+  );
+};
 
 export default Home;
