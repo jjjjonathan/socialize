@@ -4,7 +4,6 @@ import Layout from '../components/Layout';
 import NewUsers from '../components/NewUsers';
 import Newsfeed from '../components/Newsfeed';
 import NewPost from '../components/NewPost';
-import AddFriendButton from '../components/AddFriendButton';
 
 export async function getServerSideProps({ req, res }) {
   await middleware.run(req, res);
@@ -37,7 +36,6 @@ const Home = ({ currentUser }) => (
         <NewUsers />
       </Col>
       <Col>
-        <AddFriendButton />
         <NewPost />
         <Newsfeed
           posts={[

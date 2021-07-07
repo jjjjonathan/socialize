@@ -8,9 +8,8 @@ import CircleSpinner from './CircleSpinner';
 const NewPost = ({ addNewPostToFeed }) => {
   const handleNewPost = async ({ newPost }) => {
     try {
-      const postedPost = await axios.post('/api/post', { body: newPost });
-      console.log(postedPost);
-      addNewPostToFeed(postedPost);
+      const { data } = await axios.post('/api/post', { body: newPost });
+      addNewPostToFeed(data);
     } catch (error) {
       console.error(error);
     }

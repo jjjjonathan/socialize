@@ -15,7 +15,11 @@ const AddFriendButton = ({ variant, className, ...props }) => {
   }
 
   return (
-    <Button variant="secondary" className={className} {...props}>
+    <Button
+      variant="secondary"
+      className={`${className} ${styles.large}`}
+      {...props}
+    >
       <i className="bi bi-person-plus"></i> Add Friend
     </Button>
   );

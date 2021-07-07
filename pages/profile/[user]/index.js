@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { Row, Col, Card } from 'react-bootstrap';
+import produce from 'immer';
 import middleware from '../../../middleware';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
@@ -9,6 +10,7 @@ import CircleSpinner from '../../../components/CircleSpinner';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import NewPost from '../../../components/NewPost';
+import AddFriendButton from '../../../components/AddFriendButton';
 
 export async function getServerSideProps({ req, res, query }) {
   await middleware.run(req, res);
@@ -53,8 +55,18 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
     postsByUser,
     // isPostsByUserError, TODO add error handling
     isPostsByUserLoading,
-    // setPostsByUser, TODO add ability to add new posts
+    setPostsByUser,
   } = usePostsByUser(user);
+
+  const addNewPostToFeed = (newPost) => {
+    console.log('Old state: ', postsByUser);
+    console.log('Post to add: ', newPost);
+    const nextState = produce(postsByUser, (draft) => {
+      draft.posts.unshift(newPost);
+    });
+    console.log('New state: ', nextState);
+    setPostsByUser(nextState);
+  };
 
   return (
     <Layout pageTitle={profile.name} currentUser={currentUser}>
@@ -69,6 +81,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
           <h2 className="mb-1">{profile.name}</h2>
           <h3 className="text-muted h6">@{user}</h3>
         </div>
+        {!isOwnProfile ? <AddFriendButton className="ml-auto" /> : null}
       </div>
       <Row>
         <Col md={{ span: 4 }}>
@@ -84,7 +97,9 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
           </Card>
         </Col>
         <Col>
-          {isOwnProfile ? <NewPost /> : null}
+          {isOwnProfile ? (
+            <NewPost addNewPostToFeed={addNewPostToFeed} />
+          ) : null}
           {isPostsByUserLoading ? (
             <div className="d-flex justify-content-center mt-3">
               <CircleSpinner size="50" />
