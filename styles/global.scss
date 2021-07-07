@@ -45,6 +45,20 @@ textarea {
   width: 100%;
 }
 
+.new-post-validation-error {
+  display: block !important;
+  text-align: right;
+  padding-right: 2px;
+  margin-top: -17px;
+  margin-bottom: 17px;
+}
+
+.new-post-submit-button {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
 // GLASS CARD STUFF
 
 $glass-card-radius: 15px;

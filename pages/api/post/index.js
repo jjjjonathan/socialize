@@ -10,7 +10,7 @@ handler.post(
   body('body')
     .trim()
     .isLength({ min: 3, max: 2000 })
-    .withMessage('Posts must be between 3 and 2000 characters!')
+    .withMessage('Posts must be between 3 and 2000 characters')
     .escape(),
   async (req, res) => {
     if (!req.user) return res.status(401).end();
