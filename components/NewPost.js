@@ -3,7 +3,7 @@ import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import axios from 'axios';
-import FlatSpinner from './FlatSpinner';
+import CircleSpinner from './CircleSpinner';
 
 const NewPost = ({ addNewPostToFeed }) => {
   const handleNewPost = async ({ newPost }) => {
@@ -54,7 +54,7 @@ const NewPost = ({ addNewPostToFeed }) => {
                   disabled={isSubmitting}
                   className="new-post-submit-button"
                 >
-                  {isSubmitting ? <FlatSpinner size="20" /> : 'Post'}
+                  {isSubmitting ? <CircleSpinner size="50" /> : 'Post'}
                 </Button>
               </FormikForm>
             </Card.Body>
