@@ -31,7 +31,11 @@ const NewUsers = () => {
               {user.name}
             </a>
           </Link>
-          <AddFriendButton variant="mini" className="ml-auto" />
+          <AddFriendButton
+            username={user.username}
+            variant="mini"
+            className="ml-auto"
+          />
         </div>
       ))}
     </>
