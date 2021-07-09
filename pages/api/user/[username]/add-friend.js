@@ -14,7 +14,7 @@ handler.post(async (req, res) => {
   if (!userToAdd || req.user.username === username)
     return res.status(400).end();
 
-  userToAdd.friendRequests.push(req.user.id);
+  userToAdd.friendRequests.push({ user: req.user.id });
 
   const response = await userToAdd.save();
   return res.json(response);

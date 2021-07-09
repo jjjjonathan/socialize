@@ -9,7 +9,10 @@ handler.get(async (req, res) => {
   if (!req.user) return res.status(401).end();
 
   const { id } = req.user;
-  const user = await User.findById(id).populate('friendRequests');
+  const user = await User.findById(id, 'friendRequests').populate(
+    'friendRequests.user',
+    'name username profilePicture',
+  );
 
   return res.json(user);
 });
