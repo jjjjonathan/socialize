@@ -34,6 +34,20 @@ const NavMenu = ({ currentUser }) => {
             ) : (
               <>
                 <NavDropdown
+                  title="Friend Requests"
+                  id="friend-requests-dropdown"
+                >
+                  {currentUser.friendRequests.length !== 0 ? (
+                    currentUser.friendRequests.map((friendReq) => (
+                      <Navbar.Text key={friendReq.id}>
+                        {friendReq.name}
+                      </Navbar.Text>
+                    ))
+                  ) : (
+                    <Navbar.Text>None</Navbar.Text>
+                  )}
+                </NavDropdown>
+                <NavDropdown
                   title={`Welcome, ${currentUser.name}`}
                   id="nav-dropdown"
                 >
