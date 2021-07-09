@@ -14,7 +14,7 @@ handler.get(async (req, res) => {
     'name username profilePicture',
   );
 
-  return res.json(user);
+  return res.json(user.friendRequests);
 });
 
 export default handler;

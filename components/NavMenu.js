@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import FlatSpinner from './FlatSpinner';
+import FriendRequestsDropdown from './FriendRequestsDropdown';
 
 const NavMenu = ({ currentUser }) => {
   const router = useRouter();
@@ -33,20 +34,7 @@ const NavMenu = ({ currentUser }) => {
               <FlatSpinner />
             ) : (
               <>
-                <NavDropdown
-                  title="Friend Requests"
-                  id="friend-requests-dropdown"
-                >
-                  {currentUser.friendRequests.length !== 0 ? (
-                    currentUser.friendRequests.map((friendReq) => (
-                      <Navbar.Text key={friendReq.id}>
-                        {friendReq.name}
-                      </Navbar.Text>
-                    ))
-                  ) : (
-                    <Navbar.Text>None</Navbar.Text>
-                  )}
-                </NavDropdown>
+                <FriendRequestsDropdown />
                 <NavDropdown
                   title={`Welcome, ${currentUser.name}`}
                   id="nav-dropdown"
