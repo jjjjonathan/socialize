@@ -49,14 +49,28 @@ const UserSchema = new mongoose.Schema({
   },
   friends: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      timestamp: {
+        type: Date,
+        default: Date.now,
+      },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
     },
   ],
   friendRequests: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
+      timestamp: {
+        type: Date,
+        default: Date.now,
+      },
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
     },
   ],
 });
