@@ -5,7 +5,7 @@ import User from '../../../../../models/User';
 const handler = nc();
 handler.use(middleware);
 
-handler.post(async (req, res) => {
+handler.delete(async (req, res) => {
   if (!req.user) return res.status(401).end();
 
   const { friendId } = req.query;
@@ -20,17 +20,7 @@ handler.post(async (req, res) => {
 
   user.friendRequests.splice(friendReqIndex, 1);
 
-  // Creating timestamp here so they're the same
-  const timestamp = Date.now();
-
-  user.friends.push({ user: friendId, timestamp });
-
-  const friend = await User.findById(friendId);
-  friend.friends.push({ user: id, timestamp });
-
   await user.save();
-  await friend.save();
-
   return res.status(204).end();
 });
 
