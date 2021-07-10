@@ -89,10 +89,18 @@ UserSchema.set('toJSON', {
     delete ret._id;
     delete ret.__v;
     delete ret.passwordHash;
+
     if (ret.friendRequests) {
       ret.friendRequests.forEach((friendReq) => {
         friendReq.id = friendReq._id.toString();
         delete friendReq._id;
+      });
+    }
+
+    if (ret.friends) {
+      ret.friends.forEach((friend) => {
+        friend.id = friend._id.toString();
+        delete friend._id;
       });
     }
   },

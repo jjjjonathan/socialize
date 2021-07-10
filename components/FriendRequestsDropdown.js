@@ -7,7 +7,7 @@ const FriendRequestsDropdown = () => {
     friendRequests,
     isFriendRequestsError,
     isFriendRequestsLoading,
-    setFriendRequests,
+    // setFriendRequests, TODO add click to refresh to error
   } = useFriendRequests();
 
   if (isFriendRequestsLoading) {
@@ -26,7 +26,7 @@ const FriendRequestsDropdown = () => {
     );
   }
 
-  if (friendRequests.length === 0) {
+  if (friendRequests.friendRequests.length === 0) {
     return (
       <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
         <p>None</p>
@@ -37,7 +37,7 @@ const FriendRequestsDropdown = () => {
   return (
     <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
       <ul>
-        {friendRequests.map((friendReq) => (
+        {friendRequests.friendRequests.map((friendReq) => (
           <li key={friendReq.id}>{friendReq.user.name}</li>
         ))}
       </ul>
