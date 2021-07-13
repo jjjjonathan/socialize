@@ -1,6 +1,6 @@
 import nc from 'next-connect';
-import middleware from '../../middleware';
-import User from '../../models/User';
+import middleware from '../../../middleware';
+import User from '../../../models/User';
 
 const handler = nc();
 handler.use(middleware);
