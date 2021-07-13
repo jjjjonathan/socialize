@@ -11,6 +11,7 @@ import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import NewPost from '../../../components/NewPost';
 import AddFriendButton from '../../../components/AddFriendButton';
+import FriendsList from '../../../components/FriendsList';
 
 export async function getServerSideProps({ req, res, query }) {
   await middleware.run(req, res);
@@ -27,7 +28,10 @@ export async function getServerSideProps({ req, res, query }) {
   }
 
   const { user: username } = query;
-  const user = await User.findOne({ username }, '-friendRequests');
+  const user = await User.findOne({ username }, '-friendRequests').populate(
+    'friends.user',
+    'name username profilePicture',
+  );
 
   if (!user) {
     return {
@@ -85,7 +89,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
       </div>
       <Row>
         <Col md={{ span: 4 }}>
-          <Card className="gradient-glass-card">
+          <Card className="gradient-glass-card mb-4">
             <Card.Header>
               <h4 className="h5 mb-0">About me</h4>
             </Card.Header>
@@ -95,6 +99,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
               </p>
             </Card.Body>
           </Card>
+          <FriendsList friends={profile.friends} />
         </Col>
         <Col>
           {isOwnProfile ? (
