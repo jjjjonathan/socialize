@@ -1,6 +1,7 @@
 import { NavDropdown } from 'react-bootstrap';
 import useFriendRequests from '../hooks/useFriendRequests';
 import FlatSpinner from './FlatSpinner';
+import FriendRequest from './FriendRequest';
 
 const FriendRequestsDropdown = () => {
   const {
@@ -36,11 +37,9 @@ const FriendRequestsDropdown = () => {
 
   return (
     <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
-      <ul>
-        {friendRequests.friendRequests.map((friendReq) => (
-          <li key={friendReq.id}>{friendReq.user.name}</li>
-        ))}
-      </ul>
+      {friendRequests.friendRequests.map((friendReq) => (
+        <FriendRequest friendReq={friendReq} key={friendReq.id} />
+      ))}
     </NavDropdown>
   );
 };
