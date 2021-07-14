@@ -81,12 +81,19 @@ UserSchema.virtual('posts', {
   foreignField: 'user',
 });
 
+UserSchema.virtual('requestedFriends', {
+  ref: 'User',
+  localField: '_id',
+  foreignField: 'friendRequests.user',
+});
+
 /* eslint-disable no-param-reassign */
 UserSchema.set('toJSON', {
   virtuals: true,
   transform: (doc, ret) => {
     ret.id = ret._id.toString();
     delete ret._id;
+
     delete ret.__v;
     delete ret.passwordHash;
 

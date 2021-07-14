@@ -4,15 +4,16 @@ import { Button } from 'react-bootstrap';
 import styles from './AddFriendButton.module.css';
 import CircleSpinner from './CircleSpinner';
 
-const AddFriendButton = ({ username, variant, ...props }) => {
+const AddFriendButton = ({ username, variant, onRemove, ...props }) => {
   const [status, setStatus] = useState('default');
 
   const onClick = async () => {
     try {
       setStatus('submitting');
-      // await axios.post(`/api/user/${username}/add-friend`);
+      await axios.post(`/api/user/${username}/add-friend`);
+      setStatus('success');
       setTimeout(() => {
-        setStatus('success');
+        onRemove(username);
       }, 2000);
     } catch (error) {
       // TODO add error message

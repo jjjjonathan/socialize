@@ -7,7 +7,13 @@ import Alert from './Alert';
 import AddFriendButton from './AddFriendButton';
 
 const NewUsers = () => {
-  const { newUsers, isNewUsersLoading, isNewUsersError } = useNewUsers();
+  const { newUsers, isNewUsersLoading, isNewUsersError, setNewUsers } =
+    useNewUsers();
+
+  const onRemove = (username) => {
+    const nextState = newUsers.filter((user) => username !== user.username);
+    setNewUsers(nextState);
+  };
 
   if (isNewUsersLoading) return <FlatSpinner />;
   if (isNewUsersError) return <Alert>Error loading users</Alert>;
@@ -35,6 +41,7 @@ const NewUsers = () => {
             username={user.username}
             variant="mini"
             className="ml-auto"
+            onRemove={onRemove}
           />
         </div>
       ))}
