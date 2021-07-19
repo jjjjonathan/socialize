@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Row, Col, Button, Collapse } from 'react-bootstrap';
 import middleware from '../middleware';
+import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/Layout';
 import NewUsers from '../components/NewUsers';
 import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
+import CircleSpinner from '../components/CircleSpinner';
+import Alert from '../components/Alert';
 
 export async function getServerSideProps({ req, res }) {
   await middleware.run(req, res);
@@ -31,6 +34,7 @@ export async function getServerSideProps({ req, res }) {
 
 const Home = ({ currentUser }) => {
   const [newUsersOpen, setNewUsersOpen] = useState(false);
+  const { newsfeed, isNewsfeedError, isNewsfeedLoading } = useNewsfeed();
 
   const topMenu = () => (
     <>
@@ -66,6 +70,13 @@ const Home = ({ currentUser }) => {
     </div>
   );
 
+  const displayNewsfeed = () => {
+    if (isNewsfeedLoading) return <CircleSpinner />;
+    if (isNewsfeedError) return <Alert>Error Loading Newsfeed</Alert>;
+
+    return <PostList posts={newsfeed} />;
+  };
+
   return (
     <Layout pageTitle="Home" currentUser={currentUser}>
       <Row>
@@ -75,18 +86,7 @@ const Home = ({ currentUser }) => {
         </Col>
         <Col>
           <NewPost />
-          <PostList
-            posts={[
-              {
-                user: {
-                  name: 'Jonny baby',
-                  profilePicture: 'https://avatar.tobi.sh/random?size=512&',
-                },
-                body: 'idk',
-                likes: [],
-              },
-            ]}
-          />
+          {displayNewsfeed()}
         </Col>
       </Row>
     </Layout>

@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import Image from 'next/image';
+import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
 
 const PostCard = ({ post }) => (
@@ -12,7 +13,12 @@ const PostCard = ({ post }) => (
           width="30"
           alt={`Profile picture of ${post.user.name}`}
         />
-        <h4 className={`h6 ml-2 pt-2 ${styles.name}`}>{post.user.name}</h4>
+        <div className="ml-2 pt-2">
+          <span className={`h6 ${styles.name}`}>{post.user.name} </span>
+          <span className="text-muted medium">
+            posted {defaultDate(post.timestamp)}
+          </span>
+        </div>
       </div>
     </Card.Header>
     <Card.Body>

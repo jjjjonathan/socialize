@@ -19,6 +19,9 @@ const Test = () => (
     <div style={{ background: 'lightgray', width: 250, height: 120 }}>
       <FriendRequest friendReq={friendReq} />
     </div>
+    <div>Hello</div>
+    <div className="medium">Hello</div>
+    <div className="small">Hello</div>
   </div>
 );
 
