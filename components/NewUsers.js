@@ -17,6 +17,7 @@ const NewUsers = () => {
 
   if (isNewUsersLoading) return <FlatSpinner />;
   if (isNewUsersError) return <Alert>Error loading users</Alert>;
+  if (newUsers.length === 0) return <Alert>No more new users</Alert>;
 
   return (
     <>

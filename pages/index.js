@@ -3,7 +3,7 @@ import { Row, Col, Button, Collapse } from 'react-bootstrap';
 import middleware from '../middleware';
 import Layout from '../components/Layout';
 import NewUsers from '../components/NewUsers';
-import Newsfeed from '../components/Newsfeed';
+import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
 
 export async function getServerSideProps({ req, res }) {
@@ -75,7 +75,7 @@ const Home = ({ currentUser }) => {
         </Col>
         <Col>
           <NewPost />
-          <Newsfeed
+          <PostList
             posts={[
               {
                 user: {

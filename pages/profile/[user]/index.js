@@ -5,7 +5,7 @@ import produce from 'immer';
 import middleware from '../../../middleware';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
-import Newsfeed from '../../../components/Newsfeed';
+import PostList from '../../../components/PostList';
 import CircleSpinner from '../../../components/CircleSpinner';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
@@ -63,12 +63,9 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
   } = usePostsByUser(user);
 
   const addNewPostToFeed = (newPost) => {
-    console.log('Old state: ', postsByUser);
-    console.log('Post to add: ', newPost);
     const nextState = produce(postsByUser, (draft) => {
       draft.posts.unshift(newPost);
     });
-    console.log('New state: ', nextState);
     setPostsByUser(nextState);
   };
 
@@ -110,7 +107,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
               <CircleSpinner size="50" />
             </div>
           ) : (
-            <Newsfeed posts={postsByUser.posts} />
+            <PostList posts={postsByUser.posts} />
           )}
         </Col>
       </Row>

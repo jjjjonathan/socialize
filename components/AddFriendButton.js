@@ -16,6 +16,7 @@ const AddFriendButton = ({ username, variant, onRemove, ...props }) => {
         onRemove(username);
       }, 2000);
     } catch (error) {
+      setStatus('default');
       // TODO add error message
       console.error(error);
     }

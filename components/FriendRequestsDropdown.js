@@ -8,8 +8,15 @@ const FriendRequestsDropdown = () => {
     friendRequests,
     isFriendRequestsError,
     isFriendRequestsLoading,
-    // setFriendRequests, TODO add click to refresh to error
+    setFriendRequests, // TODO add click to refresh to error (route to login if 401 ?)
   } = useFriendRequests();
+
+  const onRemove = (userId) => {
+    const nextState = friendRequests.friendRequests.filter(
+      (friendReq) => userId !== friendReq.user.id,
+    );
+    setFriendRequests(nextState);
+  };
 
   if (isFriendRequestsLoading) {
     return (
@@ -27,7 +34,7 @@ const FriendRequestsDropdown = () => {
     );
   }
 
-  if (friendRequests.friendRequests.length === 0) {
+  if (friendRequests.friendRequests?.length === 0) {
     return (
       <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
         <p>None</p>
@@ -38,7 +45,11 @@ const FriendRequestsDropdown = () => {
   return (
     <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
       {friendRequests.friendRequests.map((friendReq) => (
-        <FriendRequest friendReq={friendReq} key={friendReq.id} />
+        <FriendRequest
+          friendReq={friendReq}
+          onRemove={onRemove}
+          key={friendReq.id}
+        />
       ))}
     </NavDropdown>
   );
