@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React from 'react';
 import { Dropdown, Button } from 'react-bootstrap';
 import styles from './NavDropdown.module.css';
