@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import NavDropdown from './NavDropdown';
 import FlatSpinner from './FlatSpinner';
-import FriendRequestsDropdown from './FriendRequestsDropdown';
+import FriendRequestsMenu from './FriendRequestsMenu';
 
 const NavMenu = ({ currentUser }) => {
   const router = useRouter();
@@ -27,30 +28,43 @@ const NavMenu = ({ currentUser }) => {
         <Link href="/" passHref>
           <Navbar.Brand>socialize</Navbar.Brand>
         </Link>
-        <Navbar.Toggle aria-controls="main-navbar-nav" />
-        <Navbar.Collapse id="main-navbar-nav">
-          <Nav className="ml-auto">
-            {isLoggingOut ? (
-              <FlatSpinner />
-            ) : (
-              <>
-                <FriendRequestsDropdown />
-                <NavDropdown
-                  title={`Welcome, ${currentUser.name}`}
-                  id="nav-dropdown"
-                >
-                  <Link href={`/profile/${currentUser.username}`} passHref>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </Link>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Log out
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </>
-            )}
-          </Nav>
-        </Navbar.Collapse>
+
+        {isLoggingOut ? (
+          <FlatSpinner className="ml-auto" />
+        ) : (
+          <>
+            <Link href={`/profile/${currentUser.username}`} passHref>
+              <Navbar.Text className="ml-auto">
+                Welcome, {currentUser.name}
+              </Navbar.Text>
+            </Link>
+            <NavDropdown
+              className="ml-4"
+              icon="bi-person-lines-fill"
+              id="friend-requests-dropdown"
+            >
+              <FriendRequestsMenu />
+            </NavDropdown>
+            <NavDropdown
+              className="ml-4"
+              icon="bi-bell-fill"
+              id="notifications-dropdown"
+            >
+              <p>Content</p>
+            </NavDropdown>
+            <NavDropdown
+              className="ml-4"
+              icon="bi-three-dots"
+              id="hamburger-dropdown"
+            >
+              <Link href={`/settings`} passHref>
+                <Dropdown.Item>Settings</Dropdown.Item>
+              </Link>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleLogout}>Log out</Dropdown.Item>
+            </NavDropdown>
+          </>
+        )}
       </Container>
     </Navbar>
   );

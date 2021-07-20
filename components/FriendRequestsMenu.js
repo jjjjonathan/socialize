@@ -1,9 +1,8 @@
-import { NavDropdown } from 'react-bootstrap';
 import useFriendRequests from '../hooks/useFriendRequests';
 import FlatSpinner from './FlatSpinner';
 import FriendRequest from './FriendRequest';
 
-const FriendRequestsDropdown = () => {
+const FriendRequestsMenu = () => {
   const {
     friendRequests,
     isFriendRequestsError,
@@ -19,31 +18,19 @@ const FriendRequestsDropdown = () => {
   };
 
   if (isFriendRequestsLoading) {
-    return (
-      <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
-        <FlatSpinner />
-      </NavDropdown>
-    );
+    return <FlatSpinner />;
   }
 
   if (isFriendRequestsError) {
-    return (
-      <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
-        <p className="text-danger">Error loading</p>
-      </NavDropdown>
-    );
+    return <p className="text-danger">Error loading</p>;
   }
 
   if (friendRequests.friendRequests?.length === 0) {
-    return (
-      <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
-        <p>None</p>
-      </NavDropdown>
-    );
+    return <p>None</p>;
   }
 
   return (
-    <NavDropdown title="Friend Requests" id="friend-requests-dropdown">
+    <>
       {friendRequests.friendRequests.map((friendReq) => (
         <FriendRequest
           friendReq={friendReq}
@@ -51,8 +38,8 @@ const FriendRequestsDropdown = () => {
           key={friendReq.id}
         />
       ))}
-    </NavDropdown>
+    </>
   );
 };
 
-export default FriendRequestsDropdown;
+export default FriendRequestsMenu;

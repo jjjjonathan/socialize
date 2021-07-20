@@ -1,8 +1,6 @@
-import { Navbar, Nav, Container, Dropdown } from 'react-bootstrap';
+import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import Link from 'next/link';
 import FriendRequest from '../components/FriendRequest';
-import FriendRequestsDropdown from '../components/FriendRequestsDropdown';
-import NavMenu from '../components/NavMenu';
 import NavDropdown from '../components/NavDropdown';
 
 const friendReq = {
@@ -50,17 +48,6 @@ const TestNavMenu = () => (
           <Dropdown.Item>Settings</Dropdown.Item>
         </Link>
       </NavDropdown>
-
-      {/* <Nav className="ml-auto">
-        <FriendRequestsDropdown />
-        <NavDropdown title={`Welcome, ${currentUser.name}`} id="nav-dropdown">
-          <Link href={`/profile/${currentUser.username}`} passHref>
-            <NavDropdown.Item>Profile</NavDropdown.Item>
-          </Link>
-          <NavDropdown.Divider />
-          <NavDropdown.Item>Log out</NavDropdown.Item>
-        </NavDropdown>
-      </Nav> */}
     </Container>
   </Navbar>
 );
