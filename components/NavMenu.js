@@ -57,7 +57,7 @@ const NavMenu = ({ currentUser }) => {
               icon="bi-three-dots"
               id="hamburger-dropdown"
             >
-              <Link href={`/settings`} passHref>
+              <Link href="/settings" passHref>
                 <Dropdown.Item>Settings</Dropdown.Item>
               </Link>
               <Dropdown.Divider />

@@ -1,7 +1,4 @@
-import { Navbar, Container, Dropdown } from 'react-bootstrap';
-import Link from 'next/link';
 import FriendRequest from '../components/FriendRequest';
-import NavDropdown from '../components/NavDropdown';
 
 const friendReq = {
   user: {
@@ -14,47 +11,8 @@ const friendReq = {
   id: '60ea2515bbe1b73602fec25d',
 };
 
-const currentUser = { name: 'Jonny Baby', username: 'jonnybaby12345' };
-
-const TestNavMenu = () => (
-  <Navbar bg="primary" expand="sm" fixed="top">
-    <Container>
-      <Link href="/" passHref>
-        <Navbar.Brand>socialize</Navbar.Brand>
-      </Link>
-
-      <NavDropdown
-        className="ml-auto"
-        icon="bi-person-lines-fill"
-        id="friend-requests-dropdown"
-      >
-        <p>Content</p>
-      </NavDropdown>
-
-      <NavDropdown
-        className="ml-4"
-        icon="bi-bell-fill"
-        id="notifications-dropdown"
-      >
-        <p>Content</p>
-      </NavDropdown>
-
-      <NavDropdown
-        className="ml-4"
-        icon="bi-three-dots"
-        id="hamburger-dropdown"
-      >
-        <Link href={`/settings`} passHref>
-          <Dropdown.Item>Settings</Dropdown.Item>
-        </Link>
-      </NavDropdown>
-    </Container>
-  </Navbar>
-);
-
 const Test = () => (
   <>
-    <TestNavMenu currentUser={currentUser} />
     <div
       className="d-flex justify-content-center align-items-center"
       style={{ height: '100vh' }}
