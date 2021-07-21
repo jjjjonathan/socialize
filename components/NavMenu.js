@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import NavDropdown from './NavDropdown';
 import FlatSpinner from './FlatSpinner';
 import FriendRequestsMenu from './FriendRequestsMenu';
+import styles from './NavMenu.module.css';
 
 const NavMenu = ({ currentUser }) => {
   const router = useRouter();
@@ -34,8 +36,20 @@ const NavMenu = ({ currentUser }) => {
         ) : (
           <>
             <Link href={`/profile/${currentUser.username}`} passHref>
-              <Navbar.Text className="ml-auto">
-                Welcome, {currentUser.name}
+              <a className="ml-auto">
+                <Image
+                  src={currentUser.profilePicture}
+                  height="30"
+                  width="30"
+                  alt={`Profile picture of ${currentUser.name}`}
+                />
+              </a>
+            </Link>
+            <Link href={`/profile/${currentUser.username}`} passHref>
+              <Navbar.Text
+                className={`d-none d-md-block mx-3 text-dark ${styles.name}`}
+              >
+                {currentUser.name}
               </Navbar.Text>
             </Link>
             <NavDropdown
