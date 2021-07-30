@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { Card } from 'react-bootstrap';
+import Image from './Image';
 import styles from './NewUsers.module.css';
 
 const FriendsList = ({ friends }) => (
@@ -11,16 +11,13 @@ const FriendsList = ({ friends }) => (
     <Card.Body>
       {friends.map((friend) => (
         <div className="d-flex align-items-center mb-2" key={friend.id}>
-          <Link href={`/profile/${friend.user.username}`} passHref>
-            <a>
-              <Image
-                src={friend.user.profilePicture}
-                height="40"
-                width="40"
-                alt={`Profile picture of ${friend.user.name}`}
-              />
-            </a>
-          </Link>
+          <Image
+            publicId={friend.user.profilePicture}
+            size="40"
+            variant="circle"
+            profilePicName={friend.user.name}
+            href={`/profile/${friend.user.username}`}
+          />
           <Link href={`/profile/${friend.user.username}`} passHref>
             <a className={`h6 ml-3 mb-0 text-secondary ${styles.name}`}>
               {friend.user.name}

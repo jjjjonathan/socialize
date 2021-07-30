@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-import Image from 'next/image';
+import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
 
@@ -8,10 +8,10 @@ const PostCard = ({ post }) => (
     <Card.Header>
       <div className="d-flex align-items-center">
         <Image
-          src={post.user.profilePicture}
-          height="30"
-          width="30"
-          alt={`Profile picture of ${post.user.name}`}
+          publicId={post.user.profilePicture}
+          size="30"
+          variant="circle"
+          profilePicName={post.user.name}
         />
         <div className="ml-2 pt-2">
           <span className={`h6 ${styles.name}`}>{post.user.name} </span>
