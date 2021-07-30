@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import { Row, Col } from 'react-bootstrap';
 import middleware from '../middleware';
 import Layout from '../components/Layout';
+import ProfilePictureUpload from '../components/ProfilePictureUpload';
 
 export async function getServerSideProps({ req, res }) {
   await middleware.run(req, res);
@@ -33,12 +33,7 @@ const Settings = ({ currentUser }) => (
       <Col>
         <h3 className="h4 mb-4">Profile</h3>
         <h4 className="h6 mb-3">Profile Picture</h4>
-        <Image
-          src={currentUser.profilePicture}
-          alt={`Profile picture of ${currentUser.name}`}
-          width="50"
-          height="50"
-        />
+        <ProfilePictureUpload currentUser={currentUser} />
       </Col>
       <Col>
         <h3 className="h4 mb-3">More settings</h3>

@@ -1,9 +1,11 @@
 import nc from 'next-connect';
+import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import middleware from '../../../middleware';
 import User from '../../../models/User';
 
 const handler = nc();
+const upload = multer({ dest: '/tmp' });
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -13,7 +15,7 @@ cloudinary.config({
 
 handler.use(middleware);
 
-handler.post(async (req, res) => {
+handler.post(upload.single('profilePicture'), async (req, res) => {
   if (!req.user) return res.status(401).end();
 
   const { id } = req.user;
