@@ -1,4 +1,5 @@
 import FriendRequest from '../components/FriendRequest';
+import Image from '../components/Image';
 
 const friendReq = {
   user: {
@@ -17,12 +18,22 @@ const Test = () => (
       className="d-flex justify-content-center align-items-center"
       style={{ height: '100vh' }}
     >
-      <div style={{ background: 'lightgray', width: 250, height: 120 }}>
+      <div
+        style={{
+          background: 'lightgray',
+          width: 250,
+          height: 120,
+          display: 'none',
+        }}
+      >
         <FriendRequest friendReq={friendReq} />
       </div>
-      <div>Hello</div>
-      <div className="medium">Hello</div>
-      <div className="small">Hello</div>
+      <Image
+        publicId="yqayu565erhm66q6c5hz"
+        alt="Profile picture"
+        variant="circle"
+        size="200"
+      />
     </div>
   </>
 );
