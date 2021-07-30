@@ -27,7 +27,7 @@ handler.post(upload.single('profilePicture'), async (req, res) => {
 
   console.log(image);
 
-  const profilePicture = image.secure_url;
+  const profilePicture = image.public_id;
 
   const { id } = req.user;
   await User.findByIdAndUpdate(id, { profilePicture });

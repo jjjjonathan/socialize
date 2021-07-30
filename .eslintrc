@@ -5,6 +5,7 @@
     "class-methods-use-this": "off",
     "no-underscore-dangle": "off",
     "no-console": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "jsx-a11y/alt-text": "off"
   }
 }

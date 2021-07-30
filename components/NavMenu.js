@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Image from './Image';
 import NavDropdown from './NavDropdown';
 import FlatSpinner from './FlatSpinner';
 import FriendRequestsMenu from './FriendRequestsMenu';
@@ -35,16 +35,14 @@ const NavMenu = ({ currentUser }) => {
           <FlatSpinner className="ml-auto" />
         ) : (
           <>
-            <Link href={`/profile/${currentUser.username}`} passHref>
-              <a className="ml-auto">
-                <Image
-                  src={currentUser.profilePicture}
-                  height="30"
-                  width="30"
-                  alt={`Profile picture of ${currentUser.name}`}
-                />
-              </a>
-            </Link>
+            <Image
+              publicId={currentUser.profilePicture}
+              size="40"
+              profilePicName={currentUser.name}
+              variant="circle"
+              href={`/profile/${currentUser.username}`}
+              className="ml-auto"
+            />
             <Link href={`/profile/${currentUser.username}`} passHref>
               <Navbar.Text
                 className={`d-none d-md-block mx-3 text-dark ${styles.name}`}
