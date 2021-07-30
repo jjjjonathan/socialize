@@ -25,8 +25,6 @@ handler.post(upload.single('profilePicture'), async (req, res) => {
     gravity: 'faces',
   });
 
-  console.log(image);
-
   const profilePicture = image.public_id;
 
   const { id } = req.user;

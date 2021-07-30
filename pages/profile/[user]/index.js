@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 import { Row, Col, Card } from 'react-bootstrap';
 import produce from 'immer';
+import Image from '../../../components/Image';
 import middleware from '../../../middleware';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
@@ -73,10 +73,10 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
     <Layout pageTitle={profile.name} currentUser={currentUser}>
       <div className="mb-4 d-flex align-items-center">
         <Image
-          src={profile.profilePicture}
-          alt={`Profile picture of ${profile.name}`}
-          width="100"
-          height="100"
+          publicId={profile.profilePicture}
+          profilePicName={profile.name}
+          size="100"
+          variant="circle"
         />
         <div className="ml-3">
           <h2 className="mb-1">{profile.name}</h2>
