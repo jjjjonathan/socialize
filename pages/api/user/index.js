@@ -1,10 +1,19 @@
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import nc from 'next-connect';
+import { v2 as cloudinary } from 'cloudinary';
 import middleware from '../../../middleware';
 import User from '../../../models/User';
+import { defaultProfilePicture } from '../../../utils/profileDefaults';
 
 const handler = nc();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 handler.use(middleware);
 
 handler.post(
@@ -48,11 +57,23 @@ handler.post(
     const { name, email, username, password } = req.body;
     const passwordHash = await bcrypt.hash(password, 11);
 
+    const image = await cloudinary.uploader.upload(
+      defaultProfilePicture(username, name),
+      {
+        width: 512,
+        height: 512,
+        crop: 'fill',
+        gravity: 'faces',
+      },
+    );
+    const profilePicture = image.public_id;
+
     const user = new User({
       name,
       email,
       username,
       passwordHash,
+      profilePicture,
     });
 
     const savedUser = await user.save();
