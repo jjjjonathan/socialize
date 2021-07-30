@@ -18,10 +18,27 @@ handler.use(middleware);
 handler.post(upload.single('profilePicture'), async (req, res) => {
   if (!req.user) return res.status(401).end();
 
-  const { id } = req.user;
-  const user = await User.findById(id);
+  const image = await cloudinary.uploader.upload(req.file.path, {
+    width: 512,
+    height: 512,
+    crop: 'fill',
+    gravity: 'faces',
+  });
 
-  return res.json(user);
+  console.log(image);
+
+  const profilePicture = image.secure_url;
+
+  const { id } = req.user;
+  await User.findByIdAndUpdate(id, { profilePicture });
+
+  return res.json(204);
 });
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export default handler;

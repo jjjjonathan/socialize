@@ -17,7 +17,11 @@ const ProfilePictureUpload = ({ currentUser }) => {
     const formData = new FormData();
     formData.append('profilePicture', file);
 
-    await axios.post('/api/user/profile-picture', file);
+    try {
+      await axios.post('/api/user/profile-picture', formData);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
