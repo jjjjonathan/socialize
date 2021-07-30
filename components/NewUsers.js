@@ -29,6 +29,7 @@ const NewUsers = () => {
             variant="circle"
             profilePicName={user.name}
             href={`/profile/${user.username}`}
+            layout="fixed"
           />
           <Link href={`/profile/${user.username}`} passHref>
             <a className={`h6 ml-3 mb-0 text-secondary ${styles.name}`}>

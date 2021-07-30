@@ -10,6 +10,7 @@ const Image = ({
   profilePicName,
   className,
   href,
+  ...props
 }) => {
   const cl = new Cloudinary({
     cloud_name: 'freespirited-turtledove',
@@ -50,6 +51,7 @@ const Image = ({
         height={size}
         placeholder="blur"
         blurDataURL={blurDataURL}
+        {...props}
       />
     );
   };
