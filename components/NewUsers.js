@@ -15,7 +15,7 @@ const NewUsers = () => {
     setNewUsers(nextState);
   };
 
-  if (isNewUsersLoading) return <FlatSpinner />;
+  if (isNewUsersLoading) return <FlatSpinner size="20" />;
   if (isNewUsersError) return <Alert>Error loading users</Alert>;
   if (newUsers.length === 0) return <Alert>No more new users</Alert>;
 

@@ -80,7 +80,12 @@ const Home = ({ currentUser }) => {
   };
 
   const displayNewsfeed = () => {
-    if (isNewsfeedLoading) return <CircleSpinner />;
+    if (isNewsfeedLoading)
+      return (
+        <div className="mt-5 d-flex justify-content-center">
+          <CircleSpinner />
+        </div>
+      );
     if (isNewsfeedError) return <Alert>Error Loading Newsfeed</Alert>;
 
     return <PostList posts={newsfeed} />;
