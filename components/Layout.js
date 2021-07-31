@@ -15,7 +15,7 @@ const Layout = ({ pageTitle, children, currentUser }) => (
     <main className={styles.mainContainer}>
       <Container>{children}</Container>
     </main>
-    <Toaster position="bottom-left" />
+    <Toaster position="top-center" />
   </>
 );
 

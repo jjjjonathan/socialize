@@ -2,7 +2,7 @@
 
 import styles from './FlatSpinner.module.css';
 
-const FlatSpinner = ({ color, size }) => {
+const FlatSpinner = ({ color, size, className, style, props }) => {
   const height = size ? `${size}px` : '24px';
   const width = size ? `${size * (70 / 24)}px` : '70px';
 
@@ -10,12 +10,14 @@ const FlatSpinner = ({ color, size }) => {
 
   return (
     <div
-      className={styles.spinner}
+      className={`${className} ${styles.spinner}`}
       style={{
         '--dot-color': `var(--${color || 'dark'})`,
         height,
         width,
+        ...style,
       }}
+      {...props}
     >
       <div
         className={styles.bounce1}

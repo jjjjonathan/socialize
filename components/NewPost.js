@@ -3,15 +3,18 @@ import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import axios from 'axios';
-import CircleSpinner from './CircleSpinner';
+import toast from 'react-hot-toast';
+import FlatSpinner from './FlatSpinner';
 
 const NewPost = ({ addNewPostToFeed }) => {
   const handleNewPost = async ({ newPost }) => {
     try {
       const { data } = await axios.post('/api/post', { body: newPost });
       addNewPostToFeed(data);
+      toast.success('Posted!');
     } catch (error) {
       console.error(error);
+      toast.error('Could not add new post!');
     }
   };
 
@@ -52,8 +55,16 @@ const NewPost = ({ addNewPostToFeed }) => {
                   type="submit"
                   disabled={isSubmitting}
                   className="new-post-submit-button"
+                  style={{ width: 38, height: 24, boxSizing: 'content-box' }}
                 >
-                  {isSubmitting ? <CircleSpinner size="50" /> : 'Post'}
+                  {isSubmitting ? (
+                    <FlatSpinner
+                      size="18"
+                      style={{ marginTop: '-3px', marginLeft: '-8px' }}
+                    />
+                  ) : (
+                    'Post'
+                  )}
                 </Button>
               </FormikForm>
             </Card.Body>
