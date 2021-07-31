@@ -8,16 +8,19 @@ handler.use(middleware);
 handler.get(async (req, res) => {
   const { username } = req.query;
 
-  const posts = await User.findOne({ username }, 'posts')
-    .sort('-timestamp')
-    .populate({
-      path: 'posts',
-      populate: {
-        path: 'user',
-        select: 'name username profilePicture',
-      },
-    });
+  const posts = await User.findOne({ username }, 'posts').populate({
+    path: 'posts',
+    options: {
+      sort: '-timestamp',
+    },
+    populate: {
+      path: 'user',
+      select: 'name username profilePicture',
+    },
+  });
+
   if (!posts) return res.status(404).json({ error: 'User not found' });
+
   return res.json(posts);
 });
 
