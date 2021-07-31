@@ -8,7 +8,7 @@ import NewUsers from '../components/NewUsers';
 import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
 import CircleSpinner from '../components/CircleSpinner';
-import Alert from '../components/Alert';
+import FlatAlert from '../components/FlatAlert';
 
 export async function getServerSideProps({ req, res }) {
   await middleware.run(req, res);
@@ -83,10 +83,11 @@ const Home = ({ currentUser }) => {
     if (isNewsfeedLoading)
       return (
         <div className="mt-5 d-flex justify-content-center">
-          <CircleSpinner />
+          <CircleSpinner size="50" />
         </div>
       );
-    if (isNewsfeedError) return <Alert>Error Loading Newsfeed</Alert>;
+    if (isNewsfeedError)
+      return <FlatAlert className="mt-5">Could not load posts</FlatAlert>;
 
     return <PostList posts={newsfeed} />;
   };

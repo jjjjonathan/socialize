@@ -12,6 +12,7 @@ import { monthYear } from '../../../utils/dateHelpers';
 import NewPost from '../../../components/NewPost';
 import AddFriendButton from '../../../components/AddFriendButton';
 import FriendsList from '../../../components/FriendsList';
+import FlatAlert from '../../../components/FlatAlert';
 
 export async function getServerSideProps({ req, res, query }) {
   await middleware.run(req, res);
@@ -57,7 +58,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
   const { user } = router.query;
   const {
     postsByUser,
-    // isPostsByUserError, TODO add error handling
+    isPostsByUserError,
     isPostsByUserLoading,
     setPostsByUser,
   } = usePostsByUser(user);
@@ -67,6 +68,18 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
       draft.posts.unshift(newPost);
     });
     setPostsByUser(nextState);
+  };
+
+  const postArea = () => {
+    if (isPostsByUserLoading)
+      return (
+        <div className="d-flex justify-content-center mt-5">
+          <CircleSpinner size="50" />
+        </div>
+      );
+    if (isPostsByUserError)
+      return <FlatAlert className="mt-5">Could not load posts</FlatAlert>;
+    return <PostList posts={postsByUser.posts} />;
   };
 
   return (
@@ -103,13 +116,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
           {isOwnProfile ? (
             <NewPost addNewPostToFeed={addNewPostToFeed} />
           ) : null}
-          {isPostsByUserLoading ? (
-            <div className="d-flex justify-content-center mt-3">
-              <CircleSpinner size="50" />
-            </div>
-          ) : (
-            <PostList posts={postsByUser.posts} />
-          )}
+          {postArea()}
         </Col>
       </Row>
     </Layout>
