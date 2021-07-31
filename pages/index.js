@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Row, Col, Button, Collapse } from 'react-bootstrap';
+import produce from 'immer';
 import middleware from '../middleware';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/Layout';
@@ -34,7 +35,8 @@ export async function getServerSideProps({ req, res }) {
 
 const Home = ({ currentUser }) => {
   const [newUsersOpen, setNewUsersOpen] = useState(false);
-  const { newsfeed, isNewsfeedError, isNewsfeedLoading } = useNewsfeed();
+  const { newsfeed, isNewsfeedError, isNewsfeedLoading, setNewsfeed } =
+    useNewsfeed();
 
   const topMenu = () => (
     <>
@@ -70,6 +72,13 @@ const Home = ({ currentUser }) => {
     </div>
   );
 
+  const addNewPostToFeed = (newPost) => {
+    const nextState = produce(newsfeed, (draft) => {
+      draft.unshift(newPost);
+    });
+    setNewsfeed(nextState);
+  };
+
   const displayNewsfeed = () => {
     if (isNewsfeedLoading) return <CircleSpinner />;
     if (isNewsfeedError) return <Alert>Error Loading Newsfeed</Alert>;
@@ -85,7 +94,7 @@ const Home = ({ currentUser }) => {
           {sidebar()}
         </Col>
         <Col>
-          <NewPost />
+          <NewPost addNewPostToFeed={addNewPostToFeed} />
           {displayNewsfeed()}
         </Col>
       </Row>
