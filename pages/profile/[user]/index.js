@@ -77,6 +77,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
           profilePicName={profile.name}
           size="100"
           variant="circle"
+          blurPlaceholder
         />
         <div className="ml-3">
           <h2 className="mb-1">{profile.name}</h2>

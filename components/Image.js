@@ -10,6 +10,7 @@ const Image = ({
   profilePicName,
   className,
   href,
+  blurPlaceholder,
   ...props
 }) => {
   const cl = new Cloudinary({
@@ -42,6 +43,13 @@ const Image = ({
       return className;
     };
 
+    const blurProps = blurPlaceholder
+      ? {
+          placeholder: 'blur',
+          blurDataURL,
+        }
+      : {};
+
     return (
       <NextImage
         className={imageClassName()}
@@ -49,8 +57,7 @@ const Image = ({
         alt={profilePicName ? `Profile picture of ${profilePicName}` : alt}
         width={size}
         height={size}
-        placeholder="blur"
-        blurDataURL={blurDataURL}
+        {...blurProps}
         {...props}
       />
     );
