@@ -3,7 +3,7 @@ import Image from './Image';
 import styles from './NewUsers.module.css';
 import useNewUsers from '../hooks/useNewUsers';
 import FlatSpinner from './FlatSpinner';
-import Alert from './Alert';
+import FlatAlert from './FlatAlert';
 import AddFriendButton from './AddFriendButton';
 
 const NewUsers = () => {
@@ -16,8 +16,9 @@ const NewUsers = () => {
   };
 
   if (isNewUsersLoading) return <FlatSpinner size="20" />;
-  if (isNewUsersError) return <Alert>Error loading users</Alert>;
-  if (newUsers.length === 0) return <Alert>No more new users</Alert>;
+  if (isNewUsersError)
+    return <FlatAlert type="error">Error loading users</FlatAlert>;
+  if (newUsers.length === 0) return <FlatAlert>No more new users</FlatAlert>;
 
   return (
     <>

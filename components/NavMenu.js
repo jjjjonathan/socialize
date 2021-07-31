@@ -45,6 +45,7 @@ const NavMenu = ({ currentUser }) => {
             />
             <Link href={`/profile/${currentUser.username}`} passHref>
               <Navbar.Text
+                as="a"
                 className={`d-none d-md-block mx-3 text-dark ${styles.name}`}
               >
                 {currentUser.name}

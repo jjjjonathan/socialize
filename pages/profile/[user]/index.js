@@ -78,7 +78,11 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
         </div>
       );
     if (isPostsByUserError)
-      return <FlatAlert className="mt-5">Could not load posts</FlatAlert>;
+      return (
+        <FlatAlert type="error" className="text-center mt-5">
+          Could not load posts
+        </FlatAlert>
+      );
     return <PostList posts={postsByUser.posts} />;
   };
 

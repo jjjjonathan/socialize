@@ -1,8 +1,9 @@
-import Alert from './Alert';
+import FlatAlert from './FlatAlert';
 import PostCard from './PostCard';
 
 const PostList = ({ posts }) => {
-  if (posts.length === 0) return <Alert>No posts to show</Alert>;
+  if (posts.length === 0)
+    return <FlatAlert className="text-center mt-3">No posts to show</FlatAlert>;
 
   return (
     <>

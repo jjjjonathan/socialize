@@ -87,7 +87,11 @@ const Home = ({ currentUser }) => {
         </div>
       );
     if (isNewsfeedError)
-      return <FlatAlert className="mt-5">Could not load posts</FlatAlert>;
+      return (
+        <FlatAlert type="error" className="text-center mt-5">
+          Could not load posts
+        </FlatAlert>
+      );
 
     return <PostList posts={newsfeed} />;
   };
