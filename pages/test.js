@@ -1,11 +1,12 @@
 import FriendRequest from '../components/FriendRequest';
 import Image from '../components/Image';
+import ProfileFriendButton from '../components/ProfileFriendButton';
 
 const friendReq = {
   user: {
     name: 'Hallie Anderson',
     username: 'halliea',
-    profilePicture: 'https://avatar.tobi.sh/halliea.svg?size=512&text=HA',
+    profilePicture: 'yqayu565erhm66q6c5hz',
     id: '60e4c52ee54b7c7ed47cc24b',
   },
   timestamp: '2021-07-10T22:54:13.904Z',
@@ -23,7 +24,6 @@ const Test = () => (
           background: 'lightgray',
           width: 250,
           height: 120,
-          display: 'none',
         }}
       >
         <FriendRequest friendReq={friendReq} />
@@ -34,6 +34,7 @@ const Test = () => (
         variant="circle"
         size="200"
       />
+      <ProfileFriendButton friendStatus="friends" />
     </div>
   </>
 );

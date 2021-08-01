@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 import styles from './AddFriendButton.module.css';
 import CircleSpinner from './CircleSpinner';
 
@@ -17,8 +18,8 @@ const AddFriendButton = ({ username, variant, onRemove, ...props }) => {
       }, 2000);
     } catch (error) {
       setStatus('default');
-      // TODO add error message
       console.error(error);
+      toast.error('Could not add friend');
     }
   };
 

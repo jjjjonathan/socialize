@@ -10,7 +10,7 @@ import CircleSpinner from '../../../components/CircleSpinner';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import NewPost from '../../../components/NewPost';
-import AddFriendButton from '../../../components/AddFriendButton';
+import ProfileFriendButton from '../../../components/ProfileFriendButton';
 import FriendsList from '../../../components/FriendsList';
 import FlatAlert from '../../../components/FlatAlert';
 
@@ -100,7 +100,7 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
           <h2 className="mb-1">{profile.name}</h2>
           <h3 className="text-muted h6">@{user}</h3>
         </div>
-        {!isOwnProfile ? <AddFriendButton className="ml-auto" /> : null}
+        {!isOwnProfile ? <ProfileFriendButton className="ml-auto" /> : null}
       </div>
       <Row>
         <Col md={{ span: 4 }}>
