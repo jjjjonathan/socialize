@@ -40,6 +40,22 @@ export async function getServerSideProps({ req, res, query }) {
     };
   }
 
+  const { requestedFriends } = await User.findById(reqUser).populate(
+    'requestedFriends',
+  );
+
+  let friendStatus = '';
+
+  if (user.friends.find((friend) => friend.user.id === reqUser.id)) {
+    friendStatus = 'friends';
+  } else if (
+    requestedFriends.find(
+      (reqFriend) => reqFriend._id.toString() === user.id.toString(),
+    )
+  ) {
+    friendStatus = 'requested';
+  }
+
   const isOwnProfile = reqUser.id === user.id;
   const profile = JSON.parse(JSON.stringify(user));
   const currentUser = JSON.parse(JSON.stringify(reqUser));
@@ -49,11 +65,12 @@ export async function getServerSideProps({ req, res, query }) {
       isOwnProfile,
       profile,
       currentUser,
+      friendStatus,
     },
   };
 }
 
-const Profile = ({ profile, currentUser, isOwnProfile }) => {
+const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
   const router = useRouter();
   const { user } = router.query;
   const {
@@ -100,7 +117,13 @@ const Profile = ({ profile, currentUser, isOwnProfile }) => {
           <h2 className="mb-1">{profile.name}</h2>
           <h3 className="text-muted h6">@{user}</h3>
         </div>
-        {!isOwnProfile ? <ProfileFriendButton className="ml-auto" /> : null}
+        {!isOwnProfile ? (
+          <ProfileFriendButton
+            username={profile.username}
+            className="ml-auto"
+            friendStatus={friendStatus}
+          />
+        ) : null}
       </div>
       <Row>
         <Col md={{ span: 4 }}>
