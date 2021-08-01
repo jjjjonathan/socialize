@@ -26,7 +26,7 @@ const FriendRequestButtons = ({ id, onApprove, onDelete }) => {
   const handleDelete = async () => {
     try {
       setStatus('submitting');
-      await axios.post(`/api/user/friend-request/${id}/delete`);
+      await axios.delete(`/api/user/friend-request/${id}/delete`);
       setStatus('deleted');
       setTimeout(() => {
         onDelete(id);
