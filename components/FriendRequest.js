@@ -14,7 +14,11 @@ const FriendRequest = ({ friendReq, onRemove }) => (
       <h6 className="mb-0 ml-2">{friendReq.user.name}</h6>
     </div>
     <p className="small">Requested {defaultDate(friendReq.timestamp)}</p>
-    <FriendRequestButtons id={friendReq.user.id} onRemove={onRemove} />
+    <FriendRequestButtons
+      id={friendReq.user.id}
+      onApprove={onRemove}
+      onDelete={onRemove}
+    />
   </div>
 );
 

@@ -13,11 +13,10 @@ const ProfileFriendButton = ({
   id,
   ...props
 }) => {
-  const [status, setStatus] = useState('request');
+  const [status, setStatus] = useState('default');
 
   useEffect(() => {
-    if (friendStatus === 'friends') setStatus('friends');
-    if (friendStatus === 'requested') setStatus('requested');
+    if (friendStatus) setStatus(friendStatus);
   }, [friendStatus]);
 
   const onAddFriend = async () => {
@@ -32,8 +31,12 @@ const ProfileFriendButton = ({
     }
   };
 
-  const onRequestAccepted = () => {
-    console.log('accepted');
+  const onRequestApprove = () => {
+    setStatus('friends');
+  };
+
+  const onRequestDelete = () => {
+    setStatus('default');
   };
 
   const innards = () => {
@@ -59,7 +62,11 @@ const ProfileFriendButton = ({
         return (
           <div className="d-flex flex-column align-items-end">
             <small className="mb-2">{name} added you as a friend!</small>
-            <FriendRequestButtons id={id} onRemove={onRequestAccepted} />
+            <FriendRequestButtons
+              id={id}
+              onApprove={onRequestApprove}
+              onDelete={onRequestDelete}
+            />
           </div>
         );
       case 'friends':

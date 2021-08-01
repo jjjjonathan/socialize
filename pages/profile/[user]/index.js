@@ -44,9 +44,13 @@ export async function getServerSideProps({ req, res, query }) {
     'requestedFriends',
   );
 
-  let friendStatus = '';
+  let friendStatus = null;
 
-  if (user.friends.find((friend) => friend.user.id === reqUser.id)) {
+  if (
+    user.friends.find(
+      (friend) => friend.user.id.toString() === reqUser.id.toString(),
+    )
+  ) {
     friendStatus = 'friends';
   } else if (
     requestedFriends.find(
@@ -54,11 +58,20 @@ export async function getServerSideProps({ req, res, query }) {
     )
   ) {
     friendStatus = 'requested';
+  } else if (
+    reqUser.friendRequests.find((friendReq) => {
+      console.log('equal?', friendReq.user.toString() === user.id.toString());
+      return friendReq.user.toString() === user.id.toString();
+    })
+  ) {
+    friendStatus = 'request';
   }
 
   const isOwnProfile = reqUser.id === user.id;
   const profile = JSON.parse(JSON.stringify(user));
   const currentUser = JSON.parse(JSON.stringify(reqUser));
+
+  console.log(currentUser);
 
   return {
     props: {

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import FlatSpinner from './FlatSpinner';
 import styles from './FriendRequestButtons.module.css';
 
-const FriendRequestButtons = ({ id, onRemove }) => {
+const FriendRequestButtons = ({ id, onApprove, onDelete }) => {
   const [status, setStatus] = useState('default');
 
   const handleApprove = async () => {
@@ -14,7 +14,7 @@ const FriendRequestButtons = ({ id, onRemove }) => {
       await axios.post(`/api/user/friend-request/${id}/approve`);
       setStatus('approved');
       setTimeout(() => {
-        onRemove(id);
+        onApprove(id);
       }, 2000);
     } catch (error) {
       setStatus('default');
@@ -29,7 +29,7 @@ const FriendRequestButtons = ({ id, onRemove }) => {
       await axios.post(`/api/user/friend-request/${id}/delete`);
       setStatus('deleted');
       setTimeout(() => {
-        onRemove(id);
+        onDelete(id);
       }, 2000);
     } catch (error) {
       setStatus('default');
