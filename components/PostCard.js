@@ -1,4 +1,4 @@
-import { Card } from 'react-bootstrap';
+import { ButtonGroup, Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
@@ -28,9 +28,29 @@ const PostCard = ({ post }) => (
     </Card.Header>
     <Card.Body>
       {post.body}
+      <hr />
+      <div className="d-flex medium">
+        <div>{post.likes.length} Likes</div>
+        <div className="ml-auto">0 Comments</div>
+      </div>
       {/* <Card.Img variant="bottom" src="https://via.placeholder.com/150" /> */}
     </Card.Body>
-    <Card.Footer>{post.likes.length} Likes</Card.Footer>
+    <Card.Footer className="p-0">
+      <ButtonGroup className={styles.footerButtonGroup}>
+        <Button
+          variant="outline-dark"
+          className={`py-2 ${styles.footerButtonLeft}`}
+        >
+          Like
+        </Button>
+        <Button
+          variant="outline-dark"
+          className={`py-2 ${styles.footerButtonRight}`}
+        >
+          Comment
+        </Button>
+      </ButtonGroup>
+    </Card.Footer>
   </Card>
 );
 

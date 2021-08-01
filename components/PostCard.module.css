@@ -1,3 +1,25 @@
 .name {
   font-weight: 700;
 }
+
+.footerButtonGroup {
+  width: 100%;
+}
+
+.footerButtonLeft {
+  width: 50%;
+  font-size: 0.85em;
+  border-width: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 15px;
+  border-right-width: 3px;
+  border-right-color: white;
+}
+
+.footerButtonRight {
+  width: 50%;
+  font-size: 0.85em;
+  border-width: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 15px;
+}
