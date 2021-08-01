@@ -120,6 +120,8 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
         {!isOwnProfile ? (
           <ProfileFriendButton
             username={profile.username}
+            name={profile.name}
+            id={profile.id}
             className="ml-auto"
             friendStatus={friendStatus}
           />

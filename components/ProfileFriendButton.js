@@ -4,16 +4,23 @@ import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import styles from './ProfileFriendButton.module.css';
 import FlatSpinner from './FlatSpinner';
+import FriendRequestButtons from './FriendRequestButtons';
 
-const ProfileFriendButton = ({ friendStatus, name, username, ...props }) => {
-  const [status, setStatus] = useState('default');
+const ProfileFriendButton = ({
+  friendStatus,
+  name,
+  username,
+  id,
+  ...props
+}) => {
+  const [status, setStatus] = useState('request');
 
   useEffect(() => {
     if (friendStatus === 'friends') setStatus('friends');
     if (friendStatus === 'requested') setStatus('requested');
   }, [friendStatus]);
 
-  const onClick = async () => {
+  const onAddFriend = async () => {
     try {
       setStatus('submitting');
       await axios.post(`/api/user/${username}/add-friend`);
@@ -21,8 +28,12 @@ const ProfileFriendButton = ({ friendStatus, name, username, ...props }) => {
     } catch (error) {
       setStatus('default');
       console.error(error);
-      toast.error('Could not add friend');
+      toast.error('Could not add friend!');
     }
+  };
+
+  const onRequestAccepted = () => {
+    console.log('accepted');
   };
 
   const innards = () => {
@@ -46,8 +57,9 @@ const ProfileFriendButton = ({ friendStatus, name, username, ...props }) => {
         );
       case 'request':
         return (
-          <div>
-            <small>{name} added you as a friend!</small>
+          <div className="d-flex flex-column align-items-end">
+            <small className="mb-2">{name} added you as a friend!</small>
+            <FriendRequestButtons id={id} onRemove={onRequestAccepted} />
           </div>
         );
       case 'friends':
@@ -59,7 +71,7 @@ const ProfileFriendButton = ({ friendStatus, name, username, ...props }) => {
       default:
         return (
           <Button
-            onClick={onClick}
+            onClick={onAddFriend}
             variant="secondary"
             className={styles.button}
           >
