@@ -34,7 +34,7 @@ const AddFriendButton = ({ username, onRemove, ...props }) => {
           <Button
             onClick={onClick}
             variant="outline-secondary"
-            className={styles.mini}
+            className={styles.button}
           >
             <i className="bi bi-person-plus-fill"></i>
           </Button>
