@@ -1,4 +1,5 @@
 import { Card } from 'react-bootstrap';
+import Link from 'next/link';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
@@ -12,10 +13,14 @@ const PostCard = ({ post }) => (
           size="30"
           variant="circle"
           profilePicName={post.user.name}
+          href={`/profile/${post.user.username}`}
         />
-        <div className="ml-2 pt-2">
-          <span className={`h6 ${styles.name}`}>{post.user.name} </span>
+        <div className="ml-2 mb-1">
+          <Link href={`/profile/${post.user.username}`} passHref>
+            <a className={`h6 text-dark ${styles.name}`}>{post.user.name}</a>
+          </Link>
           <span className="text-muted medium">
+            {' '}
             posted {defaultDate(post.timestamp)}
           </span>
         </div>

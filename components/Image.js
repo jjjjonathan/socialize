@@ -29,18 +29,20 @@ const Image = ({
     crop: 'scale',
   });
 
+  const definedClassName = className || '';
+
   const image = () => {
     const imageClassName = () => {
       if (variant === 'circle') {
         if (href) {
           return 'circle';
         }
-        return `circle ${className}`;
+        return `circle ${definedClassName}`;
       }
       if (href) {
         return '';
       }
-      return className;
+      return definedClassName;
     };
 
     const blurProps = blurPlaceholder
@@ -66,7 +68,7 @@ const Image = ({
   if (href)
     return (
       <Link href={href} passHref>
-        <a className={className}>{image()}</a>
+        <a className={definedClassName}>{image()}</a>
       </Link>
     );
 
