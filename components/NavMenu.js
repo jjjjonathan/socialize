@@ -32,7 +32,7 @@ const NavMenu = ({ currentUser }) => {
         </Link>
 
         {isLoggingOut ? (
-          <FlatSpinner className="ml-auto" />
+          <FlatSpinner className="ml-auto mr-0" />
         ) : (
           <>
             <Image

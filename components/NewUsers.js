@@ -39,7 +39,6 @@ const NewUsers = () => {
           </Link>
           <AddFriendButton
             username={user.username}
-            variant="mini"
             className="ml-auto"
             onRemove={onRemove}
           />
