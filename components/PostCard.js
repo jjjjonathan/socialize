@@ -1,12 +1,38 @@
+import { useState } from 'react';
 import { ButtonGroup, Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
+import FlatSpinner from './FlatSpinner';
 
-const PostCard = ({ post }) => {
-  const handleLike = () => {
-    console.log('liking post id ', post.id);
+const PostCard = ({ post, updateLikes }) => {
+  const [likeStatus, setLikeStatus] = useState('default');
+
+  const handleLike = async () => {
+    try {
+      setLikeStatus('liking');
+      const { data } = await axios.post(`/api/post/${post.id}/like`);
+      setLikeStatus('liked');
+      updateLikes(data.likes); // work on this
+    } catch (error) {
+      setLikeStatus('default');
+      console.error(error);
+      toast.error('Could not like post!');
+    }
+  };
+
+  const likeButtonInnards = () => {
+    switch (likeStatus) {
+      case 'liking':
+        return <FlatSpinner size="15" />;
+      case 'liked':
+        return 'Unlike';
+      default:
+        return 'Like';
+    }
   };
 
   return (
@@ -35,10 +61,11 @@ const PostCard = ({ post }) => {
         {post.body}
         <hr />
         <div className="d-flex medium">
-          <div>{post.likes.length} Likes</div>
+          <div>
+            {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+          </div>
           <div className="ml-auto">0 Comments</div>
         </div>
-        {/* <Card.Img variant="bottom" src="https://via.placeholder.com/150" /> */}
       </Card.Body>
       <Card.Footer className="p-0">
         <ButtonGroup className={styles.footerButtonGroup}>
@@ -46,8 +73,9 @@ const PostCard = ({ post }) => {
             variant="outline-dark"
             className={`py-2 ${styles.footerButtonLeft}`}
             onClick={handleLike}
+            disabled={likeStatus === 'liking'}
           >
-            Like
+            {likeButtonInnards()}
           </Button>
           <Button
             variant="outline-dark"
