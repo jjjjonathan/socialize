@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ButtonGroup, Button, Card, Modal } from 'react-bootstrap';
+import { ButtonGroup, Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -7,13 +7,10 @@ import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
 import FlatSpinner from './FlatSpinner';
+import LikesModal from './LikesModal';
 
 const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
-  const [showModal, setShowModal] = useState(false);
-
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
 
   useEffect(() => {
     if (post.likes.find((like) => like === currentUser.id)) {
@@ -112,12 +109,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           </ButtonGroup>
         </Card.Footer>
       </Card>
-      <Modal show={showModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, your reading this text in a modal!</Modal.Body>
-      </Modal>
+      <LikesModal postId={post.id} />
     </>
   );
 };
