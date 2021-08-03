@@ -100,6 +100,22 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
     setPostsByUser(nextState);
   };
 
+  const updateLikes = (postId, likes) => {
+    const nextState = {
+      ...postsByUser,
+      posts: postsByUser.posts.map((post) => {
+        if (post.id === postId) {
+          return {
+            ...post,
+            likes,
+          };
+        }
+        return post;
+      }),
+    };
+    setPostsByUser(nextState);
+  };
+
   const postArea = () => {
     if (isPostsByUserLoading)
       return (
@@ -113,7 +129,13 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
           Could not load posts
         </FlatAlert>
       );
-    return <PostList posts={postsByUser.posts} />;
+    return (
+      <PostList
+        posts={postsByUser.posts}
+        updateLikes={updateLikes}
+        currentUser={currentUser}
+      />
+    );
   };
 
   return (
