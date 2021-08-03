@@ -79,6 +79,19 @@ const Home = ({ currentUser }) => {
     setNewsfeed(nextState);
   };
 
+  const updateLikes = (postId, likes) => {
+    const nextState = newsfeed.map((post) => {
+      if (post.id === postId) {
+        return {
+          ...post,
+          likes,
+        };
+      }
+      return post;
+    });
+    setNewsfeed(nextState);
+  };
+
   const displayNewsfeed = () => {
     if (isNewsfeedLoading)
       return (
@@ -93,7 +106,13 @@ const Home = ({ currentUser }) => {
         </FlatAlert>
       );
 
-    return <PostList posts={newsfeed} />;
+    return (
+      <PostList
+        posts={newsfeed}
+        updateLikes={updateLikes}
+        currentUser={currentUser}
+      />
+    );
   };
 
   return (

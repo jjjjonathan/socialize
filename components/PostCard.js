@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonGroup, Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
@@ -8,19 +8,38 @@ import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
 import FlatSpinner from './FlatSpinner';
 
-const PostCard = ({ post, updateLikes }) => {
+const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
 
-  const handleLike = async () => {
-    try {
-      setLikeStatus('liking');
-      const { data } = await axios.post(`/api/post/${post.id}/like`);
+  useEffect(() => {
+    if (post.likes.find((like) => like === currentUser.id)) {
       setLikeStatus('liked');
-      updateLikes(data.likes); // work on this
-    } catch (error) {
-      setLikeStatus('default');
-      console.error(error);
-      toast.error('Could not like post!');
+    }
+  }, [post]);
+
+  const handleLike = async () => {
+    if (likeStatus === 'default') {
+      try {
+        setLikeStatus('liking');
+        const { data } = await axios.post(`/api/post/${post.id}/like`);
+        updateLikes(post.id, data.likes);
+        setLikeStatus('liked');
+      } catch (error) {
+        setLikeStatus('default');
+        console.error(error);
+        toast.error('Could not like post!');
+      }
+    } else if (likeStatus === 'liked') {
+      try {
+        setLikeStatus('liking');
+        const { data } = await axios.post(`/api/post/${post.id}/like`);
+        updateLikes(post.id, data.likes);
+        setLikeStatus('default');
+      } catch (error) {
+        setLikeStatus('liked');
+        console.error(error);
+        toast.error('Could not unlike post!');
+      }
     }
   };
 
