@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ButtonGroup, Button, Card } from 'react-bootstrap';
+import { ButtonGroup, Button, Card, Modal } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -10,6 +10,10 @@ import FlatSpinner from './FlatSpinner';
 
 const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
 
   useEffect(() => {
     if (post.likes.find((like) => like === currentUser.id)) {
@@ -55,56 +59,66 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
   };
 
   return (
-    <Card className="glass-card mb-4">
-      <Card.Header>
-        <div className="d-flex align-items-center">
-          <Image
-            publicId={post.user.profilePicture}
-            size="30"
-            variant="circle"
-            profilePicName={post.user.name}
-            href={`/profile/${post.user.username}`}
-          />
-          <div className="ml-2 mb-1">
-            <Link href={`/profile/${post.user.username}`} passHref>
-              <a className={`h6 text-dark ${styles.name}`}>{post.user.name}</a>
-            </Link>
-            <span className="text-muted medium">
-              {' '}
-              posted {defaultDate(post.timestamp)}
-            </span>
+    <>
+      <Card className="glass-card mb-4">
+        <Card.Header>
+          <div className="d-flex align-items-center">
+            <Image
+              publicId={post.user.profilePicture}
+              size="30"
+              variant="circle"
+              profilePicName={post.user.name}
+              href={`/profile/${post.user.username}`}
+            />
+            <div className="ml-2 mb-1">
+              <Link href={`/profile/${post.user.username}`} passHref>
+                <a className={`h6 text-dark ${styles.name}`}>
+                  {post.user.name}
+                </a>
+              </Link>
+              <span className="text-muted medium">
+                {' '}
+                posted {defaultDate(post.timestamp)}
+              </span>
+            </div>
           </div>
-        </div>
-      </Card.Header>
-      <Card.Body>
-        {post.body}
-        <hr />
-        <div className="d-flex medium">
-          <div>
-            {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+        </Card.Header>
+        <Card.Body>
+          {post.body}
+          <hr />
+          <div className="d-flex medium">
+            <a className={`text-dark ${styles.likeCount}`} onClick={handleShow}>
+              {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+            </a>
+            <div className="ml-auto">0 Comments</div>
           </div>
-          <div className="ml-auto">0 Comments</div>
-        </div>
-      </Card.Body>
-      <Card.Footer className="p-0">
-        <ButtonGroup className={styles.footerButtonGroup}>
-          <Button
-            variant="outline-dark"
-            className={`py-2 ${styles.footerButtonLeft}`}
-            onClick={handleLike}
-            disabled={likeStatus === 'liking'}
-          >
-            {likeButtonInnards()}
-          </Button>
-          <Button
-            variant="outline-dark"
-            className={`py-2 ${styles.footerButtonRight}`}
-          >
-            Comment
-          </Button>
-        </ButtonGroup>
-      </Card.Footer>
-    </Card>
+        </Card.Body>
+        <Card.Footer className="p-0">
+          <ButtonGroup className={styles.footerButtonGroup}>
+            <Button
+              variant="outline-dark"
+              className={`py-2 ${styles.footerButtonLeft}`}
+              onClick={handleLike}
+              disabled={likeStatus === 'liking'}
+            >
+              {likeButtonInnards()}
+            </Button>
+            <Button
+              variant="outline-dark"
+              className={`py-2 ${styles.footerButtonRight}`}
+            >
+              Comment
+            </Button>
+          </ButtonGroup>
+        </Card.Footer>
+      </Card>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, your reading this text in a modal!</Modal.Body>
+      </Modal>
+    </>
   );
 };
 
