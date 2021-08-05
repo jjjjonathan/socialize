@@ -19,16 +19,7 @@ handler.get(async (req, res) => {
       $in: allIds,
     },
   })
-    .populate({
-      path: 'comments',
-      options: {
-        sort: 'timestamp',
-      },
-      populate: {
-        path: 'user',
-        select: 'name username profilePicture',
-      },
-    })
+    .populate('commentCount')
     .populate('user', 'name username profilePicture')
     .sort('-timestamp');
 
