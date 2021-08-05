@@ -31,6 +31,13 @@ PostSchema.virtual('comments', {
   foreignField: 'post',
 });
 
+PostSchema.virtual('commentCount', {
+  ref: Comment,
+  localField: '_id',
+  foreignField: 'post',
+  count: true,
+});
+
 /* eslint-disable no-param-reassign */
 PostSchema.set('toJSON', {
   virtuals: true,
