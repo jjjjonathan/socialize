@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Comment from './Comment';
 
 const PostSchema = new mongoose.Schema({
   body: {
@@ -22,6 +23,12 @@ const PostSchema = new mongoose.Schema({
       ref: 'User',
     },
   ],
+});
+
+PostSchema.virtual('comments', {
+  ref: Comment,
+  localField: '_id',
+  foreignField: 'post',
 });
 
 /* eslint-disable no-param-reassign */
