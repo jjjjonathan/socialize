@@ -11,6 +11,7 @@ import LikesModal from './LikesModal';
 
 const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (post.likes.find((like) => like === currentUser.id)) {
@@ -84,7 +85,10 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           {post.body}
           <hr />
           <div className="d-flex medium">
-            <a className={`text-dark ${styles.likeCount}`} onClick={handleShow}>
+            <a
+              className={`text-dark ${styles.likeCount}`}
+              onClick={() => setShowModal(true)}
+            >
               {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
             </a>
             <div className="ml-auto">0 Comments</div>
@@ -109,7 +113,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           </ButtonGroup>
         </Card.Footer>
       </Card>
-      <LikesModal postId={post.id} />
+      <LikesModal postId={post.id} setShow={setShowModal} show={showModal} />
     </>
   );
 };

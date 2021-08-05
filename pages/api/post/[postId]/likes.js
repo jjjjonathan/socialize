@@ -14,7 +14,7 @@ handler.get(async (req, res) => {
     'name username profilePicture',
   );
 
-  return res.json(post);
+  return res.json(post.likes);
 });
 
 export default handler;
