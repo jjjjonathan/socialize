@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
+import produce from 'immer';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
@@ -57,12 +58,20 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
 
   const handleNewComment = async ({ newComment }) => {
     try {
-      await axios.post(`/api/post/${post.id}/add-comment`, {
-        body: newComment,
-      });
+      const savedComment = await axios.post(
+        `/api/post/${post.id}/add-comment`,
+        {
+          body: newComment,
+        },
+      );
       toast.success('Comment added!');
       setNewCommentOpen(false);
-      setComments();
+
+      const nextState = produce(comments, (draft) => {
+        draft.comments.push(savedComment);
+      });
+
+      setComments(nextState);
       setCommentsOpen(true);
     } catch (error) {
       console.error(error);

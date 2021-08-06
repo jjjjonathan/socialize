@@ -21,7 +21,11 @@ handler.post(async (req, res) => {
 
   await comment.save();
 
-  return res.json(comment);
+  const populatedComment = await comment
+    .populate('user', 'name username profilePicture')
+    .execPopulate();
+
+  return res.json(populatedComment);
 });
 
 export default handler;
