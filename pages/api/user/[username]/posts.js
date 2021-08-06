@@ -13,10 +13,13 @@ handler.get(async (req, res) => {
     options: {
       sort: '-timestamp',
     },
-    populate: {
-      path: 'user',
-      select: 'name username profilePicture',
-    },
+    populate: [
+      {
+        path: 'user',
+        select: 'name username profilePicture',
+      },
+      { path: 'commentCount' },
+    ],
   });
 
   if (!posts) return res.status(404).json({ error: 'User not found' });
