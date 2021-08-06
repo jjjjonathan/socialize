@@ -120,3 +120,10 @@ $glass-card-radius: 15px;
 .circle {
   border-radius: 1000px;
 }
+
+.comment-textarea {
+  border-radius: $glass-card-radius;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: 12px 20px 48px 20px;
+}

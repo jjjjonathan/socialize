@@ -4,12 +4,16 @@
 
 .footerButtonGroup {
   width: 100%;
+  height: 38px;
 }
 
-.footerButtonLeft {
+.footerButton {
   width: 50%;
   font-size: 0.85em;
   border-width: 0;
+}
+
+.footerButtonLeft {
   border-top-left-radius: 0;
   border-bottom-left-radius: 15px;
   border-right-width: 3px;
@@ -17,11 +21,14 @@
 }
 
 .footerButtonRight {
-  width: 50%;
-  font-size: 0.85em;
-  border-width: 0;
   border-top-right-radius: 0;
   border-bottom-right-radius: 15px;
+  transition: border-bottom-right-radius 0.2s;
+}
+
+.footerButtonOpen {
+  border-radius: 0 !important;
+  transition: border-radius 0.2s;
 }
 
 .pointer {
