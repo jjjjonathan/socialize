@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ButtonGroup, Button, Card } from 'react-bootstrap';
+import { ButtonGroup, Button, Card, Collapse } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -12,6 +12,7 @@ import LikesModal from './LikesModal';
 const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
   const [showModal, setShowModal] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
 
   useEffect(() => {
     if (post.likes.find((like) => like === currentUser.id)) {
@@ -86,16 +87,26 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           <hr />
           <div className="d-flex medium">
             <a
-              className={`text-dark ${styles.likeCount}`}
+              className={`text-dark ${styles.pointer}`}
               onClick={() => setShowModal(true)}
             >
               {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
             </a>
-            <div className="ml-auto">
+            <a
+              className={`ml-auto text-dark ${styles.pointer}`}
+              onClick={() => setCommentsOpen(!commentsOpen)}
+              aria-expanded={commentsOpen}
+              aria-controls="collapse-comments"
+            >
               {post.commentCount}{' '}
               {post.commentCount === 1 ? 'Comment' : 'Comments'}
-            </div>
+            </a>
           </div>
+          <Collapse in={commentsOpen}>
+            <div id="collapse-comments">
+              <p>Comments here</p>
+            </div>
+          </Collapse>
         </Card.Body>
         <Card.Footer className="p-0">
           <ButtonGroup className={styles.footerButtonGroup}>
