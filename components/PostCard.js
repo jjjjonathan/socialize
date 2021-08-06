@@ -91,7 +91,10 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
             >
               {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
             </a>
-            <div className="ml-auto">0 Comments</div>
+            <div className="ml-auto">
+              {post.commentCount}{' '}
+              {post.commentCount === 1 ? 'Comment' : 'Comments'}
+            </div>
           </div>
         </Card.Body>
         <Card.Footer className="p-0">
