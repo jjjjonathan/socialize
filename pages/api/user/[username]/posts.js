@@ -6,6 +6,8 @@ const handler = nc();
 handler.use(middleware);
 
 handler.get(async (req, res) => {
+  if (!req.user) return res.status(401).end();
+
   const { username } = req.query;
 
   const posts = await User.findOne({ username }, 'posts').populate({
