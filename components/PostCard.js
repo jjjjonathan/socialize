@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
-import produce from 'immer';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
@@ -20,6 +19,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
   const [showModal, setShowModal] = useState(false);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [newCommentOpen, setNewCommentOpen] = useState(false);
+  const [commentCount, setCommentCount] = useState(0);
 
   const { comments, isCommentsError, isCommentsLoading, setComments } =
     useComments(post.id);
@@ -28,7 +28,8 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
     if (post.likes.find((like) => like === currentUser.id)) {
       setLikeStatus('liked');
     }
-  }, [post]);
+    setCommentCount(post.commentCount);
+  }, []);
 
   const handleLike = async () => {
     if (likeStatus === 'default') {
@@ -56,23 +57,20 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
     }
   };
 
-  const handleNewComment = async ({ newComment }) => {
+  const handleNewComment = async ({ newComment }, { resetForm }) => {
     try {
-      const savedComment = await axios.post(
-        `/api/post/${post.id}/add-comment`,
-        {
-          body: newComment,
-        },
-      );
-      toast.success('Comment added!');
-      setNewCommentOpen(false);
-
-      const nextState = produce(comments, (draft) => {
-        draft.comments.push(savedComment);
+      const response = await axios.post(`/api/post/${post.id}/add-comment`, {
+        body: newComment,
       });
+      const savedComment = response.data;
 
-      setComments(nextState);
+      setNewCommentOpen(false);
+      setCommentCount(commentCount + 1);
+      setComments([...comments, savedComment]);
       setCommentsOpen(true);
+      resetForm();
+
+      toast.success('Comment added!');
     } catch (error) {
       console.error(error);
       toast.error('Could not add new comment!');
@@ -103,7 +101,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
   };
 
   const commentText = () => {
-    if (post.commentCount > 0)
+    if (commentCount > 0)
       return (
         <a
           className={`ml-auto text-dark ${styles.pointer}`}
@@ -111,7 +109,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           aria-expanded={commentsOpen}
           aria-controls="collapse-comments"
         >
-          {post.commentCount} {post.commentCount === 1 ? 'Comment' : 'Comments'}
+          {commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}
         </a>
       );
 
@@ -171,7 +169,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
                 {likeText()}
                 {commentText()}
               </div>
-              {post.commentCount ? (
+              {commentCount ? (
                 <Collapse in={commentsOpen}>
                   <div id="collapse-comments">
                     <Comments
