@@ -1,30 +1,38 @@
 import Link from 'next/link';
 import Image from './Image';
 import useComments from '../hooks/useComments';
+import FlatSpinner from './FlatSpinner';
+import FlatAlert from './FlatAlert';
 
 const Comments = ({ postId }) => {
-  const { comments, isCommentsError, isCommentsLoading, setComments } =
-    useComments(postId);
+  const { comments, isCommentsError, isCommentsLoading } = useComments(postId);
 
-  return (
-    <div>
-      {comments.map((comment) => (
-        <div className="d-flex align-items-center mb-2" key={comment.id}>
+  const innards = () => {
+    if (isCommentsLoading) return <FlatSpinner />;
+    if (isCommentsError)
+      return <FlatAlert type="error">Could not load comments</FlatAlert>;
+
+    return comments.map((comment) => (
+      <div key={comment.id}>
+        <div className="d-flex align-items-center mb-2">
           <Image
-            publicId={comment.profilePicture}
-            size="40"
+            publicId={comment.user.profilePicture}
+            size="30"
             variant="circle"
-            profilePicName={comment.name}
-            href={`/profile/${comment.username}`}
+            profilePicName={comment.user.name}
+            href={`/profile/${comment.user.username}`}
             layout="fixed"
           />
-          <Link href={`/profile/${comment.username}`} passHref>
-            <a className={`h6 ml-3 mb-1 text-dark`}>{comment.name}</a>
+          <Link href={`/profile/${comment.user.username}`} passHref>
+            <a className="ml-3 mb-1 text-dark">{comment.user.name}</a>
           </Link>
         </div>
-      ))}
-    </div>
-  );
+        <div>{comment.body}</div>
+      </div>
+    ));
+  };
+
+  return <div className="d-flex align-items-center">{innards()}</div>;
 };
 
 export default Comments;
