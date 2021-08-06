@@ -47,6 +47,36 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
     }
   };
 
+  const likeText = () => {
+    if (post.likes.length > 0)
+      return (
+        <a
+          className={`text-dark ${styles.pointer}`}
+          onClick={() => setShowModal(true)}
+        >
+          {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
+        </a>
+      );
+
+    return <p className="text-dark mb-0">0 Likes</p>;
+  };
+
+  const commentText = () => {
+    if (post.commentCount > 0)
+      return (
+        <a
+          className={`ml-auto text-dark ${styles.pointer}`}
+          onClick={() => setCommentsOpen(!commentsOpen)}
+          aria-expanded={commentsOpen}
+          aria-controls="collapse-comments"
+        >
+          {post.commentCount} {post.commentCount === 1 ? 'Comment' : 'Comments'}
+        </a>
+      );
+
+    return <p className="ml-auto text-dark mb-0">0 Comments</p>;
+  };
+
   const likeButtonInnards = () => {
     switch (likeStatus) {
       case 'liking':
@@ -87,27 +117,16 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           {post.body}
           <hr />
           <div className="d-flex medium">
-            <a
-              className={`text-dark ${styles.pointer}`}
-              onClick={() => setShowModal(true)}
-            >
-              {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
-            </a>
-            <a
-              className={`ml-auto text-dark ${styles.pointer}`}
-              onClick={() => setCommentsOpen(!commentsOpen)}
-              aria-expanded={commentsOpen}
-              aria-controls="collapse-comments"
-            >
-              {post.commentCount}{' '}
-              {post.commentCount === 1 ? 'Comment' : 'Comments'}
-            </a>
+            {likeText()}
+            {commentText()}
           </div>
-          <Collapse in={commentsOpen}>
-            <div id="collapse-comments">
-              <Comments postId={post.id} />
-            </div>
-          </Collapse>
+          {post.commentCount ? (
+            <Collapse in={commentsOpen}>
+              <div id="collapse-comments">
+                <Comments postId={post.id} />
+              </div>
+            </Collapse>
+          ) : null}
         </Card.Body>
         <Card.Footer className="p-0">
           <ButtonGroup className={styles.footerButtonGroup}>
