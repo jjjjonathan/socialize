@@ -1,3 +1,4 @@
+import Comments from '../components/Comments';
 import FriendRequest from '../components/FriendRequest';
 import Image from '../components/Image';
 import ProfileFriendButton from '../components/ProfileFriendButton';
@@ -22,19 +23,13 @@ const Test = () => (
       <div
         style={{
           background: 'lightgray',
-          width: 250,
-          height: 120,
+          width: 400,
+          height: 200,
         }}
       >
-        <FriendRequest friendReq={friendReq} />
+        <Comments postId="6105caa6956ef480c3d03fb0" />
+        {/* <FriendRequest friendReq={friendReq} /> */}
       </div>
-      <Image
-        publicId="yqayu565erhm66q6c5hz"
-        alt="Profile picture"
-        variant="circle"
-        size="200"
-      />
-      <ProfileFriendButton friendStatus="friends" />
     </div>
   </>
 );

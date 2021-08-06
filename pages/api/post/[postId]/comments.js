@@ -6,7 +6,7 @@ const handler = nc();
 handler.use(middleware);
 
 handler.get(async (req, res) => {
-  if (!req.user) return res.status(401).end();
+  // if (!req.user) return res.status(401).end();
 
   const { postId } = req.query;
 
