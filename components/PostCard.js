@@ -12,12 +12,16 @@ import styles from './PostCard.module.css';
 import FlatSpinner from './FlatSpinner';
 import LikesModal from './LikesModal';
 import Comments from './Comments';
+import useComments from '../hooks/useComments';
 
 const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
   const [showModal, setShowModal] = useState(false);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [newCommentOpen, setNewCommentOpen] = useState(false);
+
+  const { comments, isCommentsError, isCommentsLoading, setComments } =
+    useComments(post.id);
 
   useEffect(() => {
     if (post.likes.find((like) => like === currentUser.id)) {
@@ -53,11 +57,13 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
 
   const handleNewComment = async ({ newComment }) => {
     try {
-      await axios.post(`/api/post/${post.id}/new-comment`, {
+      await axios.post(`/api/post/${post.id}/add-comment`, {
         body: newComment,
       });
-
       toast.success('Comment added!');
+      setNewCommentOpen(false);
+      setComments();
+      setCommentsOpen(true);
     } catch (error) {
       console.error(error);
       toast.error('Could not add new comment!');
@@ -159,7 +165,11 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
               {post.commentCount ? (
                 <Collapse in={commentsOpen}>
                   <div id="collapse-comments">
-                    <Comments postId={post.id} />
+                    <Comments
+                      comments={comments}
+                      isCommentsError={isCommentsError}
+                      isCommentsLoading={isCommentsLoading}
+                    />
                   </div>
                 </Collapse>
               ) : null}
@@ -206,14 +216,13 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
                       }`}
                       placeholder="Add new comment..."
                       name="newComment"
-                      id="newComment"
                       value={values.newComment}
                       onChange={handleChange}
                     />
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="new-post-submit-button medium"
+                      className="new-post-submit-button"
                       style={{
                         width: 38,
                         height: 24,

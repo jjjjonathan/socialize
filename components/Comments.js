@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import Image from './Image';
-import useComments from '../hooks/useComments';
 import FlatSpinner from './FlatSpinner';
 import FlatAlert from './FlatAlert';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './Comments.module.css';
 
-const Comments = ({ postId }) => {
-  const { comments, isCommentsError, isCommentsLoading } = useComments(postId);
-
+const Comments = ({ comments, isCommentsLoading, isCommentsError }) => {
   if (isCommentsLoading)
     return (
       <div className="mt-4 d-flex justify-content-center">
