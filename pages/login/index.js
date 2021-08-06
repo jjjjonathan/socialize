@@ -126,7 +126,7 @@ const Login = () => {
             </Button>
           </Link>
           <Button variant="outline-dark" className="mt-2 auth-button">
-            Log in with Google
+            Log in as Example User
           </Button>
           <Link href="/signup" passHref>
             <Button variant="outline-dark" className="mt-2 auth-button" as="a">
