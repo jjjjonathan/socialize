@@ -1,7 +1,5 @@
 import Comments from '../components/Comments';
 import FriendRequest from '../components/FriendRequest';
-import Image from '../components/Image';
-import ProfileFriendButton from '../components/ProfileFriendButton';
 
 const friendReq = {
   user: {
@@ -28,7 +26,7 @@ const Test = () => (
         }}
       >
         <Comments postId="6105caa6956ef480c3d03fb0" />
-        {/* <FriendRequest friendReq={friendReq} /> */}
+        <FriendRequest friendReq={friendReq} />
       </div>
     </div>
   </>

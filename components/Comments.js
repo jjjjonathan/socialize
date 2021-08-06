@@ -11,13 +11,13 @@ const Comments = ({ postId }) => {
 
   if (isCommentsLoading)
     return (
-      <div className="d-flex justify-content-center">
+      <div className="mt-4 d-flex justify-content-center">
         <FlatSpinner />
       </div>
     );
   if (isCommentsError)
     return (
-      <div className="text-center">
+      <div className="mt-4 text-center">
         <FlatAlert type="error">Could not load comments</FlatAlert>
       </div>
     );
