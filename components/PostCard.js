@@ -8,6 +8,7 @@ import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
 import FlatSpinner from './FlatSpinner';
 import LikesModal from './LikesModal';
+import Comments from './Comments';
 
 const PostCard = ({ post, updateLikes, currentUser }) => {
   const [likeStatus, setLikeStatus] = useState('default');
@@ -104,7 +105,7 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
           </div>
           <Collapse in={commentsOpen}>
             <div id="collapse-comments">
-              <p>Comments here</p>
+              <Comments postId={post.id} />
             </div>
           </Collapse>
         </Card.Body>
