@@ -1,6 +1,7 @@
 import middleware from '../middleware';
 import Layout from '../components/Layout';
 import ProfilePictureUpload from '../components/ProfilePictureUpload';
+import AboutMeUpdate from '../components/AboutMeUpdate';
 
 export async function getServerSideProps({ req, res }) {
   await middleware.run(req, res);
@@ -33,6 +34,8 @@ const Settings = ({ currentUser }) => (
         <h3 className="h4 mb-4">Profile</h3>
         <h4 className="h6 mb-3">Profile Picture</h4>
         <ProfilePictureUpload currentUser={currentUser} />
+        <h4 className="h6 mb-3 mt-4">About Me</h4>
+        <AboutMeUpdate />
       </div>
     </div>
   </Layout>
