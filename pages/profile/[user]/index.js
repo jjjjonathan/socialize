@@ -169,8 +169,14 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
               <h4 className="h5 mb-0">About me</h4>
             </Card.Header>
             <Card.Body>
-              <p className="my-0">
-                socializing since {monthYear(profile.userSince)}
+              {profile.bio ? (
+                <>
+                  <p>{profile.bio}</p>
+                  <hr />
+                </>
+              ) : null}
+              <p className="my-0 medium">
+                Member since {monthYear(profile.userSince)}
               </p>
             </Card.Body>
           </Card>
