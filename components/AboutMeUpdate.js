@@ -6,7 +6,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import FlatSpinner from './FlatSpinner';
 
-const AboutMeUpdate = ({ currentUser }) => {
+const AboutMeUpdate = ({ originalBio }) => {
   const handleUpdateBio = async ({ bio }) => {
     try {
       await axios.post('/api/user/bio', { bio });
@@ -23,7 +23,7 @@ const AboutMeUpdate = ({ currentUser }) => {
 
   return (
     <Formik
-      initialValues={{ bio: currentUser.bio || '' }}
+      initialValues={{ bio: originalBio || '' }}
       validationSchema={validationSchema}
       onSubmit={handleUpdateBio}
     >
