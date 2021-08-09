@@ -6,11 +6,10 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import FlatSpinner from './FlatSpinner';
 
-const AboutMeUpdate = () => {
+const AboutMeUpdate = ({ currentUser }) => {
   const handleUpdateBio = async ({ bio }) => {
     try {
       await axios.post('/api/user/bio', { bio });
-
       toast.success('Successfully updated About Me!');
     } catch (error) {
       console.error(error);
@@ -24,7 +23,7 @@ const AboutMeUpdate = () => {
 
   return (
     <Formik
-      initialValues={{ bio: '' }}
+      initialValues={{ bio: currentUser.bio || '' }}
       validationSchema={validationSchema}
       onSubmit={handleUpdateBio}
     >
@@ -38,7 +37,7 @@ const AboutMeUpdate = () => {
                   minRows={3}
                   maxRows={12}
                   className={`glass-card-textarea ${
-                    errors.newPost && touched.newPost ? 'is-invalid' : null
+                    errors.bio && touched.bio ? 'is-invalid' : null
                   }`}
                   placeholder="About Me"
                   name="bio"
@@ -50,12 +49,12 @@ const AboutMeUpdate = () => {
                   type="submit"
                   disabled={isSubmitting}
                   className="new-post-submit-button"
-                  style={{ width: 38, height: 24, boxSizing: 'content-box' }}
+                  style={{ width: 62, height: 24, boxSizing: 'content-box' }}
                 >
                   {isSubmitting ? (
                     <FlatSpinner
                       size="18"
-                      style={{ marginTop: '-3px', marginLeft: '-8px' }}
+                      style={{ marginTop: '-3px', marginLeft: '5px' }}
                     />
                   ) : (
                     'Update'

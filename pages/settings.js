@@ -35,7 +35,7 @@ const Settings = ({ currentUser }) => (
         <h4 className="h6 mb-3">Profile Picture</h4>
         <ProfilePictureUpload currentUser={currentUser} />
         <h4 className="h6 mb-3 mt-4">About Me</h4>
-        <AboutMeUpdate />
+        <AboutMeUpdate currentUser={currentUser} />
       </div>
     </div>
   </Layout>
