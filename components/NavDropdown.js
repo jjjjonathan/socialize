@@ -1,10 +1,9 @@
 import React from 'react';
 import { Dropdown, Button } from 'react-bootstrap';
-import styles from './NavDropdown.module.css';
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Button
-    className={styles.button}
+    className="circle-button"
     variant="outline-dark"
     ref={ref}
     onClick={(e) => {

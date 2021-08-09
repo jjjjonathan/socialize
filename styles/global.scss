@@ -127,3 +127,24 @@ $glass-card-radius: 15px;
   border-top-right-radius: 0;
   padding: 12px 20px 48px 20px;
 }
+
+.circle-button {
+  font-size: 1.5em;
+  text-align: center;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  border-width: 0;
+}
+
+.circle-button-small {
+  font-size: 1em;
+  text-align: center;
+  padding: 0;
+  padding-top: 3px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  border-width: 0;
+}

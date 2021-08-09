@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Button } from 'react-bootstrap';
+import Link from 'next/link';
 import produce from 'immer';
 import Image from '../../../components/Image';
 import middleware from '../../../middleware';
@@ -165,17 +166,28 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
       <Row>
         <Col md={{ span: 4 }}>
           <Card className="gradient-glass-card mb-4">
-            <Card.Header>
+            <Card.Header className="d-flex">
               <h4 className="h5 mb-0">About me</h4>
+              {isOwnProfile && (
+                <Link href="/settings" passHref>
+                  <Button
+                    variant="outline-dark"
+                    as="a"
+                    className="ml-auto circle-button-small"
+                  >
+                    <i className="bi bi-pencil-fill"></i>
+                  </Button>
+                </Link>
+              )}
             </Card.Header>
             <Card.Body>
-              {profile.bio ? (
+              {profile.bio && (
                 <>
                   <p>{profile.bio}</p>
                   <hr />
                 </>
-              ) : null}
-              <p className="my-0 medium">
+              )}
+              <p className="my-0 medium text-center">
                 Member since {monthYear(profile.userSince)}
               </p>
             </Card.Body>
