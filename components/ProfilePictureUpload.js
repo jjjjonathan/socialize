@@ -54,19 +54,28 @@ const ProfilePictureUpload = ({ currentUser }) => {
         </Button>
       </div>
       <Collapse in={changeOpen}>
-        <div id="collapse-change-profile-picture">
-          <form onSubmit={handleSubmit} className="medium">
-            <input
-              type="file"
-              name="profilePicture"
-              accept="image/png, image/jpeg"
-              onChange={onFileChange}
-              required
-            />
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? <FlatSpinner size="20" /> : 'Submit'}
-            </Button>
-          </form>
+        <div>
+          <div
+            id="collapse-change-profile-picture"
+            className="bg-light p-4 mt-3"
+            style={{ borderRadius: 10 }}
+          >
+            <form
+              onSubmit={handleSubmit}
+              className="medium d-flex align-items-center"
+            >
+              <input
+                type="file"
+                name="profilePicture"
+                accept="image/png, image/jpeg"
+                onChange={onFileChange}
+                required
+              />
+              <Button type="submit" disabled={isSubmitting} className="ml-auto">
+                {isSubmitting ? <FlatSpinner size="20" /> : 'Submit'}
+              </Button>
+            </form>
+          </div>
         </div>
       </Collapse>
     </>

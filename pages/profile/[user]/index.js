@@ -153,7 +153,7 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
           <h2 className="mb-1">{profile.name}</h2>
           <h3 className="text-muted h6">@{user}</h3>
         </div>
-        {!isOwnProfile ? (
+        {!isOwnProfile && (
           <ProfileFriendButton
             username={profile.username}
             name={profile.name}
@@ -161,7 +161,7 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
             className="ml-auto"
             friendStatus={friendStatus}
           />
-        ) : null}
+        )}
       </div>
       <Row>
         <Col md={{ span: 4 }}>
