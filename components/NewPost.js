@@ -7,10 +7,11 @@ import toast from 'react-hot-toast';
 import FlatSpinner from './FlatSpinner';
 
 const NewPost = ({ addNewPostToFeed }) => {
-  const handleNewPost = async ({ newPost }) => {
+  const handleNewPost = async ({ newPost }, { resetForm }) => {
     try {
       const { data } = await axios.post('/api/post', { body: newPost });
       addNewPostToFeed(data);
+      resetForm();
       toast.success('Posted!');
     } catch (error) {
       console.error(error);
