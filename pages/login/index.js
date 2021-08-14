@@ -35,10 +35,13 @@ const Login = () => {
     try {
       setIsError(false);
       setIsLoggingIn(true);
-      await axios.post('/api/auth/login', {
+      const { data } = await axios.post('/api/auth/login', {
         username,
         password,
       });
+      if (!data.isEmailVerified) {
+        router.push('/verify-email');
+      }
       router.push('/');
     } catch (error) {
       setIsLoggingIn(false);
