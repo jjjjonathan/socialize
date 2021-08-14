@@ -33,7 +33,7 @@ handler.post(async (req, res) => {
       <h3>Hello, ${req.user.name}!</h3>
       <p>Please follow the link below to confirm your email:</p>
       <p><a href="${verificationLink}">${verificationLink}</a></p>
-      <p>The above link will expire in twenty minutes.</p>
+      <p>The above link will expire in 20 minutes.</p>
     </div>
     `,
   });

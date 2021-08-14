@@ -49,7 +49,14 @@ const VerifyEmail = ({ email }) => {
   const innards = () => {
     switch (status) {
       case 'sent':
-        return <Alert>Verification email sent to {email}!</Alert>;
+        return (
+          <Alert>
+            <p>Verification email sent to {email}!</p>
+            <p className="medium mb-0">
+              Verification link will expire in 20 minutes.
+            </p>
+          </Alert>
+        );
       case 'error':
         return <Alert type="error">Could not send verification email!</Alert>;
       default:
