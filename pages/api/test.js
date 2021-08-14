@@ -1,25 +1,33 @@
-import { nanoid } from 'nanoid';
 import nc from 'next-connect';
 import middleware from '../../middleware';
-import sendEmail from '../../utils/sendEmail';
+import { defaultDate } from '../../utils/dateHelpers';
 
 const handler = nc();
 handler.use(middleware);
 
 handler.get(async (req, res) => {
-  // const email = {
-  //   to: 'hornathanjon@gmail.com',
-  //   from: 'jonathanhorn000@gmail.com',
-  //   subject: 'Sending with SendGrid is Fun',
-  //   text: 'and easy to do anywhere, even with Node.js',
-  //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-  // };
+  const origDate = Date.now();
+  const datePlusTwenty = origDate + 1000 * 60 * 20;
 
-  // await sendEmail(email);
+  const formatOrig = defaultDate(origDate);
+  const formatTwenty = defaultDate(datePlusTwenty);
 
-  // res.status(204).end();
+  const other = +new Date();
+  const otherPlusTwenty = other + 1000 * 60 * 20;
 
-  res.json({ weburi: process.env.WEB_URI });
+  const formatOther = defaultDate(other);
+  const formatOtherTwenty = defaultDate(otherPlusTwenty);
+
+  return res.json({
+    origDate,
+    datePlusTwenty,
+    formatOrig,
+    formatTwenty,
+    other,
+    otherPlusTwenty,
+    formatOther,
+    formatOtherTwenty,
+  });
 });
 
 export default handler;
