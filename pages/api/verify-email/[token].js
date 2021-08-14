@@ -11,7 +11,8 @@ handler.post(async (req, res) => {
 
   const tokenObject = await Token.findOne({ token });
 
-  if (!tokenObject) return res.status(400).end();
+  if (!tokenObject || tokenObject.type !== 'verifyEmail')
+    return res.status(400).end();
 
   const createdTime = +tokenObject.timestamp;
   const expiryTime = createdTime + 1000 * 60 * 20;
