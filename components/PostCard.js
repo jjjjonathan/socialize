@@ -20,6 +20,7 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [newCommentOpen, setNewCommentOpen] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
   const { comments, isCommentsError, isCommentsLoading, setComments } =
     useComments(post.id);
@@ -81,10 +82,13 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
 
   const handleDeletePost = async () => {
     try {
+      setDeleting(true);
       await axios.delete(`/api/post/${post.id}/delete`);
       removePostFromList(post.id);
       toast.success('Post deleted!');
+      setDeleting(false);
     } catch (error) {
+      setDeleting(false);
       console.error(error);
       toast.error('Could not delete post!');
     }
@@ -144,6 +148,25 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
     }
   };
 
+  const deleteButton = () => {
+    if (deleting)
+      return (
+        <div className="ml-auto" style={{ position: 'relative', top: -8 }}>
+          <FlatSpinner size="15" color="danger" />
+        </div>
+      );
+
+    return (
+      <Button
+        className="ml-auto circle-button-small"
+        variant="outline-danger"
+        onClick={handleDeletePost}
+      >
+        <i className="bi bi-trash"></i>
+      </Button>
+    );
+  };
+
   return (
     <Formik
       initialValues={{ newComment: '' }}
@@ -173,15 +196,7 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
                     posted {defaultDate(post.timestamp)}
                   </span>
                 </div>
-                {isOwnPost && (
-                  <Button
-                    className="ml-auto circle-button-small"
-                    variant="outline-danger"
-                    onClick={handleDeletePost}
-                  >
-                    <i className="bi bi-trash"></i>
-                  </Button>
-                )}
+                {isOwnPost && deleteButton()}
               </div>
             </Card.Header>
             <Card.Body>
