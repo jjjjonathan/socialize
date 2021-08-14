@@ -1,11 +1,19 @@
-import Link from 'next/link';
-import Image from './Image';
 import FlatSpinner from './FlatSpinner';
 import FlatAlert from './FlatAlert';
-import { defaultDate } from '../utils/dateHelpers';
-import styles from './Comments.module.css';
+import Comment from './Comment';
 
-const Comments = ({ comments, isCommentsLoading, isCommentsError }) => {
+const Comments = ({
+  comments,
+  isCommentsLoading,
+  isCommentsError,
+  setComments,
+  currentUser,
+}) => {
+  const removeCommentFromList = (commentId) => {
+    const nextState = comments.filter((comment) => comment.id !== commentId);
+    setComments(nextState);
+  };
+
   if (isCommentsLoading)
     return (
       <div className="mt-4 d-flex justify-content-center">
@@ -22,30 +30,12 @@ const Comments = ({ comments, isCommentsLoading, isCommentsError }) => {
   return (
     <div>
       {comments.map((comment) => (
-        <div key={comment.id} className="w-100 d-flex mt-3">
-          <Image
-            publicId={comment.user.profilePicture}
-            size="32"
-            variant="circle"
-            profilePicName={comment.user.name}
-            href={`/profile/${comment.user.username}`}
-            layout="fixed"
-          />
-          <div className={`w-100 ml-2 px-3 pt-2 pb-3 bg-light ${styles.body}`}>
-            <div>
-              <Link href={`/profile/${comment.user.username}`} passHref>
-                <a className={`h6 mb-1 text-dark ${styles.name}`}>
-                  {comment.user.name}
-                </a>
-              </Link>
-              <span className="text-muted small">
-                {' '}
-                posted {defaultDate(comment.timestamp)}
-              </span>
-            </div>
-            <p className="mb-0 medium">{comment.body}</p>
-          </div>
-        </div>
+        <Comment
+          comment={comment}
+          currentUser={currentUser}
+          removeCommentFromList={removeCommentFromList}
+          key={comment.id}
+        />
       ))}
     </div>
   );

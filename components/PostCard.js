@@ -213,6 +213,8 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
                       comments={comments}
                       isCommentsError={isCommentsError}
                       isCommentsLoading={isCommentsLoading}
+                      setComments={setComments}
+                      currentUser={currentUser}
                     />
                   </div>
                 </Collapse>
