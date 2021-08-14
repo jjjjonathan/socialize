@@ -43,6 +43,7 @@ const facebook = new FacebookStrategy(
             email: profile.emails[0].value,
             facebookId: profile.id,
             profilePicture,
+            isEmailVerified: true,
           });
           const savedNewUser = await newUser.save();
           return done(null, savedNewUser);
