@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import middleware from '../../middleware';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
 import Alert from '../../components/Alert';
 
-export async function getServerSideProps({ req, res, query }) {
-  await middleware.run(req, res);
-
-  const token = { query };
+export async function getServerSideProps({ query }) {
+  const { token } = query;
 
   return {
     props: { token },

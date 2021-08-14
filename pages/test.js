@@ -1,4 +1,3 @@
-import Comments from '../components/Comments';
 import FriendRequest from '../components/FriendRequest';
 
 const friendReq = {
@@ -25,7 +24,6 @@ const Test = () => (
           height: 200,
         }}
       >
-        <Comments postId="6105caa6956ef480c3d03fb0" />
         <FriendRequest friendReq={friendReq} />
       </div>
     </div>
