@@ -46,6 +46,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
   friends: [
     {
       timestamp: {
