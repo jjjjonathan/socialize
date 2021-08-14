@@ -34,7 +34,7 @@ const Signup = () => {
       setApiErrors([]);
       setIsSigningUp(true);
       await axios.post('/api/user', values);
-      router.push('/login');
+      router.push('/verify-email');
     } catch (error) {
       setIsSigningUp(false);
       if (error.response?.data?.errors) {

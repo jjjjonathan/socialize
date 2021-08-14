@@ -48,6 +48,7 @@ handler.post(
     return true;
   }),
 
+  // eslint-disable-next-line consistent-return
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -78,7 +79,10 @@ handler.post(
 
     const savedUser = await user.save();
 
-    return res.json(savedUser);
+    req.login(savedUser, (error) => {
+      if (error) throw error;
+      res.status(201).json(savedUser);
+    });
   },
 );
 

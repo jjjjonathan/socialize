@@ -27,7 +27,7 @@ export async function getServerSideProps({ req, res }) {
 
 const Login = () => {
   const router = useRouter();
-  console.log(router);
+
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isError, setIsError] = useState(false);
 
