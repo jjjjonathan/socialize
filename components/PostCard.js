@@ -215,6 +215,9 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
                       isCommentsLoading={isCommentsLoading}
                       setComments={setComments}
                       currentUser={currentUser}
+                      decreaseCommentCount={() =>
+                        setCommentCount(commentCount - 1)
+                      }
                     />
                   </div>
                 </Collapse>

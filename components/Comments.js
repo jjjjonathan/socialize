@@ -8,10 +8,12 @@ const Comments = ({
   isCommentsError,
   setComments,
   currentUser,
+  decreaseCommentCount,
 }) => {
   const removeCommentFromList = (commentId) => {
     const nextState = comments.filter((comment) => comment.id !== commentId);
     setComments(nextState);
+    decreaseCommentCount();
   };
 
   if (isCommentsLoading)

@@ -55,21 +55,25 @@ const Comment = ({ comment, currentUser, removeCommentFromList }) => {
         href={`/profile/${comment.user.username}`}
         layout="fixed"
       />
-      <div className={`w-100 ml-2 px-3 pt-2 pb-3 bg-light ${styles.body}`}>
+      <div
+        className={`d-flex w-100 ml-2 px-3 pt-2 pb-3 bg-light ${styles.body}`}
+      >
         <div>
-          <Link href={`/profile/${comment.user.username}`} passHref>
-            <a className={`h6 mb-1 text-dark ${styles.name}`}>
-              {comment.user.name}
-            </a>
-          </Link>
-          <span className="text-muted small">
-            {' '}
-            posted {defaultDate(comment.timestamp)}
-          </span>
+          <div>
+            <Link href={`/profile/${comment.user.username}`} passHref>
+              <a className={`h6 mb-1 text-dark ${styles.name}`}>
+                {comment.user.name}
+              </a>
+            </Link>
+            <span className="text-muted small">
+              {' '}
+              posted {defaultDate(comment.timestamp)}
+            </span>
+          </div>
+          <p className="mb-0 medium">{comment.body}</p>
         </div>
-        <p className="mb-0 medium">{comment.body}</p>
+        {isOwnComment && deleteButton()}
       </div>
-      {isOwnComment && deleteButton()}
     </div>
   );
 };
