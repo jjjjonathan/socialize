@@ -15,6 +15,7 @@ handler.post(async (req, res) => {
   const verificationToken = nanoid(32);
   const tokenObject = new Token({
     token: verificationToken,
+    type: 'verifyEmail',
     user: req.user.id,
   });
 
@@ -28,6 +29,7 @@ handler.post(async (req, res) => {
     to: req.user.email,
     from: process.env.EMAIL_FROM,
     subject: 'Please verify your email with socialize!',
+    text: `Hello, ${req.user.name}! Please follow this link to confirm your email: ${verificationLink} (Link will expire in 20 minutes)`,
     html: `
     <div>
       <h3>Hello, ${req.user.name}!</h3>
