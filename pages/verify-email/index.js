@@ -1,7 +1,9 @@
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import middleware from '../../middleware';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
+import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ req, res }) {
   await middleware.run(req, res);
@@ -24,17 +26,38 @@ export async function getServerSideProps({ req, res }) {
     };
   }
 
-  return { props: {} };
+  return {
+    props: {
+      email: req.user.email,
+    },
+  };
 }
 
-const VerifyEmail = () => {
-  const router = useRouter();
+const VerifyEmail = ({ email }) => {
+  const [status, setStatus] = useState('default');
 
-  return (
-    <Splash pageTitle="Verify Email">
-      <CircleSpinner size="70" />
-    </Splash>
-  );
+  useEffect(async () => {
+    try {
+      await axios.post('/api/verify-email');
+      setStatus('sent');
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+    }
+  }, []);
+
+  const innards = () => {
+    switch (status) {
+      case 'sent':
+        return <Alert>Verification email sent to {email}!</Alert>;
+      case 'error':
+        return <Alert type="error">Could not send verification email!</Alert>;
+      default:
+        return <CircleSpinner size="70" />;
+    }
+  };
+
+  return <Splash pageTitle="Verify Email">{innards()}</Splash>;
 };
 
 export default VerifyEmail;
