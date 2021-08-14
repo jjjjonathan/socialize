@@ -77,6 +77,7 @@ handler.post(
     });
 
     const savedUser = await user.save();
+
     return res.json(savedUser);
   },
 );

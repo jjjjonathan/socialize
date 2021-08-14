@@ -19,7 +19,7 @@ handler.get(async (req, res) => {
 
   // res.status(204).end();
 
-  res.json({ nanoid: nanoid(32) });
+  res.json({ weburi: process.env.WEB_URI });
 });
 
 export default handler;
