@@ -81,7 +81,7 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(`/api/post/${post.id}`);
+      await axios.delete(`/api/post/${post.id}/delete`);
       removePostFromList(post.id);
       toast.success('Post deleted!');
     } catch (error) {
