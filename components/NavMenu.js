@@ -46,7 +46,7 @@ const NavMenu = ({ currentUser }) => {
             <Link href={`/profile/${currentUser.username}`} passHref>
               <Navbar.Text
                 as="a"
-                className={`d-none d-md-block mx-3 text-dark ${styles.name}`}
+                className={`d-none d-md-block mx-3 text-dark mb-1 ${styles.name}`}
               >
                 {currentUser.name}
               </Navbar.Text>
@@ -57,13 +57,6 @@ const NavMenu = ({ currentUser }) => {
               id="friend-requests-dropdown"
             >
               <FriendRequestsMenu />
-            </NavDropdown>
-            <NavDropdown
-              className="ml-4"
-              icon="bi-bell-fill"
-              id="notifications-dropdown"
-            >
-              <p>Content</p>
             </NavDropdown>
             <NavDropdown
               className="ml-4"
