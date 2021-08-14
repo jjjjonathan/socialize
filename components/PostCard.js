@@ -14,7 +14,7 @@ import LikesModal from './LikesModal';
 import Comments from './Comments';
 import useComments from '../hooks/useComments';
 
-const PostCard = ({ post, updateLikes, currentUser }) => {
+const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
   const [likeStatus, setLikeStatus] = useState('default');
   const [showModal, setShowModal] = useState(false);
   const [commentsOpen, setCommentsOpen] = useState(false);
@@ -30,6 +30,8 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
     }
     setCommentCount(post.commentCount);
   }, []);
+
+  const isOwnPost = post.user.id === currentUser.id;
 
   const handleLike = async () => {
     if (likeStatus === 'default') {
@@ -74,6 +76,17 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
     } catch (error) {
       console.error(error);
       toast.error('Could not add new comment!');
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      await axios.delete(`/api/post/${post.id}`);
+      removePostFromList(post.id);
+      toast.success('Post deleted!');
+    } catch (error) {
+      console.error(error);
+      toast.error('Could not delete post!');
     }
   };
 
@@ -160,6 +173,15 @@ const PostCard = ({ post, updateLikes, currentUser }) => {
                     posted {defaultDate(post.timestamp)}
                   </span>
                 </div>
+                {isOwnPost && (
+                  <Button
+                    className="ml-auto circle-button-small"
+                    variant="outline-danger"
+                    onClick={handleDeletePost}
+                  >
+                    <i className="bi bi-trash"></i>
+                  </Button>
+                )}
               </div>
             </Card.Header>
             <Card.Body>

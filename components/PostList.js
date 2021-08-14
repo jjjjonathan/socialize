@@ -1,7 +1,7 @@
 import FlatAlert from './FlatAlert';
 import PostCard from './PostCard';
 
-const PostList = ({ posts, updateLikes, currentUser }) => {
+const PostList = ({ posts, updateLikes, currentUser, removePostFromList }) => {
   if (posts.length === 0)
     return <FlatAlert className="text-center mt-3">No posts to show</FlatAlert>;
 
@@ -13,6 +13,7 @@ const PostList = ({ posts, updateLikes, currentUser }) => {
           post={post}
           updateLikes={updateLikes}
           currentUser={currentUser}
+          removePostFromList={removePostFromList}
         />
       ))}
     </>

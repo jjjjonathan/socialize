@@ -79,6 +79,11 @@ const Home = ({ currentUser }) => {
     setNewsfeed(nextState);
   };
 
+  const removePostFromFeed = (postId) => {
+    const nextState = newsfeed.filter((post) => post.id !== postId);
+    setNewsfeed(nextState);
+  };
+
   const updateLikes = (postId, likes) => {
     const nextState = newsfeed.map((post) => {
       if (post.id === postId) {
@@ -111,6 +116,7 @@ const Home = ({ currentUser }) => {
         posts={newsfeed}
         updateLikes={updateLikes}
         currentUser={currentUser}
+        removePostFromList={removePostFromFeed}
       />
     );
   };
