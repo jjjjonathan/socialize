@@ -39,10 +39,12 @@ const Login = () => {
         username,
         password,
       });
+      console.log('DATA', data);
       if (!data.isEmailVerified) {
         router.push('/verify-email');
+      } else {
+        router.push('/');
       }
-      router.push('/');
     } catch (error) {
       setIsLoggingIn(false);
       console.error(error);
