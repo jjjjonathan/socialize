@@ -14,6 +14,9 @@ const TokenSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  type: {
+    type: 'String',
+  },
 });
 
 /* eslint-disable no-param-reassign */
