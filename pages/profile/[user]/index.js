@@ -101,6 +101,14 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
     setPostsByUser(nextState);
   };
 
+  const removePostFromFeed = (postId) => {
+    const nextState = {
+      ...postsByUser,
+      posts: postsByUser.posts.filter((post) => post.id !== postId),
+    };
+    setPostsByUser(nextState);
+  };
+
   const updateLikes = (postId, likes) => {
     const nextState = {
       ...postsByUser,
@@ -135,6 +143,7 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
         posts={postsByUser.posts}
         updateLikes={updateLikes}
         currentUser={currentUser}
+        removePostFromList={removePostFromFeed}
       />
     );
   };
