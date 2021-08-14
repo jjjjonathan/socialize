@@ -23,7 +23,7 @@ handler.post(async (req, res) => {
 
   // Send verification email
 
-  const verificationLink = `${process.env.WEB_URI}/verify-email/${verificationToken}`;
+  const verificationLink = `${process.env.WEB_URI}/change-password/${verificationToken}`;
 
   await sendEmail({
     to: req.user.email,

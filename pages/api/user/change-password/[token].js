@@ -1,6 +1,7 @@
 import nc from 'next-connect';
 import middleware from '../../../../middleware';
 import Token from '../../../../models/Token';
+import User from '../../../../models/User';
 
 const handler = nc();
 handler.use(middleware);
@@ -21,7 +22,9 @@ handler.post(async (req, res) => {
     return res.status(401).json({ error: 'expired' });
   }
 
-  return res.status(200).json({ success: 'verified' });
+  const user = await User.findById(tokenObject.user);
+
+  return res.status(200).json(user);
 });
 
 export default handler;
