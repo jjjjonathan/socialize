@@ -21,6 +21,7 @@ const ChangePassword = ({ token }) => {
 
   const [status, setStatus] = useState('default');
   const [user, setUser] = useState({});
+  const [apiErrors, setApiErrors] = useState([]);
 
   useEffect(async () => {
     try {
@@ -39,20 +40,22 @@ const ChangePassword = ({ token }) => {
 
   const handleSubmit = async ({ password, passwordConf }) => {
     try {
-      // setApiErrors([]);
+      setStatus('changing');
+      setApiErrors([]);
       await axios.post('/api/user/change-password', {
         password,
         passwordConf,
         email: user.email,
       });
-      // Successful change message
+      setStatus('changed');
       setTimeout(() => {
         router.push('/login');
       }, 3000);
     } catch (error) {
-      // if (error.response?.data?.errors) {
-      //   setApiErrors(error.response.data.errors);
-      // }
+      setStatus('verified');
+      if (error.response?.data?.errors) {
+        setApiErrors(error.response.data.errors);
+      }
       console.error(error);
     }
   };
@@ -64,8 +67,23 @@ const ChangePassword = ({ token }) => {
       .oneOf([yup.ref('password'), null], 'Passwords must match'),
   });
 
+  const alert = () => {
+    if (apiErrors.length !== 0)
+      return (
+        <Alert type="error">
+          <ul className="mb-0">
+            {apiErrors.map((error, index) => (
+              <li key={index}>{error.msg}</li>
+            ))}
+          </ul>
+        </Alert>
+      );
+    return null;
+  };
+
   const passwordForm = () => (
     <div className="auth-form">
+      {alert()}
       <p>Email address: {user.email}</p>
       <p>Username: {user.username}</p>
       <Formik
@@ -135,6 +153,15 @@ const ChangePassword = ({ token }) => {
         );
       case 'invalid':
         return <Alert type="error">Invalid request</Alert>;
+      case 'changing':
+        return <CircleSpinner size="70" />;
+      case 'changed':
+        return (
+          <Alert>
+            <p>Password successfully changed!</p>
+            <p className="mb-0">Redirecting to login page...</p>
+          </Alert>
+        );
       default:
         return <CircleSpinner size="70" />;
     }
