@@ -84,8 +84,12 @@ const ChangePassword = ({ token }) => {
   const passwordForm = () => (
     <div className="auth-form">
       {alert()}
-      <p>Email address: {user.email}</p>
-      <p>Username: {user.username}</p>
+      <p className="medium">
+        <strong>Email address:</strong> {user.email}
+      </p>
+      <p className="medium">
+        <strong>Username:</strong> {user.username}
+      </p>
       <Formik
         initialValues={{
           password: '',
@@ -159,7 +163,7 @@ const ChangePassword = ({ token }) => {
         return (
           <Alert>
             <p>Password successfully changed!</p>
-            <p className="mb-0">Redirecting to login page...</p>
+            <p className="mb-0">Redirecting...</p>
           </Alert>
         );
       default:
