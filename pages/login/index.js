@@ -125,6 +125,12 @@ const Login = () => {
             )}
           </Formik>
 
+          <div className="text-center my-2">
+            <Link href="/change-password/forgot" passHref>
+              <a className="small text-dark">Forgot your password?</a>
+            </Link>
+          </div>
+
           <Link href="/api/auth/facebook" passHref>
             <Button variant="outline-dark" className="mt-4 auth-button" as="a">
               Log in with Facebook
