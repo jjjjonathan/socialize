@@ -52,10 +52,32 @@ handler.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log(errors.array());
       return res.status(400).json({ errors: errors.array() });
     }
 
     const { name, email, username, password } = req.body;
+
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail)
+      return res.status(400).json({
+        errors: [
+          {
+            msg: `User already exists with email address ${email} Try logging in or use a different email.`,
+          },
+        ],
+      });
+
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername)
+      return res.status(400).json({
+        errors: [
+          {
+            msg: `Username ${username} is already in use. Try something different!`,
+          },
+        ],
+      });
+
     const passwordHash = await bcrypt.hash(password, 11);
 
     const image = await cloudinary.uploader.upload(
