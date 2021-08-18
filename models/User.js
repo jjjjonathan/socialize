@@ -44,6 +44,8 @@ const UserSchema = new mongoose.Schema({
   },
   bio: {
     type: String,
+    minLength: 3,
+    maxLength: 1000,
     required: false,
   },
   isEmailVerified: {
