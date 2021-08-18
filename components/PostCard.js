@@ -200,7 +200,7 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
               </div>
             </Card.Header>
             <Card.Body>
-              {post.body}
+              <div dangerouslySetInnerHTML={{ __html: post.body }}></div>
               <hr />
               <div className="d-flex medium">
                 {likeText()}
