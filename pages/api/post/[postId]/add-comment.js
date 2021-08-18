@@ -1,3 +1,4 @@
+import { body as validate, validationResult } from 'express-validator';
 import nc from 'next-connect';
 import middleware from '../../../../middleware';
 import Comment from '../../../../models/Comment';
@@ -5,27 +6,37 @@ import Comment from '../../../../models/Comment';
 const handler = nc();
 handler.use(middleware);
 
-handler.post(async (req, res) => {
-  if (!req.user) return res.status(401).end();
-  if (!req.body?.body) return res.status(400).end();
+handler.post(
+  validate('body')
+    .trim()
+    .isLength({ min: 1, max: 1000 })
+    .withMessage('Comments must be between 1 and 1000 characters')
+    .escape(),
 
-  const { postId } = req.query;
-  const userId = req.user.id;
-  const { body } = req.body;
+  async (req, res) => {
+    if (!req.user) return res.status(401).end();
 
-  const comment = new Comment({
-    body,
-    post: postId,
-    user: userId,
-  });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400);
 
-  await comment.save();
+    const { postId } = req.query;
+    const userId = req.user.id;
+    const { body } = req.body;
 
-  const populatedComment = await comment
-    .populate('user', 'name username profilePicture')
-    .execPopulate();
+    const comment = new Comment({
+      body,
+      post: postId,
+      user: userId,
+    });
 
-  return res.json(populatedComment);
-});
+    await comment.save();
+
+    const populatedComment = await comment
+      .populate('user', 'name username profilePicture')
+      .execPopulate();
+
+    return res.json(populatedComment);
+  },
+);
 
 export default handler;
