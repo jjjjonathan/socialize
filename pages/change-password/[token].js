@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
@@ -101,11 +102,11 @@ const ChangePassword = ({ token }) => {
         {({ isSubmitting, errors }) => (
           <FormikForm noValidate>
             <Form.Group className="mb-2" controlId="password">
-              <Form.Label className="small mb-0 ml-2">Password</Form.Label>
+              <Form.Label className="small mb-0 ml-2">New Password</Form.Label>
               <Field
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="New Password"
                 as={Form.Control}
                 isInvalid={!!errors.password}
               />
@@ -153,7 +154,10 @@ const ChangePassword = ({ token }) => {
         return passwordForm();
       case 'expired':
         return (
-          <Alert type="error">This link has expired. Request a new one</Alert>
+          <Alert type="error">
+            This link has expired.{' '}
+            <Link href="/change-password/forgot">Request a new one</Link>
+          </Alert>
         );
       case 'invalid':
         return <Alert type="error">Invalid request</Alert>;
