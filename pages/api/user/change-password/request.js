@@ -18,6 +18,9 @@ handler.post(async (req, res) => {
   if (req.body?.email) {
     email = req.body.email;
     const user = await User.findOne({ email });
+
+    if (!user) return res.status(400).json({ error: 'Email not found' });
+
     userId = user.id;
     name = user.name;
   } else {
