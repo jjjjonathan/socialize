@@ -16,8 +16,12 @@ const ForgotPassword = () => {
       await axios.post('/api/user/change-password/request', { email });
       setStatus('sent');
     } catch (error) {
-      setStatus('invalid');
-      console.log('ERROR', { error });
+      if (error.response?.data?.error === 'Email not found') {
+        setStatus('invalid');
+      } else {
+        setStatus('error');
+      }
+      console.error(error);
     }
   };
 
@@ -31,7 +35,21 @@ const ForgotPassword = () => {
       .required(),
   });
 
-  const alert = () => null;
+  const alert = () => {
+    switch (status) {
+      case 'invalid':
+        return (
+          <Alert type="error">
+            The email address you entered does not match our records. Please try
+            again.
+          </Alert>
+        );
+      case 'error':
+        return <Alert type="error">Error sending password reset email</Alert>;
+      default:
+        return null;
+    }
+  };
 
   const emailForm = () => (
     <div className="auth-form">
@@ -89,7 +107,7 @@ const ForgotPassword = () => {
   return (
     <Splash
       pageTitle="Forgot Password"
-      useGlassmorphicBox={status === 'verified'}
+      useGlassmorphicBox={status !== 'sending' && status !== 'sent'}
     >
       {innards()}
     </Splash>
