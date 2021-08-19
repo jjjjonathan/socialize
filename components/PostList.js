@@ -7,9 +7,9 @@ const PostList = ({ posts, updateLikes, currentUser, removePostFromList }) => {
 
   return (
     <>
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <PostCard
-          key={index}
+          key={post.id}
           post={post}
           updateLikes={updateLikes}
           currentUser={currentUser}
