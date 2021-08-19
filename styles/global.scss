@@ -148,3 +148,7 @@ $glass-card-radius: 15px;
   border-radius: 50px;
   border-width: 0;
 }
+
+.dropdown-menu {
+  @include drop-shadow-sm;
+}
