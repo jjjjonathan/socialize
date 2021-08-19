@@ -79,9 +79,15 @@ const Settings = ({ currentUser, bio }) => {
           <ProfilePictureUpload currentUser={currentUser} />
           <h4 className="h6 mb-3 mt-5">About Me</h4>
           <AboutMeUpdate originalBio={bio} />
-          <h4 className="h6 mb-3 mt-5">Change Password</h4>
-          <p>Get a password reset email here:</p>
-          <div style={{ width: 'fit-content' }}>{resetPasswordButton()}</div>
+          {currentUser.username !== 'example' && (
+            <>
+              <h4 className="h6 mb-3 mt-5">Change Password</h4>
+              <p>Get a password reset email here:</p>
+              <div style={{ width: 'fit-content' }}>
+                {resetPasswordButton()}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </Layout>

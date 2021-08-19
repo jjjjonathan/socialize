@@ -52,6 +52,22 @@ const Login = () => {
     }
   };
 
+  // const handleExampleLogin = async () => {
+  //   try {
+  //     setIsError(false);
+  //     setIsLoggingIn(true);
+  //     await axios.post('/api/auth/login', {
+  //       username: 'example',
+  //       password: process.env.EXAMPLE_USER_PASSWORD,
+  //     });
+  //     router.push('/');
+  //   } catch (error) {
+  //     setIsLoggingIn(false);
+  //     console.error(error);
+  //     setIsError(true);
+  //   }
+  // };
+
   const validationSchema = yup.object().shape({
     username: yup.string().label('Username').required(),
     password: yup.string().label('Password').min(8).max(40).required(),
@@ -136,9 +152,11 @@ const Login = () => {
               Log in with Facebook
             </Button>
           </Link>
-          <Button variant="outline-dark" className="mt-2 auth-button">
-            Log in as Example User
-          </Button>
+          <Link href="/api/auth/example-login" passHref>
+            <Button variant="outline-dark" className="mt-2 auth-button" as="a">
+              Log in as Example User
+            </Button>
+          </Link>
           <Link href="/signup" passHref>
             <Button variant="outline-dark" className="mt-2 auth-button" as="a">
               Sign up with Email
