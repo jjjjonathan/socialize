@@ -151,7 +151,12 @@ const Home = ({ currentUser }) => {
           {topMenu()}
           {sidebar()}
         </Col>
-        <Col>{displayNewsfeed()}</Col>
+        <Col>
+          <div className="d-none d-md-block">
+            <NewPost addNewPostToFeed={addNewPostToFeed} />
+          </div>
+          {displayNewsfeed()}
+        </Col>
       </Row>
     </Layout>
   );
