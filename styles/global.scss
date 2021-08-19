@@ -153,3 +153,13 @@ $glass-card-radius: 15px;
   @include drop-shadow-sm;
   font-family: $font-family-base;
 }
+
+.btn-group.special {
+  display: flex;
+}
+
+.special .btn {
+  flex: 1;
+  font-weight: 500;
+  font-size: 0.96em;
+}
