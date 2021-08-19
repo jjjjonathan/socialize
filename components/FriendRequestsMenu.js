@@ -18,9 +18,12 @@ const FriendRequestsMenu = () => {
   } = useFriendRequests();
 
   const onRemove = (userId) => {
-    const nextState = friendRequests.friendRequests.filter(
-      (friendReq) => userId !== friendReq.user.id,
-    );
+    const nextState = {
+      ...friendRequests,
+      friendRequests: friendRequests.friendRequests.filter(
+        (friendReq) => userId !== friendReq.user.id,
+      ),
+    };
     setFriendRequests(nextState);
   };
 
