@@ -14,7 +14,7 @@ const FriendRequestsMenu = () => {
     friendRequests,
     isFriendRequestsError,
     isFriendRequestsLoading,
-    setFriendRequests, // TODO add click to refresh to error (route to login if 401 ?)
+    setFriendRequests,
   } = useFriendRequests();
 
   const onRemove = (userId) => {
