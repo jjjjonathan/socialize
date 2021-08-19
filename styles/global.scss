@@ -151,4 +151,5 @@ $glass-card-radius: 15px;
 
 .dropdown-menu {
   @include drop-shadow-sm;
+  font-family: $font-family-base;
 }
