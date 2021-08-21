@@ -13,7 +13,7 @@ const facebook = new FacebookStrategy(
   {
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: '/api/auth/facebook/callback',
+    callbackURL: `${process.env.WEB_URI}/api/auth/facebook/callback`,
     profileFields: ['id', 'email', 'displayName'],
   },
   async (accessToken, refreshToken, profile, done) => {
