@@ -8,8 +8,10 @@ const Splash = ({ pageTitle, useGlassmorphicBox, children }) => (
     </Head>
     <main>
       <div className={styles.container}>
-        <div className={useGlassmorphicBox ? styles.center : undefined}>
-          {children}
+        <div className={styles.sheen}>
+          <div className={useGlassmorphicBox ? styles.center : ''}>
+            {children}
+          </div>
         </div>
       </div>
     </main>
