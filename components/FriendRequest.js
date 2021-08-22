@@ -3,7 +3,7 @@ import { defaultDate } from '../utils/dateHelpers';
 import FriendRequestButtons from './FriendRequestButtons';
 
 const FriendRequest = ({ friendReq, onRemove }) => (
-  <div className="mb-4">
+  <div className="mb-4" style={{ width: 200 }}>
     <div className="d-flex align-items-center mb-2">
       <Image
         publicId={friendReq.user.profilePicture}
@@ -16,11 +16,13 @@ const FriendRequest = ({ friendReq, onRemove }) => (
     <p className="small mb-2 text-center text-muted">
       Requested {defaultDate(friendReq.timestamp)}
     </p>
-    <FriendRequestButtons
-      id={friendReq.user.id}
-      onApprove={onRemove}
-      onDelete={onRemove}
-    />
+    <div className="d-flex justify-content-center">
+      <FriendRequestButtons
+        id={friendReq.user.id}
+        onApprove={onRemove}
+        onDelete={onRemove}
+      />
+    </div>
   </div>
 );
 
