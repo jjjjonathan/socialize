@@ -60,10 +60,9 @@ export async function getServerSideProps({ req, res, query }) {
   ) {
     friendStatus = 'requested';
   } else if (
-    reqUser.friendRequests.find((friendReq) => {
-      console.log('equal?', friendReq.user.toString() === user.id.toString());
-      return friendReq.user.toString() === user.id.toString();
-    })
+    reqUser.friendRequests.find(
+      (friendReq) => friendReq.user.toString() === user.id.toString(),
+    )
   ) {
     friendStatus = 'request';
   }
