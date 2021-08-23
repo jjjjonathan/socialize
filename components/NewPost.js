@@ -48,7 +48,6 @@ const NewPost = ({ addNewPostToFeed }) => {
                   }`}
                   placeholder="What's on your mind?"
                   name="newPost"
-                  id="newPost"
                   value={values.newPost}
                   onChange={handleChange}
                 />
