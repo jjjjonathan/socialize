@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import produce from 'immer';
 import parse from 'html-react-parser';
 import Image from '../../../components/Image';
 import middleware from '../../../middleware';
@@ -73,8 +72,6 @@ export async function getServerSideProps({ req, res, query }) {
   const profile = JSON.parse(JSON.stringify(user));
   const currentUser = JSON.parse(JSON.stringify(reqUser));
 
-  console.log(currentUser);
-
   return {
     props: {
       isOwnProfile,
@@ -95,11 +92,8 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
     setPostsByUser,
   } = usePostsByUser(user);
 
-  const addNewPostToFeed = (newPost) => {
-    const nextState = produce(postsByUser, (draft) => {
-      draft.posts.unshift(newPost);
-    });
-    setPostsByUser(nextState);
+  const addNewPostToFeed = () => {
+    setPostsByUser();
   };
 
   const removePostFromFeed = (postId) => {
