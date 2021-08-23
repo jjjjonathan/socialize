@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import produce from 'immer';
+import parse from 'html-react-parser';
 import Image from '../../../components/Image';
 import middleware from '../../../middleware';
 import usePostsByUser from '../../../hooks/usePostsByUser';
@@ -192,7 +193,7 @@ const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
             <Card.Body>
               {profile.bio && (
                 <>
-                  <p>{profile.bio}</p>
+                  <p>{parse(profile.bio)}</p>
                   <hr />
                 </>
               )}

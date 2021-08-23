@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
+import parse from 'html-react-parser';
 import FlatSpinner from './FlatSpinner';
 import { defaultDate } from '../utils/dateHelpers';
 import Image from './Image';
@@ -70,7 +71,7 @@ const Comment = ({ comment, currentUser, removeCommentFromList }) => {
               posted {defaultDate(comment.timestamp)}
             </span>
           </div>
-          <p className="mb-0 medium">{comment.body}</p>
+          <p className="mb-0 medium">{parse(comment.body)}</p>
         </div>
         {isOwnComment && deleteButton()}
       </div>

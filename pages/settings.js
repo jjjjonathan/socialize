@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import parse from 'html-react-parser';
 import middleware from '../middleware';
 import Layout from '../components/Layout';
 import ProfilePictureUpload from '../components/ProfilePictureUpload';
@@ -24,7 +25,7 @@ export async function getServerSideProps({ req, res }) {
   }
 
   const fetchedUser = await User.findById(reqUser.id, 'bio');
-  const bio = fetchedUser.bio || null;
+  const bio = parse(fetchedUser.bio) || null;
 
   const currentUser = JSON.parse(JSON.stringify(reqUser));
 
