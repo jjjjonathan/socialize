@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
+import parse from 'html-react-parser';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
@@ -199,7 +200,7 @@ const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
               </div>
             </Card.Header>
             <Card.Body>
-              <div dangerouslySetInnerHTML={{ __html: post.body }}></div>
+              <div>{parse(post.body)}</div>
               <hr />
               <div className="d-flex medium">
                 {likeText()}
