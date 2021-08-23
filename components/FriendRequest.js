@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import FriendRequestButtons from './FriendRequestButtons';
@@ -10,8 +11,11 @@ const FriendRequest = ({ friendReq, onRemove }) => (
         profilePicName={friendReq.user.name}
         size="40"
         variant="circle"
+        href={`/profile/${friendReq.user.username}`}
       />
-      <h6 className="mt-1 ml-2">{friendReq.user.name}</h6>
+      <Link href={`/profile/${friendReq.user.username}`} passHref>
+        <a className="mt-1 ml-2 h6 text-dark">{friendReq.user.name}</a>
+      </Link>
     </div>
     <p className="small mb-2 text-center text-muted">
       Requested {defaultDate(friendReq.timestamp)}
