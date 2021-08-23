@@ -25,7 +25,7 @@ export async function getServerSideProps({ req, res }) {
   }
 
   const fetchedUser = await User.findById(reqUser.id, 'bio');
-  const bio = parse(fetchedUser.bio) || null;
+  const bio = fetchedUser.bio ? parse(fetchedUser.bio) : null;
 
   const currentUser = JSON.parse(JSON.stringify(reqUser));
 
