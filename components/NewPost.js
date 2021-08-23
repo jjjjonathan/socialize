@@ -9,8 +9,8 @@ import FlatSpinner from './FlatSpinner';
 const NewPost = ({ addNewPostToFeed }) => {
   const handleNewPost = async ({ newPost }, { resetForm }) => {
     try {
-      const { data } = await axios.post('/api/post', { body: newPost });
-      addNewPostToFeed(data);
+      await axios.post('/api/post', { body: newPost });
+      addNewPostToFeed();
       resetForm();
       toast.success('Posted!');
     } catch (error) {

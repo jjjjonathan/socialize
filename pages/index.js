@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
-import produce from 'immer';
 import middleware from '../middleware';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/Layout';
@@ -40,11 +39,8 @@ const Home = ({ currentUser }) => {
   const { newsfeed, isNewsfeedError, isNewsfeedLoading, setNewsfeed } =
     useNewsfeed();
 
-  const addNewPostToFeed = (newPost) => {
-    const nextState = produce(newsfeed, (draft) => {
-      draft.unshift(newPost);
-    });
-    setNewsfeed(nextState);
+  const addNewPostToFeed = () => {
+    setNewsfeed();
   };
 
   const topMenu = () => (
