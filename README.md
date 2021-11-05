@@ -1,6 +1,10 @@
 # socialize
 
-A Facebook clone portfolio project created to fulfill part of The Odin Project curriculum
+A Facebook-inspired social media app created as a portfolio project!
+
+Live preview at: https://socialize-now.herokuapp.com/
+
+![socialize](https://user-images.githubusercontent.com/76662370/140469261-9aa128e7-5e35-4058-b454-fd5c2d0f2813.gif)
 
 ## Built with
 
