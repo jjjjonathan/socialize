@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test-serve": "NODE_ENV=test npm run dev",
+    "test-serve": "NODE_ENV=test PORT=3333 npm run dev",
     "cy:open": "cypress open",
     "cy:run": "cypress run"
   },
