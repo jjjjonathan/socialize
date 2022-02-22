@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test-serve": "NODE_ENV=test PORT=3333 npm run dev",
+    "test-serve": "npm run build && NODE_ENV=test PORT=3333 npm start",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "db:seed": "NODE_ENV=test node -r esm seed.js"
+    "db:seed": "NODE_ENV=test node -r esm seed.js",
+    "test:e2e": "start-server-and-test test-serve http://localhost:3333 cy:open"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.6",
@@ -52,6 +53,7 @@
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.12.1",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "start-server-and-test": "^1.14.0"
   }
 }
