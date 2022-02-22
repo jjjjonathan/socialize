@@ -10,7 +10,7 @@
     "test-serve": "NODE_ENV=test PORT=3333 npm run dev",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "db:seed": "NODE_ENV=test node seed.js"
+    "db:seed": "NODE_ENV=test node -r esm seed.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.6",
@@ -51,6 +51,7 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-next": "11.0.1",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-cypress": "^2.12.1"
+    "eslint-plugin-cypress": "^2.12.1",
+    "esm": "^3.2.25"
   }
 }
