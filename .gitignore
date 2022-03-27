@@ -30,5 +30,15 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# env files
+.env
+.env.development
+.env.test
+.env.production
+
 # vercel
 .vercel
+
+# vscode
+.vscode
+
