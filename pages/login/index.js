@@ -84,7 +84,11 @@ const Login = () => {
     ) : null;
 
   return (
-    <Splash pageTitle="Log in" useGlassmorphicBox={!isLoggingIn}>
+    <Splash
+      pageTitle="Log in"
+      useGlassmorphicBox={!isLoggingIn}
+      withPrivacyPolicy={!isLoggingIn}
+    >
       {isLoggingIn ? (
         <CircleSpinner size="70" />
       ) : (

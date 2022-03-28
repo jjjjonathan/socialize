@@ -75,7 +75,11 @@ const Signup = () => {
   };
 
   return (
-    <Splash pageTitle="Sign up" useGlassmorphicBox={!isSigningUp}>
+    <Splash
+      pageTitle="Sign up"
+      useGlassmorphicBox={!isSigningUp}
+      withPrivacyPolicy={!isSigningUp}
+    >
       {isSigningUp ? (
         <CircleSpinner size="70" />
       ) : (
