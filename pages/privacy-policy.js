@@ -1,7 +1,7 @@
 const PrivacyPolicy = () => (
   <div style={{ margin: 20 }}>
     <h1>Privacy Policy</h1>
-    <p>Last updated: March 27, 2022</p>
+    <p>Last updated: April 1, 2022</p>
     <p>
       Your privacy is important to us. It is socialize&#39;s policy to respect
       your privacy and comply with any applicable laws regarding any personal
@@ -176,10 +176,16 @@ const PrivacyPolicy = () => (
       opportunity to opt in to or opt out of, as applicable, any new uses of
       your personal information.
     </p>
+    <h2>Deleting Your Personal Information</h2>
+    <p>
+      To delete your personal information, please contact us at the following
+      email address:
+    </p>
+    <p>jonathanhorn000@gmail.com</p>
     <h2>Contact Us</h2>
     <p>
       For any questions or concerns regarding your privacy, you may contact us
-      using the following details:
+      at the following email address:
     </p>
     <p>jonathanhorn000@gmail.com</p>
   </div>
