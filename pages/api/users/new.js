@@ -1,16 +1,17 @@
 import nc from 'next-connect';
-import middleware from '../../../middleware';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
 import User from '../../../models/User';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
+const handler = nc().get(async (req, res) => {
+  await connectMongo();
 
-handler.get(async (req, res) => {
-  if (!req.user) return res.status(401).end();
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).end();
 
-  const currentUser = await User.findById(req.user._id).populate(
-    'requestedFriends',
-  );
+  const { id } = session.user;
+  const currentUser = await User.findById(id).populate('requestedFriends');
 
   const users = await User.find(
     {},

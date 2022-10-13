@@ -2,8 +2,9 @@ import { useRouter } from 'next/router';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import parse from 'html-react-parser';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
 import Image from '../../../components/Image';
-import middleware from '../../../middleware';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import Layout from '../../../components/Layout';
 import PostList from '../../../components/PostList';
@@ -14,20 +15,16 @@ import NewPost from '../../../components/NewPost';
 import ProfileFriendButton from '../../../components/ProfileFriendButton';
 import FriendsList from '../../../components/FriendsList';
 import FlatAlert from '../../../components/FlatAlert';
+import connectMongo from '../../../utils/connectMongo';
 
 export async function getServerSideProps({ req, res, query }) {
-  await middleware.run(req, res);
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-  const reqUser = req.user;
+  await connectMongo();
 
-  if (!reqUser) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
+  const sessionUserId = session.user.id;
+
+  const sessionUser = await User.findById(sessionUserId);
 
   const { user: username } = query;
   const user = await User.findOne({ username }, '-friendRequests').populate(
@@ -41,16 +38,14 @@ export async function getServerSideProps({ req, res, query }) {
     };
   }
 
-  const { requestedFriends } = await User.findById(reqUser).populate(
+  const { requestedFriends } = await User.findById(sessionUserId).populate(
     'requestedFriends',
   );
 
   let friendStatus = null;
 
   if (
-    user.friends.find(
-      (friend) => friend.user.id.toString() === reqUser.id.toString(),
-    )
+    user.friends.find((friend) => friend.user.id.toString() === sessionUserId)
   ) {
     friendStatus = 'friends';
   } else if (
@@ -60,22 +55,21 @@ export async function getServerSideProps({ req, res, query }) {
   ) {
     friendStatus = 'requested';
   } else if (
-    reqUser.friendRequests.find(
+    sessionUser.friendRequests.find(
       (friendReq) => friendReq.user.toString() === user.id.toString(),
     )
   ) {
     friendStatus = 'request';
   }
 
-  const isOwnProfile = reqUser.id === user.id;
+  const isOwnProfile = sessionUserId === user.id;
   const profile = JSON.parse(JSON.stringify(user));
-  const currentUser = JSON.parse(JSON.stringify(reqUser));
 
   return {
     props: {
       isOwnProfile,
       profile,
-      currentUser,
+      currentUser: session.user,
       friendStatus,
     },
   };

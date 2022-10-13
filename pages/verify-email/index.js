@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
 import axios from 'axios';
-import middleware from '../../middleware';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
 import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ req, res }) {
-  await middleware.run(req, res);
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (!req.user) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  if (req.user.isEmailVerified) {
+  if (session.user.isEmailVerified) {
     return {
       redirect: {
         destination: '/',
@@ -28,7 +20,7 @@ export async function getServerSideProps({ req, res }) {
 
   return {
     props: {
-      email: req.user.email,
+      email: session.user.email,
     },
   };
 }

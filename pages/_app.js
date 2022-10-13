@@ -1,18 +1,22 @@
 import { SWRConfig } from 'swr';
+import { SessionProvider } from 'next-auth/react';
 import fetcher from '../utils/fetcher';
 import '../styles/global.scss';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 
-function MyApp({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const swrOptions = {
     fetcher,
   };
 
   return (
-    <SWRConfig value={swrOptions}>
-      <Component {...pageProps} />
-    </SWRConfig>
+    <SessionProvider session={session}>
+      <SWRConfig value={swrOptions}>
+        <Component {...pageProps} />
+      </SWRConfig>
+    </SessionProvider>
   );
 }
-
-export default MyApp;

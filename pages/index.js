@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
-import middleware from '../middleware';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/Layout';
 import NewUsers from '../components/NewUsers';
@@ -10,24 +11,11 @@ import CircleSpinner from '../components/CircleSpinner';
 import FlatAlert from '../components/FlatAlert';
 
 export async function getServerSideProps({ req, res }) {
-  await middleware.run(req, res);
-
-  const reqUser = req.user;
-
-  if (!reqUser) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
-
-  const currentUser = JSON.parse(JSON.stringify(reqUser));
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   return {
     props: {
-      currentUser,
+      currentUser: session.user,
     },
   };
 }

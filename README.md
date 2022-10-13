@@ -12,7 +12,7 @@ Live preview at: https://socialize-now.herokuapp.com/
 - React
 - React Bootstrap
 - MongoDB/Mongoose
-- Passport.js
+- NextAuth.js
 - SWR
 - Formik
 - Sass

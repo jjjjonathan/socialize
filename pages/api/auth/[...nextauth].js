@@ -1,3 +1,71 @@
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import FacebookProvider from 'next-auth/providers/facebook';
+import bcrypt from 'bcryptjs';
+import User from '../../../models/User';
+import connectMongo from '../../../utils/connectMongo';
+import { authPages } from '../../../middleware';
+
+export const authOptions = {
+  pages: authPages,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user._id;
+        token.username = user.username;
+        token.isEmailVerified = user.isEmailVerified;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.user.id = token.id;
+      session.user.username = token.username;
+      session.user.isEmailVerified = token.isEmailVerified;
+      delete session.user.image;
+
+      return session;
+    },
+  },
+  providers: [
+    CredentialsProvider({
+      name: 'Username and Password',
+      credentials: {
+        username: {
+          label: 'Username',
+          type: 'text',
+          placeholder: 'Enter username',
+        },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: 'Password',
+        },
+      },
+      authorize: async ({ username, password }) => {
+        await connectMongo();
+
+        const user = await User.findOne({ username });
+        if (!user) return null;
+
+        const match = bcrypt.compare(password, user.passwordHash);
+        if (!match) return null;
+
+        return user;
+      },
+    }),
+
+    // FacebookProvider({
+    //   clientId: process.env.FACEBOOK_APP_ID,
+    //   clientSecret: process.env.FACEBOOK_APP_SECRET,
+    // }),
+  ],
+  debug: false,
+};
+
+export default NextAuth(authOptions);
+
+/*
+
 import FacebookStrategy from 'passport-facebook';
 import { v2 as cloudinary } from 'cloudinary';
 import User from '../../models/User';
@@ -66,3 +134,5 @@ const facebook = new FacebookStrategy(
 );
 
 export default facebook;
+
+*/

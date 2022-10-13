@@ -3,35 +3,26 @@ import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import parse from 'html-react-parser';
-import middleware from '../middleware';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from './api/auth/[...nextauth]';
 import Layout from '../components/Layout';
 import ProfilePictureUpload from '../components/ProfilePictureUpload';
 import AboutMeUpdate from '../components/AboutMeUpdate';
 import User from '../models/User';
 import FlatSpinner from '../components/FlatSpinner';
+import connectMongo from '../utils/connectMongo';
 
 export async function getServerSideProps({ req, res }) {
-  await middleware.run(req, res);
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-  const reqUser = req.user;
-
-  if (!reqUser) {
-    return {
-      redirect: {
-        destination: '/login',
-        permanent: false,
-      },
-    };
-  }
+  await connectMongo();
 
   const fetchedUser = await User.findById(reqUser.id, 'bio');
   const bio = fetchedUser.bio ? parse(fetchedUser.bio) : null;
 
-  const currentUser = JSON.parse(JSON.stringify(reqUser));
-
   return {
     props: {
-      currentUser,
+      currentUser: session.user,
       bio,
     },
   };

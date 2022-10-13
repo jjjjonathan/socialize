@@ -14,7 +14,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-const mongoConnect = async () => {
+const connectMongo = async () => {
   if (cached.conn) {
     return cached.conn;
   }
@@ -33,9 +33,4 @@ const mongoConnect = async () => {
   return cached.conn;
 };
 
-const mongo = async (req, res, next) => {
-  await mongoConnect();
-  return next();
-};
-
-export default mongo;
+export default connectMongo;
