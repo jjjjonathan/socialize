@@ -23,7 +23,6 @@ const mongoConnect = async () => {
     const options = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
     };
 
     cached.promise = mongoose
