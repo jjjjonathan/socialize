@@ -1,10 +1,11 @@
 import nc from 'next-connect';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
-import middleware from '../../../middleware';
 import User from '../../../models/User';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
 const upload = multer({ dest: '/tmp' });
 
 cloudinary.config({
@@ -13,10 +14,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-handler.use(middleware);
+const handler = nc().post(upload.single('profilePicture'), async (req, res) => {
+  await connectMongo();
 
-handler.post(upload.single('profilePicture'), async (req, res) => {
-  if (!req.user) return res.status(401).end();
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).end();
 
   const image = await cloudinary.uploader.upload(req.file.path, {
     width: 512,
@@ -27,7 +29,7 @@ handler.post(upload.single('profilePicture'), async (req, res) => {
 
   const profilePicture = image.public_id;
 
-  const { id } = req.user;
+  const { id } = session.user;
   await User.findByIdAndUpdate(id, { profilePicture });
 
   return res.json(204);

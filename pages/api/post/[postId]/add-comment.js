@@ -1,12 +1,11 @@
 import { body as validate, validationResult } from 'express-validator';
 import nc from 'next-connect';
-import middleware from '../../../../middleware';
 import Comment from '../../../../models/Comment';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
-
-handler.post(
+const handler = nc().post(
   validate('body')
     .trim()
     .isLength({ min: 1, max: 1000 })
@@ -14,13 +13,16 @@ handler.post(
     .escape(),
 
   async (req, res) => {
-    if (!req.user) return res.status(401).end();
+    await connectMongo();
+
+    const session = await unstable_getServerSession(req, res, authOptions);
+    if (!session) return res.status(401).end();
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400);
 
     const { postId } = req.query;
-    const userId = req.user.id;
+    const userId = session.user.id;
     const { body } = req.body;
 
     const comment = new Comment({

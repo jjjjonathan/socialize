@@ -1,11 +1,10 @@
 import nc from 'next-connect';
-import middleware from '../../../middleware';
 import User from '../../../models/User';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
+const handler = nc().get(async (req, res) => {
+  await connectMongo();
 
-handler.get(async (req, res) => {
   const users = await User.find(
     {},
     'name username userSince profilePicture',

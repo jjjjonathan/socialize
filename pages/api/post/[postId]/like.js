@@ -1,15 +1,17 @@
 import nc from 'next-connect';
-import middleware from '../../../../middleware';
 import Post from '../../../../models/Post';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
+const handler = nc().post(async (req, res) => {
+  await connectMongo();
 
-handler.post(async (req, res) => {
-  if (!req.user) return res.status(401).end();
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.status(401).end();
 
   const { postId } = req.query;
-  const userId = req.user.id;
+  const userId = session.user.id;
 
   const post = await Post.findById(postId);
 

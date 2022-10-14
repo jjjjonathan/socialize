@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { authOptions } from '../api/auth/[...nextauth]';
 import axios from 'axios';
 import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';

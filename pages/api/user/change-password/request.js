@@ -1,15 +1,17 @@
 import nc from 'next-connect';
 import { nanoid } from 'nanoid';
-import middleware from '../../../../middleware';
 import Token from '../../../../models/Token';
 import sendEmail from '../../../../utils/sendEmail';
 import User from '../../../../models/User';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
+const handler = nc().post(async (req, res) => {
+  await connectMongo();
 
-handler.post(async (req, res) => {
-  if (!req.user && !req.body?.email) return res.status(401).end();
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session && !req.body?.email) return res.status(401).end();
 
   let email;
   let userId;
@@ -24,9 +26,9 @@ handler.post(async (req, res) => {
     userId = user.id;
     name = user.name;
   } else {
-    email = req.user.email;
-    userId = req.user.id;
-    name = req.user.name;
+    email = session.user.email;
+    userId = session.user.id;
+    name = session.user.name;
   }
 
   // Create token for email verification

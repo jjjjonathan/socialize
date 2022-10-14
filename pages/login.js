@@ -1,30 +1,24 @@
 import { useState } from 'react';
+import { getCsrfToken } from 'next-auth/react';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Alert from '../../components/Alert';
-import Splash from '../../components/Splash';
-import CircleSpinner from '../../components/CircleSpinner';
+import Alert from '../components/Alert';
+import Splash from '../components/Splash';
+import CircleSpinner from '../components/CircleSpinner';
 
-// export async function getServerSideProps({ req, res }) {
-//   // await middleware.run(req, res);
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
+}
 
-//   if (req.user) {
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return { props: {} };
-// }
-
-const Login = () => {
+const Login = ({ csrfToken }) => {
   const router = useRouter();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -34,16 +28,17 @@ const Login = () => {
     try {
       setIsError(false);
       setIsLoggingIn(true);
-      const { data } = await axios.post('/api/auth/login', {
+      await axios.post('/api/auth/callback/credentials', {
+        csrfToken,
         username,
         password,
       });
 
-      if (!data.isEmailVerified) {
-        router.push('/verify-email');
-      } else {
-        router.push('/');
-      }
+      // if (!data.isEmailVerified) {
+      //   router.push('/verify-email');
+      // } else {
+      router.push('/');
+      // }
     } catch (error) {
       setIsLoggingIn(false);
       console.error(error);

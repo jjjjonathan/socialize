@@ -1,13 +1,10 @@
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import nc from 'next-connect';
-import middleware from '../../../../middleware';
 import User from '../../../../models/User';
+import connectMongo from '../../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
-
-handler.post(
+const handler = nc().post(
   body('password')
     .isLength({ min: 8, max: 40 })
     .withMessage('Password must be between 8 and 40 characters'),
@@ -20,6 +17,8 @@ handler.post(
   }),
 
   async (req, res) => {
+    await connectMongo();
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });

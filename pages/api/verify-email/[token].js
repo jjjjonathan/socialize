@@ -1,12 +1,11 @@
 import nc from 'next-connect';
-import middleware from '../../../middleware';
 import Token from '../../../models/Token';
 import User from '../../../models/User';
+import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc();
-handler.use(middleware);
+const handler = nc().post(async (req, res) => {
+  await connectMongo();
 
-handler.post(async (req, res) => {
   const { token } = req.query;
 
   const tokenObject = await Token.findOne({ token });

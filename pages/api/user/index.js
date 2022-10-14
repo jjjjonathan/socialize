@@ -2,11 +2,11 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import nc from 'next-connect';
 import { v2 as cloudinary } from 'cloudinary';
-import middleware from '../../../middleware';
 import User from '../../../models/User';
 import { defaultProfilePicture } from '../../../utils/profileDefaults';
-
-const handler = nc();
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from '../../api/auth/[...nextauth]';
+import connectMongo from '../../../utils/connectMongo';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -14,7 +14,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-handler.use(middleware);
+const handler = nc();
 
 handler.post(
   body('name')
@@ -50,6 +50,8 @@ handler.post(
 
   // eslint-disable-next-line consistent-return
   async (req, res) => {
+    await connectMongo();
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log(errors.array());
@@ -109,8 +111,9 @@ handler.post(
 );
 
 handler.get(async (req, res) => {
-  if (!req.user) return res.json({ user: null });
-  return res.json(req.user);
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) return res.json({ user: null });
+  return res.json(session.user);
 });
 
 export default handler;
