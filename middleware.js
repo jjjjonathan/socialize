@@ -10,3 +10,10 @@ export const authPages = {
 export default withAuth({
   pages: authPages,
 });
+
+export const config = {
+  matcher: [
+    // Match all request paths except for those starting with `signup` or `privacy-policy`
+    '/((?!signup|privacy-policy).*)',
+  ],
+};
