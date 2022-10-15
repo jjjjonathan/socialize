@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import FacebookProvider from 'next-auth/providers/facebook';
+// import FacebookProvider from 'next-auth/providers/facebook';
 import bcrypt from 'bcryptjs';
 import User from '../../../models/User';
 import connectMongo from '../../../utils/connectMongo';
@@ -10,20 +10,27 @@ export const authOptions = {
   pages: authPages,
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user._id;
-        token.username = user.username;
-        token.isEmailVerified = user.isEmailVerified;
-      }
-      return token;
-    },
-    async session({ session, token, user }) {
-      session.user.id = token.id;
-      session.user.username = token.username;
-      session.user.isEmailVerified = token.isEmailVerified;
-      delete session.user.image;
+      const newToken = { ...token };
 
-      return session;
+      if (user) {
+        newToken.id = user._id;
+        newToken.username = user.username;
+        newToken.isEmailVerified = user.isEmailVerified;
+        newToken.profilePicture = user.profilePicture;
+      }
+
+      return newToken;
+    },
+    async session({ session, token }) {
+      const newSession = { ...session };
+
+      newSession.user.id = token.id;
+      newSession.user.username = token.username;
+      newSession.user.isEmailVerified = token.isEmailVerified;
+      newSession.user.profilePicture = token.profilePicture;
+      delete newSession.user.image;
+
+      return newSession;
     },
   },
   providers: [
@@ -45,9 +52,11 @@ export const authOptions = {
         await connectMongo();
 
         const user = await User.findOne({ username });
+        console.log('email', user?.email);
         if (!user) return null;
 
-        const match = bcrypt.compare(password, user.passwordHash);
+        const match = await bcrypt.compare(password, user.passwordHash);
+        console.log('match', match);
         if (!match) return null;
 
         return user;
