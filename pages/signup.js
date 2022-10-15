@@ -8,21 +8,6 @@ import Alert from '../components/Alert';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 
-// export async function getServerSideProps({ req, res }) {
-//   // await middleware.run(req, res);
-
-//   if (req.user) {
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return { props: {} };
-// }
-
 const Signup = () => {
   const router = useRouter();
   const [isSigningUp, setIsSigningUp] = useState(false);
@@ -32,8 +17,9 @@ const Signup = () => {
     try {
       setApiErrors([]);
       setIsSigningUp(true);
-      await axios.post('/api/user', values);
-      router.push('/verify-email');
+      const { data } = await axios.post('/api/user', values);
+      const uriEmail = encodeURIComponent(data.email);
+      router.push(`/verify-email?email=${uriEmail}`);
     } catch (error) {
       setIsSigningUp(false);
       if (error.response?.data?.errors) {

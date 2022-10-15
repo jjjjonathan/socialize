@@ -6,10 +6,10 @@ import Splash from '../../components/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
 import Alert from '../../components/Alert';
 
-export async function getServerSideProps({ req, res }) {
+export async function getServerSideProps({ req, res, query }) {
   const session = await unstable_getServerSession(req, res, authOptions);
 
-  if (session.user.isEmailVerified) {
+  if (session?.user?.isEmailVerified) {
     return {
       redirect: {
         destination: '/',
@@ -18,9 +18,25 @@ export async function getServerSideProps({ req, res }) {
     };
   }
 
+  if (session?.user?.email) {
+    return {
+      props: {
+        email: session.user.email,
+      },
+    };
+  }
+  if (query?.email) {
+    return {
+      props: {
+        email: query.email,
+      },
+    };
+  }
+
   return {
-    props: {
-      email: session.user.email,
+    redirect: {
+      destination: '/',
+      permanent: false,
     },
   };
 }
@@ -30,7 +46,7 @@ const VerifyEmail = ({ email }) => {
 
   useEffect(async () => {
     try {
-      await axios.post('/api/verify-email');
+      await axios.post('/api/verify-email', { email });
       setStatus('sent');
     } catch (error) {
       console.error(error);

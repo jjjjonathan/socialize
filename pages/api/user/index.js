@@ -48,7 +48,6 @@ handler.post(
     return true;
   }),
 
-  // eslint-disable-next-line consistent-return
   async (req, res) => {
     await connectMongo();
 
@@ -103,10 +102,7 @@ handler.post(
 
     const savedUser = await user.save();
 
-    req.login(savedUser, (error) => {
-      if (error) throw error;
-      res.status(201).json(savedUser);
-    });
+    return res.status(201).json(savedUser);
   },
 );
 
