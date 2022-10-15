@@ -2,7 +2,7 @@ import { SWRConfig } from 'swr';
 import { SessionProvider } from 'next-auth/react';
 import fetcher from '../utils/fetcher';
 import '../styles/global.scss';
-import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default function App({
   Component,

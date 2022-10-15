@@ -1,9 +1,9 @@
 import nc from 'next-connect';
+import { unstable_getServerSession } from 'next-auth/next';
 import Post from '../../../../models/Post';
 import Comment from '../../../../models/Comment';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
-import connectMongo from '../../../utils/connectMongo';
+import { authOptions } from '../../auth/[...nextauth]';
+import connectMongo from '../../../../utils/connectMongo';
 
 const handler = nc().delete(async (req, res) => {
   await connectMongo();

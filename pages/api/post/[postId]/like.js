@@ -1,8 +1,8 @@
 import nc from 'next-connect';
-import Post from '../../../../models/Post';
 import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
-import connectMongo from '../../../utils/connectMongo';
+import Post from '../../../../models/Post';
+import { authOptions } from '../../auth/[...nextauth]';
+import connectMongo from '../../../../utils/connectMongo';
 
 const handler = nc().post(async (req, res) => {
   await connectMongo();

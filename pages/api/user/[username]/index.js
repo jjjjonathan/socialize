@@ -1,5 +1,4 @@
 import nc from 'next-connect';
-import middleware from '../../../../middleware';
 import User from '../../../../models/User';
 
 const handler = nc().get(async (req, res) => {

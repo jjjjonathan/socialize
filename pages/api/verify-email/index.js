@@ -1,9 +1,9 @@
 import nc from 'next-connect';
 import { nanoid } from 'nanoid';
+import { unstable_getServerSession } from 'next-auth/next';
 import Token from '../../../models/Token';
 import sendEmail from '../../../utils/sendEmail';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { authOptions } from '../auth/[...nextauth]';
 import connectMongo from '../../../utils/connectMongo';
 
 const handler = nc().post(async (req, res) => {

@@ -6,6 +6,8 @@
     "no-underscore-dangle": "off",
     "no-console": "off",
     "react/display-name": "off",
-    "jsx-a11y/alt-text": "off"
+    "jsx-a11y/alt-text": "off",
+    "import/extensions": "off",
+    "camelcase": "off"
   }
 }

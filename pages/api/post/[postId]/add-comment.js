@@ -1,9 +1,9 @@
 import { body as validate, validationResult } from 'express-validator';
 import nc from 'next-connect';
-import Comment from '../../../../models/Comment';
 import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
-import connectMongo from '../../../utils/connectMongo';
+import Comment from '../../../../models/Comment';
+import { authOptions } from '../../auth/[...nextauth]';
+import connectMongo from '../../../../utils/connectMongo';
 
 const handler = nc().post(
   validate('body')

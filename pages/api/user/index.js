@@ -2,10 +2,10 @@ import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import nc from 'next-connect';
 import { v2 as cloudinary } from 'cloudinary';
+import { unstable_getServerSession } from 'next-auth/next';
 import User from '../../../models/User';
 import { defaultProfilePicture } from '../../../utils/profileDefaults';
-import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { authOptions } from '../auth/[...nextauth]';
 import connectMongo from '../../../utils/connectMongo';
 
 cloudinary.config({

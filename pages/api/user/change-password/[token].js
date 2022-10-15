@@ -1,8 +1,7 @@
 import nc from 'next-connect';
-import middleware from '../../../../middleware';
 import Token from '../../../../models/Token';
 import User from '../../../../models/User';
-import connectMongo from '../../../utils/connectMongo';
+import connectMongo from '../../../../utils/connectMongo';
 
 const handler = nc().post(async (req, res) => {
   await connectMongo();

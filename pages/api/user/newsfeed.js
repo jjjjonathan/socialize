@@ -1,6 +1,6 @@
 import nc from 'next-connect';
 import { unstable_getServerSession } from 'next-auth/next';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { authOptions } from '../auth/[...nextauth]';
 import User from '../../../models/User';
 import Post from '../../../models/Post';
 import connectMongo from '../../../utils/connectMongo';

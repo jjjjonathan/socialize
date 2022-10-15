@@ -17,7 +17,7 @@ export async function getServerSideProps({ req, res }) {
 
   await connectMongo();
 
-  const fetchedUser = await User.findById(reqUser.id, 'bio');
+  const fetchedUser = await User.findById(session.user.id, 'bio');
   const bio = fetchedUser.bio ? parse(fetchedUser.bio) : null;
 
   return {
