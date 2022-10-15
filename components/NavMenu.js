@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Navbar, Container, Dropdown } from 'react-bootstrap';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import { signOut } from 'next-auth/react';
 import Image from './Image';
 import NavDropdown from './NavDropdown';
 import FlatSpinner from './FlatSpinner';
@@ -10,16 +9,13 @@ import FriendRequestsMenu from './FriendRequestsMenu';
 import styles from './NavMenu.module.css';
 
 const NavMenu = ({ currentUser }) => {
-  const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
     try {
       setIsLoggingOut(true);
-      await axios.post('/api/auth/logout');
-      router.push('/login');
+      signOut();
     } catch (error) {
-      console.log(error);
       setIsLoggingOut(false);
     }
   };
