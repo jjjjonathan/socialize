@@ -16,6 +16,7 @@ const NavMenu = ({ currentUser }) => {
       setIsLoggingOut(true);
       signOut();
     } catch (error) {
+      console.error(error);
       setIsLoggingOut(false);
     }
   };

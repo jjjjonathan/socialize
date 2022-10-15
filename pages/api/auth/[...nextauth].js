@@ -52,11 +52,9 @@ export const authOptions = {
         await connectMongo();
 
         const user = await User.findOne({ username });
-        console.log('email', user?.email);
         if (!user) return null;
 
         const match = await bcrypt.compare(password, user.passwordHash);
-        console.log('match', match);
         if (!match) return null;
 
         return user;
