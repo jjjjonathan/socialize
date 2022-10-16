@@ -24,19 +24,21 @@ const ChangePassword = ({ token }) => {
   const [user, setUser] = useState({});
   const [apiErrors, setApiErrors] = useState([]);
 
-  useEffect(async () => {
-    try {
-      const { data } = await axios.post(`/api/user/change-password/${token}`);
-      setUser(data);
-      setStatus('verified');
-    } catch (error) {
-      console.error(error);
-      if (error.response?.data?.error === 'expired') {
-        setStatus('expired');
-      } else {
-        setStatus('invalid');
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.post(`/api/user/change-password/${token}`);
+        setUser(data);
+        setStatus('verified');
+      } catch (error) {
+        console.error(error);
+        if (error.response?.data?.error === 'expired') {
+          setStatus('expired');
+        } else {
+          setStatus('invalid');
+        }
       }
-    }
+    })();
   }, []);
 
   const handleSubmit = async ({ password, passwordConf }) => {

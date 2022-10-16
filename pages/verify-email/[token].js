@@ -18,17 +18,19 @@ const VerifyToken = ({ token }) => {
 
   const [status, setStatus] = useState('default');
 
-  useEffect(async () => {
-    try {
-      await axios.post(`/api/verify-email/${token}`);
-      setStatus('verified');
-      setTimeout(() => {
-        router.push('/');
-      }, 3000);
-    } catch (error) {
-      console.error(error);
-      setStatus('error');
-    }
+  useEffect(() => {
+    (async () => {
+      try {
+        await axios.post(`/api/verify-email/${token}`);
+        setStatus('verified');
+        setTimeout(() => {
+          router.push('/');
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+        setStatus('error');
+      }
+    })();
   }, []);
 
   const innards = () => {

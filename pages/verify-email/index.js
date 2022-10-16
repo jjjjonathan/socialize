@@ -44,14 +44,16 @@ export async function getServerSideProps({ req, res, query }) {
 const VerifyEmail = ({ email }) => {
   const [status, setStatus] = useState('default');
 
-  useEffect(async () => {
-    try {
-      await axios.post('/api/verify-email', { email });
-      setStatus('sent');
-    } catch (error) {
-      console.error(error);
-      setStatus('error');
-    }
+  useEffect(() => {
+    (async () => {
+      try {
+        await axios.post('/api/verify-email', { email });
+        setStatus('sent');
+      } catch (error) {
+        console.error(error);
+        setStatus('error');
+      }
+    })();
   }, []);
 
   const innards = () => {

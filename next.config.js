@@ -2,6 +2,7 @@ module.exports = {
   reactStrictMode: false,
   images: {
     domains: ['res.cloudinary.com'],
+    dangerouslyAllowSVG: true,
   },
   onDemandEntries: {
     // period (in ms) where the server will keep pages in the buffer
