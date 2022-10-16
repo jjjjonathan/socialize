@@ -40,6 +40,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "eslint": "8.25.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-next": "12.3.1",

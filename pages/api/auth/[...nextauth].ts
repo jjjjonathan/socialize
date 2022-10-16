@@ -1,11 +1,11 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import User from '../../../models/User';
 import connectMongo from '../../../utils/connectMongo';
 import { authPages } from '../../../middleware';
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   pages: authPages,
   callbacks: {
     async signIn({ user }) {

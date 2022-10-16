@@ -2,13 +2,19 @@
 
 import styles from './CircleSpinner.module.css';
 
-const CircleSpinner = ({ color, size }) => {
-  const dimensions = size ? `${size}px` : '40px';
+type Props = {
+  color?: string;
+  size?: string;
+};
+
+const CircleSpinner = ({ color = 'dark', size = '40' }: Props) => {
+  const dimensions = `${size}px`;
 
   return (
     <div
       className={styles.skChase}
       style={{
+        // @ts-ignore
         '--dot-color': `var(--${color || 'dark'})`,
         width: dimensions,
         height: dimensions,

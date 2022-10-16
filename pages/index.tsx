@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
 import { unstable_getServerSession } from 'next-auth/next';
+import { GetServerSideProps } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/Layout';
@@ -9,16 +10,17 @@ import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
 import CircleSpinner from '../components/CircleSpinner';
 import FlatAlert from '../components/FlatAlert';
+import { User } from 'next-auth';
 
-export async function getServerSideProps({ req, res }) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   return {
     props: {
-      currentUser: session.user,
+      currentUser: session?.user,
     },
   };
-}
+};
 
 const Home = ({ currentUser }) => {
   const [newUsersOpen, setNewUsersOpen] = useState(false);
@@ -86,12 +88,12 @@ const Home = ({ currentUser }) => {
     </div>
   );
 
-  const removePostFromFeed = (postId) => {
+  const removePostFromFeed = (postId: string) => {
     const nextState = newsfeed.filter((post) => post.id !== postId);
     setNewsfeed(nextState);
   };
 
-  const updateLikes = (postId, likes) => {
+  const updateLikes = (postId: string, likes) => {
     const nextState = newsfeed.map((post) => {
       if (post.id === postId) {
         return {
