@@ -1,81 +1,70 @@
 import { useState } from 'react';
-import { getCsrfToken } from 'next-auth/react';
-import axios from 'axios';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { unstable_getServerSession } from 'next-auth';
+import { signIn } from 'next-auth/react';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { authOptions } from './api/auth/[...nextauth]';
 import Alert from '../components/Alert';
 import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ query, req, res }) {
+  const { callbackUrl } = query;
+  const session = await unstable_getServerSession(req, res, authOptions);
+
+  if (session)
+    return {
+      redirect: {
+        destination: callbackUrl || '/',
+        permanent: false,
+      },
+    };
+
   return {
     props: {
-      csrfToken: await getCsrfToken(context),
+      callbackUrl: callbackUrl || null,
     },
   };
 }
 
-const Login = ({ csrfToken }) => {
+const Login = ({ callbackUrl }) => {
   const router = useRouter();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleLogin = async ({ username, password }) => {
-    try {
-      setIsError(false);
-      setIsLoggingIn(true);
-      await axios.post('/api/auth/callback/credentials', {
-        csrfToken,
-        username,
-        password,
-      });
+    setIsLoggingIn(true);
+    const res = await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+    });
 
-      // if (!data.isEmailVerified) {
-      //   router.push('/verify-email');
-      // } else {
-      router.push('/');
-      // }
-    } catch (error) {
+    if (res.error) {
+      setError(res.error);
       setIsLoggingIn(false);
-      console.error(error);
-      setIsError(true);
+    } else {
+      router.push(callbackUrl || '/');
     }
   };
-
-  // const handleExampleLogin = async () => {
-  //   try {
-  //     setIsError(false);
-  //     setIsLoggingIn(true);
-  //     await axios.post('/api/auth/login', {
-  //       username: 'example',
-  //       password: process.env.EXAMPLE_USER_PASSWORD,
-  //     });
-  //     router.push('/');
-  //   } catch (error) {
-  //     setIsLoggingIn(false);
-  //     console.error(error);
-  //     setIsError(true);
-  //   }
-  // };
 
   const validationSchema = yup.object().shape({
     username: yup.string().label('Username').required(),
     password: yup.string().label('Password').min(8).max(40).required(),
   });
 
-  const alert = () =>
-    isError ? (
-      <Alert type="error">
-        <p className="mb-0">
-          There was an error logging in! Please check your credentials and try
-          again.
-        </p>
-      </Alert>
-    ) : null;
+  const errorMsg = () => {
+    switch (error) {
+      case 'CredentialsSignin':
+        return 'Your credentials were invalid! Please try again.';
+      default:
+        return 'There was an error logging in! Please try again.';
+    }
+  };
 
   return (
     <Splash
@@ -88,7 +77,11 @@ const Login = ({ csrfToken }) => {
       ) : (
         <div className="auth-form">
           <h1 className="logo text-center mb-5">socialize</h1>
-          {alert()}
+          {error && (
+            <Alert type="error">
+              <p className="mb-0">{errorMsg()}</p>
+            </Alert>
+          )}
           <Formik
             initialValues={{ username: '', password: '' }}
             validationSchema={validationSchema}

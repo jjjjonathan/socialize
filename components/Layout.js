@@ -4,19 +4,23 @@ import { Toaster } from 'react-hot-toast';
 import NavMenu from './NavMenu';
 import styles from './Layout.module.css';
 
-const Layout = ({ pageTitle, children, currentUser }) => (
-  <>
-    <Head>
-      <title>socialize | {pageTitle}</title>
-    </Head>
-    <header>
-      <NavMenu currentUser={currentUser} />
-    </header>
-    <main className={styles.mainContainer}>
-      <Container>{children}</Container>
-    </main>
-    <Toaster position="top-center" />
-  </>
-);
+const Layout = ({ pageTitle, children, currentUser }) => {
+  const title = `socialize | ${pageTitle}`;
+
+  return (
+    <>
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <header>
+        <NavMenu currentUser={currentUser} />
+      </header>
+      <main className={styles.mainContainer}>
+        <Container>{children}</Container>
+      </main>
+      <Toaster position="top-center" />
+    </>
+  );
+};
 
 export default Layout;
