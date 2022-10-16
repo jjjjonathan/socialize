@@ -12,9 +12,7 @@ export default withAuth({
 
 export const config = {
   matcher: [
-    // Reject paths starting with
-    // `signup`, `privacy-policy`, `verify-email`, `api/verify-email` or `api/user`
-    // Includes api paths
-    '/((?!signup|privacy-policy|verify-email|api/verify-email|api/user).*)',
+    // Matches all paths (including API paths) except those starting with the following
+    '/((?!signup|privacy-policy|verify-email|api/verify-email|api/user|change-password).*)',
   ],
 };
