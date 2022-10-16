@@ -1,13 +1,21 @@
+import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from './Splash.module.scss';
 
+type Props = {
+  pageTitle: string;
+  useGlassmorphicBox?: boolean;
+  withPrivacyPolicy?: boolean;
+  children: React.ReactNode;
+};
+
 const Splash = ({
   pageTitle,
-  useGlassmorphicBox,
-  withPrivacyPolicy,
+  useGlassmorphicBox = false,
+  withPrivacyPolicy = false,
   children,
-}) => {
+}: Props) => {
   const title = `socialize | ${pageTitle}`;
 
   return (
