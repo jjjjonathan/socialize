@@ -1,30 +1,27 @@
 import mongoose from 'mongoose';
 
-const CommentSchema = new mongoose.Schema({
-  body: {
+const TokenSchema = new mongoose.Schema({
+  token: {
     type: String,
-    minLength: 1,
-    maxLength: 1000,
     required: true,
   },
   timestamp: {
     type: Date,
     default: Date.now,
   },
-  post: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Post',
-    required: true,
-  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
+  type: {
+    type: 'String',
+    required: true,
+  },
 });
 
 /* eslint-disable no-param-reassign */
-CommentSchema.set('toJSON', {
+TokenSchema.set('toJSON', {
   transform: (doc, ret) => {
     ret.id = ret._id.toString();
     delete ret._id;
@@ -33,6 +30,7 @@ CommentSchema.set('toJSON', {
 });
 
 // this avoids overwrite warning error
+// @ts-ignore
 mongoose.models = {};
 
-export default mongoose.model('Comment', CommentSchema);
+export default mongoose.model('Token', TokenSchema);

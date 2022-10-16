@@ -49,6 +49,7 @@ PostSchema.set('toJSON', {
 });
 
 // this avoids overwrite warning error
+// @ts-ignore
 mongoose.models = {};
 
 export default mongoose.model('Post', PostSchema);

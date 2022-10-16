@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/mongoose-unique-validator": "^1.0.6",
     "eslint": "8.25.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-next": "12.3.1",

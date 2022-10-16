@@ -118,6 +118,7 @@ UserSchema.set('toJSON', {
 UserSchema.plugin(uniqueValidator);
 
 // this avoids overwrite warning error
+// @ts-ignore
 mongoose.models = {};
 
 export default mongoose.model('User', UserSchema);
