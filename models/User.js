@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
-import { defaultUsername } from '../utils/profileDefaults';
 import Post from './Post';
 
 const UserSchema = new mongoose.Schema({
@@ -15,9 +14,7 @@ const UserSchema = new mongoose.Schema({
     minLength: 3,
     maxLength: 30,
     unique: true,
-    default() {
-      return defaultUsername(this.name);
-    },
+    required: true,
   },
   email: {
     type: String,

@@ -11,6 +11,7 @@ if (!MONGODB_URI) {
 let cached = global.mongoose;
 
 if (!cached) {
+  // eslint-disable-next-line no-multi-assign
   cached = global.mongoose = { conn: null, promise: null };
 }
 

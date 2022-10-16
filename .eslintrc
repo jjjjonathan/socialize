@@ -1,6 +1,7 @@
 {
   "extends": ["airbnb-base", "next", "next/core-web-vitals", "prettier"],
   "rules": {
+    "import/prefer-default-export": "off",
     "react-hooks/exhaustive-deps": "off",
     "class-methods-use-this": "off",
     "no-underscore-dangle": "off",

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
@@ -12,7 +11,7 @@ import Splash from '../components/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 
 export async function getServerSideProps({ query, req, res }) {
-  const { callbackUrl } = query;
+  const { callbackUrl, error } = query;
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (session)
@@ -25,31 +24,20 @@ export async function getServerSideProps({ query, req, res }) {
 
   return {
     props: {
-      callbackUrl: callbackUrl || null,
+      error: error || null,
     },
   };
 }
 
-const Login = ({ callbackUrl }) => {
-  const router = useRouter();
-
+const Login = ({ error }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleLogin = async ({ username, password }) => {
     setIsLoggingIn(true);
-    const res = await signIn('credentials', {
+    await signIn('credentials', {
       username,
       password,
-      redirect: false,
     });
-
-    if (res.error) {
-      setError(res.error);
-      setIsLoggingIn(false);
-    } else {
-      router.push(callbackUrl || '/');
-    }
   };
 
   const validationSchema = yup.object().shape({

@@ -18,13 +18,6 @@ export async function getServerSideProps({ req, res, query }) {
     };
   }
 
-  if (session?.user?.email) {
-    return {
-      props: {
-        email: session.user.email,
-      },
-    };
-  }
   if (query?.email) {
     return {
       props: {

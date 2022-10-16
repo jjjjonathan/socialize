@@ -8,6 +8,13 @@ import { authPages } from '../../../middleware';
 export const authOptions = {
   pages: authPages,
   callbacks: {
+    async signIn({ user }) {
+      if (!user.isEmailVerified) {
+        const uriEmail = encodeURIComponent(user.email);
+        return `/verify-email?email=${uriEmail}`;
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       const newToken = { ...token };
 
@@ -39,12 +46,10 @@ export const authOptions = {
         username: {
           label: 'Username',
           type: 'text',
-          placeholder: 'Enter username',
         },
         password: {
           label: 'Password',
           type: 'password',
-          placeholder: 'Password',
         },
       },
       authorize: async ({ username, password }) => {

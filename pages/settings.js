@@ -1,16 +1,16 @@
 import { useState } from 'react';
+import { unstable_getServerSession } from 'next-auth/next';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import parse from 'html-react-parser';
-import { unstable_getServerSession } from 'next-auth/next';
+import connectMongo from '../utils/connectMongo';
+import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
 import Layout from '../components/Layout';
 import ProfilePictureUpload from '../components/ProfilePictureUpload';
 import AboutMeUpdate from '../components/AboutMeUpdate';
-import User from '../models/User';
 import FlatSpinner from '../components/FlatSpinner';
-import connectMongo from '../utils/connectMongo';
 
 export async function getServerSideProps({ req, res }) {
   const session = await unstable_getServerSession(req, res, authOptions);
