@@ -14,9 +14,7 @@ const handler = nc().post(
 
   async (req, res) => {
     await connectMongo();
-
     const session = await unstable_getServerSession(req, res, authOptions);
-    if (!session) return res.status(401).end();
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -32,10 +30,11 @@ const handler = nc().post(
     });
 
     const savedPost = await post.save();
+    const populatedPost = await savedPost.populate(
+      'user',
+      'name username profilePicture',
+    );
 
-    const populatedPost = await savedPost
-      .populate('user', 'name username profilePicture')
-      .execPopulate();
     return res.json(populatedPost);
   },
 );
