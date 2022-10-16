@@ -7,7 +7,7 @@ import parse from 'html-react-parser';
 import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
-import Layout from '../components/Layout';
+import Layout from '../components/layout/Layout';
 import ProfilePictureUpload from '../components/ProfilePictureUpload';
 import AboutMeUpdate from '../components/AboutMeUpdate';
 import FlatSpinner from '../components/FlatSpinner';

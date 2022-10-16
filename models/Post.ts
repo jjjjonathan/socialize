@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import { Post } from '../types/records';
 import Comment from './Comment';
 
-const PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema<Post>({
   body: {
     type: String,
     minLength: 3,
@@ -52,4 +53,4 @@ PostSchema.set('toJSON', {
 // @ts-ignore
 mongoose.models = {};
 
-export default mongoose.model('Post', PostSchema);
+export default mongoose.model<Post>('Post', PostSchema);

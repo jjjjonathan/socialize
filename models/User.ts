@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
+import { User } from '../types/records';
 import Post from './Post';
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<User>({
   name: {
     type: String,
     minLength: 2,
@@ -121,4 +122,4 @@ UserSchema.plugin(uniqueValidator);
 // @ts-ignore
 mongoose.models = {};
 
-export default mongoose.model('User', UserSchema);
+export default mongoose.model<User>('User', UserSchema);

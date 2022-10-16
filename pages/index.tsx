@@ -4,13 +4,12 @@ import { unstable_getServerSession } from 'next-auth/next';
 import { GetServerSideProps } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
 import useNewsfeed from '../hooks/useNewsfeed';
-import Layout from '../components/Layout';
+import Layout from '../components/layout/Layout';
 import NewUsers from '../components/NewUsers';
 import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
 import CircleSpinner from '../components/CircleSpinner';
 import FlatAlert from '../components/FlatAlert';
-import { User } from 'next-auth';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);

@@ -1,21 +1,21 @@
 import { useRouter } from 'next/router';
-import { Row, Col, Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import parse from 'html-react-parser';
 import { unstable_getServerSession } from 'next-auth/next';
+import { Row, Col, Card, Button } from 'react-bootstrap';
+import parse from 'html-react-parser';
 import { authOptions } from '../../api/auth/[...nextauth]';
-import Image from '../../../components/Image';
 import usePostsByUser from '../../../hooks/usePostsByUser';
-import Layout from '../../../components/Layout';
-import PostList from '../../../components/PostList';
-import CircleSpinner from '../../../components/CircleSpinner';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
+import connectMongo from '../../../utils/connectMongo';
+import Image from '../../../components/Image';
+import Layout from '../../../components/layout/Layout';
+import PostList from '../../../components/PostList';
+import CircleSpinner from '../../../components/CircleSpinner';
 import NewPost from '../../../components/NewPost';
 import ProfileFriendButton from '../../../components/ProfileFriendButton';
 import FriendsList from '../../../components/FriendsList';
 import FlatAlert from '../../../components/FlatAlert';
-import connectMongo from '../../../utils/connectMongo';
 
 export async function getServerSideProps({ req, res, query }) {
   const session = await unstable_getServerSession(req, res, authOptions);

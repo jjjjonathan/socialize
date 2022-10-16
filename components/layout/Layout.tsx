@@ -1,10 +1,18 @@
+import React from 'react';
 import Head from 'next/head';
 import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
-import NavMenu from './NavMenu';
+import NavMenu from '../NavMenu';
 import styles from './Layout.module.css';
 
-const Layout = ({ pageTitle, children, currentUser }) => {
+type Props = {
+  pageTitle: string;
+  children: React.ReactNode;
+  // TODO: fix this any type
+  currentUser: any;
+};
+
+const Layout = ({ pageTitle, children, currentUser }: Props) => {
   const title = `socialize | ${pageTitle}`;
 
   return (
