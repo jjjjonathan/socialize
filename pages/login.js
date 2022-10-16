@@ -143,11 +143,13 @@ const Login = ({ callbackUrl }) => {
               Log in with Facebook
             </Button>
           </Link>
-          <Link href="/api/auth/example-login" passHref>
-            <Button variant="outline-dark" className="mt-2 auth-button" as="a">
-              Log in as Example User
-            </Button>
-          </Link>
+          <Button
+            variant="outline-dark"
+            className="mt-2 auth-button"
+            onClick={() => handleLogin({ username: 'example' })}
+          >
+            Log in as Example User
+          </Button>
           <Link href="/signup" passHref>
             <Button variant="outline-dark" className="mt-2 auth-button" as="a">
               Sign up with Email
