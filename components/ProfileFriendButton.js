@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import styles from './ProfileFriendButton.module.css';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import FriendRequestButtons from './FriendRequestButtons';
 
 const ProfileFriendButton = ({

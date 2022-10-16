@@ -10,7 +10,7 @@ import parse from 'html-react-parser';
 import Image from './Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import LikesModal from './LikesModal';
 import Comments from './Comments';
 import useComments from '../hooks/useComments';

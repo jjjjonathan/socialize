@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import styles from './AddFriendButton.module.css';
-import CircleSpinner from './CircleSpinner';
+import CircleSpinner from './spinners/CircleSpinner';
 
 const AddFriendButton = ({ username, onRemove, ...props }) => {
   const [status, setStatus] = useState('default');

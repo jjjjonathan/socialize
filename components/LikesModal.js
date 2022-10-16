@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import Image from './Image';
 import useLikes from '../hooks/useLikes';
-import CircleSpinner from './CircleSpinner';
+import CircleSpinner from './spinners/CircleSpinner';
 import FlatAlert from './FlatAlert';
 import styles from './LikesModal.module.css';
 

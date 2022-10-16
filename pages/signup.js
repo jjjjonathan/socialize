@@ -6,7 +6,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Alert from '../components/Alert';
 import Splash from '../components/layout/Splash';
-import CircleSpinner from '../components/CircleSpinner';
+import CircleSpinner from '../components/spinners/CircleSpinner';
 
 const Signup = () => {
   const router = useRouter();

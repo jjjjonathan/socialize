@@ -8,15 +8,15 @@ import { Form, Button } from 'react-bootstrap';
 import { authOptions } from './api/auth/[...nextauth]';
 import Alert from '../components/Alert';
 import Splash from '../components/layout/Splash';
-import CircleSpinner from '../components/CircleSpinner';
-import { GetServerSideProps } from 'next';
+import CircleSpinner from '../components/spinners/CircleSpinner';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export const getServerSideProps: GetServerSideProps = async ({
-  query,
-  req,
-  res,
-}) => {
-  const { callbackUrl, error } = query;
+export const getServerSideProps: GetServerSideProps<{
+  error?: string | null;
+}> = async ({ query, req, res }) => {
+  const { callbackUrl } = query;
+  const error = query.error as string | undefined;
+
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (session)
@@ -35,7 +35,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   };
 };
 
-const Login = ({ error }) => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const Login = ({ error }: Props) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const handleLogin = async ({

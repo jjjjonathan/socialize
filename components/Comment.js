@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import parse from 'html-react-parser';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import { defaultDate } from '../utils/dateHelpers';
 import Image from './Image';
 import styles from './Comment.module.css';

@@ -11,7 +11,7 @@ import connectMongo from '../../../utils/connectMongo';
 import Image from '../../../components/Image';
 import Layout from '../../../components/layout/Layout';
 import PostList from '../../../components/PostList';
-import CircleSpinner from '../../../components/CircleSpinner';
+import CircleSpinner from '../../../components/spinners/CircleSpinner';
 import NewPost from '../../../components/NewPost';
 import ProfileFriendButton from '../../../components/ProfileFriendButton';
 import FriendsList from '../../../components/FriendsList';

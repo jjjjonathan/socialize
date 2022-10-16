@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import styles from './FriendRequestButtons.module.css';
 
 const FriendRequestButtons = ({ id, onApprove, onDelete }) => {

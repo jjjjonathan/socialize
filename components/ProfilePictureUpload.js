@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, Collapse } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Image from './Image';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 
 const ProfilePictureUpload = ({ currentUser }) => {
   const router = useRouter();

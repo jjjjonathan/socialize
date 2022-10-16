@@ -4,7 +4,7 @@ import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import { signOut } from 'next-auth/react';
 import Image from './Image';
 import NavDropdown from './NavDropdown';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import FriendRequestsMenu from './FriendRequestsMenu';
 import styles from './NavMenu.module.css';
 

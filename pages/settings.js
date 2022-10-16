@@ -10,7 +10,7 @@ import { authOptions } from './api/auth/[...nextauth]';
 import Layout from '../components/layout/Layout';
 import ProfilePictureUpload from '../components/ProfilePictureUpload';
 import AboutMeUpdate from '../components/AboutMeUpdate';
-import FlatSpinner from '../components/FlatSpinner';
+import FlatSpinner from '../components/spinners/FlatSpinner';
 
 export async function getServerSideProps({ req, res }) {
   const session = await unstable_getServerSession(req, res, authOptions);

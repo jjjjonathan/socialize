@@ -3,7 +3,7 @@ import { unstable_getServerSession } from 'next-auth/next';
 import axios from 'axios';
 import { authOptions } from '../api/auth/[...nextauth]';
 import Splash from '../../components/layout/Splash';
-import CircleSpinner from '../../components/CircleSpinner';
+import CircleSpinner from '../../components/spinners/CircleSpinner';
 import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ req, res, query }) {

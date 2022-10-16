@@ -1,6 +1,6 @@
 import useFriendRequests from '../hooks/useFriendRequests';
 import FlatAlert from './FlatAlert';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import FriendRequest from './FriendRequest';
 
 const Wrapper = ({ children, props }) => (

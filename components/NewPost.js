@@ -4,7 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 
 const NewPost = ({ addNewPostToFeed }) => {
   const handleNewPost = async ({ newPost }, { resetForm }) => {

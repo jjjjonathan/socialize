@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
 import { unstable_getServerSession } from 'next-auth/next';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/layout/Layout';
 import NewUsers from '../components/NewUsers';
 import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
-import CircleSpinner from '../components/CircleSpinner';
+import CircleSpinner from '../components/spinners/CircleSpinner';
 import FlatAlert from '../components/FlatAlert';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
@@ -21,7 +21,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   };
 };
 
-const Home = ({ currentUser }) => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const Home = ({ currentUser }: Props) => {
   const [newUsersOpen, setNewUsersOpen] = useState(false);
   const [newPostOpen, setNewPostOpen] = useState(false);
 

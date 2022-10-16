@@ -1,4 +1,4 @@
-import FlatSpinner from './FlatSpinner';
+import FlatSpinner from './spinners/FlatSpinner';
 import FlatAlert from './FlatAlert';
 import Comment from './Comment';
 

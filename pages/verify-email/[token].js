@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Splash from '../../components/layout/Splash';
-import CircleSpinner from '../../components/CircleSpinner';
+import CircleSpinner from '../../components/spinners/CircleSpinner';
 import Alert from '../../components/Alert';
 
 export async function getServerSideProps({ query }) {
