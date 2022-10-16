@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
-import NavMenu from '../NavMenu';
+import NavMenu from '../nav/NavMenu';
 import styles from './Layout.module.css';
 
 type Props = {
