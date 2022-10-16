@@ -1,5 +1,10 @@
 import { Types } from 'mongoose';
 
+export type Friend = {
+  timestamp: Date;
+  user: Types.ObjectId;
+};
+
 export type User = {
   name: string;
   username: string;
@@ -10,14 +15,8 @@ export type User = {
   profilePicture: string;
   bio?: string;
   isEmailVerified: boolean;
-  friends: {
-    timestamp: Date;
-    user: Types.ObjectId;
-  }[];
-  friendRequests: {
-    timestamp: Date;
-    user: Types.ObjectId;
-  }[];
+  friends: Friend[];
+  friendRequests: Friend[];
 };
 
 export type Post = {

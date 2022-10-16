@@ -9,8 +9,13 @@ import { authOptions } from './api/auth/[...nextauth]';
 import Alert from '../components/Alert';
 import Splash from '../components/layout/Splash';
 import CircleSpinner from '../components/CircleSpinner';
+import { GetServerSideProps } from 'next';
 
-export async function getServerSideProps({ query, req, res }) {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+  res,
+}) => {
   const { callbackUrl, error } = query;
   const session = await unstable_getServerSession(req, res, authOptions);
 
@@ -20,6 +25,7 @@ export async function getServerSideProps({ query, req, res }) {
         destination: callbackUrl || '/',
         permanent: false,
       },
+      props: {},
     };
 
   return {
@@ -27,12 +33,18 @@ export async function getServerSideProps({ query, req, res }) {
       error: error || null,
     },
   };
-}
+};
 
 const Login = ({ error }) => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleLogin = async ({ username, password }) => {
+  const handleLogin = async ({
+    username,
+    password,
+  }: {
+    username?: string;
+    password?: string;
+  }) => {
     setIsLoggingIn(true);
     await signIn('credentials', {
       username,
