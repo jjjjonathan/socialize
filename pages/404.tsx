@@ -1,4 +1,4 @@
-import Splash from '../components/Splash';
+import Splash from '../components/layout/Splash';
 
 const Custom404 = () => (
   <Splash pageTitle="404 Not Found">

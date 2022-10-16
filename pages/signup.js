@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Alert from '../components/Alert';
-import Splash from '../components/Splash';
+import Splash from '../components/layout/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 
 const Signup = () => {

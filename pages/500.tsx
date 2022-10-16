@@ -1,4 +1,4 @@
-import Splash from '../components/Splash';
+import Splash from '../components/layout/Splash';
 
 const Custom500 = () => (
   <Splash pageTitle="500 Internal Server Error">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import Splash from '../../components/Splash';
+import Splash from '../../components/layout/Splash';
 import CircleSpinner from '../../components/CircleSpinner';
 import Alert from '../../components/Alert';
 

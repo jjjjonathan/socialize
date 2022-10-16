@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { authOptions } from './api/auth/[...nextauth]';
 import Alert from '../components/Alert';
-import Splash from '../components/Splash';
+import Splash from '../components/layout/Splash';
 import CircleSpinner from '../components/CircleSpinner';
 
 export async function getServerSideProps({ query, req, res }) {
