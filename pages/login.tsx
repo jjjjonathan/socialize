@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import { unstable_getServerSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
@@ -6,10 +7,9 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { authOptions } from './api/auth/[...nextauth]';
-import Alert from '../components/Alert';
+import Alert from '../components/ui/Alert';
 import Splash from '../components/layout/Splash';
 import CircleSpinner from '../components/spinners/CircleSpinner';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 export const getServerSideProps: GetServerSideProps<{
   error?: string | null;

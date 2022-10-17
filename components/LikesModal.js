@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Image from './Image';
 import useLikes from '../hooks/useLikes';
 import CircleSpinner from './spinners/CircleSpinner';
-import FlatAlert from './FlatAlert';
+import FlatAlert from './ui/FlatAlert';
 import styles from './LikesModal.module.css';
 
 const LikesModal = ({ postId, setShow, show }) => {

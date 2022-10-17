@@ -3,7 +3,7 @@ import Image from './Image';
 import styles from './NewUsers.module.css';
 import useNewUsers from '../hooks/useNewUsers';
 import FlatSpinner from './spinners/FlatSpinner';
-import FlatAlert from './FlatAlert';
+import FlatAlert from './ui/FlatAlert';
 import AddFriendButton from './AddFriendButton';
 
 const NewUsers = () => {

@@ -1,6 +1,6 @@
 // Thanks to https://tobiasahlin.com/spinkit/
 
-import { CSSProperties, DetailedHTMLProps, HTMLAttributes } from 'react';
+import { CSSProperties } from 'react';
 import styles from './FlatSpinner.module.css';
 
 type Props = {
@@ -8,7 +8,6 @@ type Props = {
   size?: string;
   className?: string;
   style?: CSSProperties;
-  props?: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
 };
 
 const FlatSpinner = ({
@@ -16,7 +15,6 @@ const FlatSpinner = ({
   size,
   className = '',
   style = {},
-  props = {},
 }: Props) => {
   const sizeNum = Number(size);
 
@@ -35,17 +33,16 @@ const FlatSpinner = ({
         width,
         ...style,
       }}
-      {...props}
     >
       <div
         className={styles.bounce1}
         style={{ width: divDimensions, height: divDimensions }}
-      ></div>
+      />
       <div
         className={styles.bounce2}
         style={{ width: divDimensions, height: divDimensions }}
-      ></div>
-      <div style={{ width: divDimensions, height: divDimensions }}></div>
+      />
+      <div style={{ width: divDimensions, height: divDimensions }} />
     </div>
   );
 };

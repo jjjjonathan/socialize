@@ -1,5 +1,5 @@
 import FlatSpinner from './spinners/FlatSpinner';
-import FlatAlert from './FlatAlert';
+import FlatAlert from './ui/FlatAlert';
 import Comment from './Comment';
 
 const Comments = ({

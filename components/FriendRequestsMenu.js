@@ -1,5 +1,5 @@
 import useFriendRequests from '../hooks/useFriendRequests';
-import FlatAlert from './FlatAlert';
+import FlatAlert from './ui/FlatAlert';
 import FlatSpinner from './spinners/FlatSpinner';
 import FriendRequest from './FriendRequest';
 

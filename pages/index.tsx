@@ -9,7 +9,7 @@ import NewUsers from '../components/NewUsers';
 import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
 import CircleSpinner from '../components/spinners/CircleSpinner';
-import FlatAlert from '../components/FlatAlert';
+import FlatAlert from '../components/ui/FlatAlert';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);

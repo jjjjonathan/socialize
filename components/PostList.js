@@ -1,4 +1,4 @@
-import FlatAlert from './FlatAlert';
+import FlatAlert from './ui/FlatAlert';
 import PostCard from './PostCard';
 
 const PostList = ({ posts, updateLikes, currentUser, removePostFromList }) => {
