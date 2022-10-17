@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import parse from 'html-react-parser';
 import FlatSpinner from './spinners/FlatSpinner';
 import { defaultDate } from '../utils/dateHelpers';
-import Image from './Image';
+import Image from './ui/Image';
 import styles from './Comment.module.css';
 
 const Comment = ({ comment, currentUser, removeCommentFromList }) => {

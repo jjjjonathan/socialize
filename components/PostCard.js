@@ -7,7 +7,7 @@ import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import parse from 'html-react-parser';
-import Image from './Image';
+import Image from './ui/Image';
 import { defaultDate } from '../utils/dateHelpers';
 import styles from './PostCard.module.css';
 import FlatSpinner from './spinners/FlatSpinner';

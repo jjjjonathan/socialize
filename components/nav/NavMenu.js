@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import { signOut } from 'next-auth/react';
-import Image from '../Image';
+import Image from '../ui/Image';
 import NavDropdown from './NavDropdown';
 import FlatSpinner from '../spinners/FlatSpinner';
 import FriendRequestsMenu from '../FriendRequestsMenu';

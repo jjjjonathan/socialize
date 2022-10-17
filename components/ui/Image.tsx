@@ -1,6 +1,15 @@
-import NextImage from 'next/image';
+import NextImage, { ImageProps } from 'next/image';
 import Link from 'next/link';
 import { Cloudinary } from 'cloudinary-core';
+
+interface Props extends ImageProps {
+  publicId: string;
+  variant?: 'circle';
+  size: string;
+  profilePicName: string;
+  href?: string;
+  blurPlaceholder?: boolean;
+}
 
 const Image = ({
   publicId,
@@ -10,19 +19,22 @@ const Image = ({
   profilePicName,
   className,
   href,
-  blurPlaceholder,
+  blurPlaceholder = false,
   ...props
-}) => {
+}: Props) => {
+  const sizeNum = Number(size);
+
   const cl = new Cloudinary({
     cloud_name: 'freespirited-turtledove',
     secure: true,
   });
 
   const src = cl.url(publicId, {
-    width: size * 2,
-    height: size * 2,
+    width: sizeNum * 2,
+    height: sizeNum * 2,
     crop: 'scale',
   });
+
   const blurDataURL = cl.url(publicId, {
     width: 10,
     height: 10,
@@ -45,22 +57,16 @@ const Image = ({
       return definedClassName;
     };
 
-    const blurProps = blurPlaceholder
-      ? {
-          placeholder: 'blur',
-          blurDataURL,
-        }
-      : {};
-
     return (
       <NextImage
         className={imageClassName()}
-        src={src}
         alt={profilePicName ? `Profile picture of ${profilePicName}` : alt}
         width={size}
         height={size}
-        {...blurProps}
+        placeholder={blurPlaceholder ? 'blur' : undefined}
+        blurDataURL={blurPlaceholder ? blurDataURL : undefined}
         {...props}
+        src={src}
       />
     );
   };

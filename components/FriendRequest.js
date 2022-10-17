@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from './Image';
+import Image from './ui/Image';
 import { defaultDate } from '../utils/dateHelpers';
 import FriendRequestButtons from './FriendRequestButtons';
 

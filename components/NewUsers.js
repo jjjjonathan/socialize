@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from './Image';
+import Image from './ui/Image';
 import styles from './NewUsers.module.css';
 import useNewUsers from '../hooks/useNewUsers';
 import FlatSpinner from './spinners/FlatSpinner';

@@ -1,7 +1,7 @@
 import { Modal } from 'react-bootstrap';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import Image from './Image';
+import Image from './ui/Image';
 import useLikes from '../hooks/useLikes';
 import CircleSpinner from './spinners/CircleSpinner';
 import FlatAlert from './ui/FlatAlert';
