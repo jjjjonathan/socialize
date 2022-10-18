@@ -1,11 +1,13 @@
 import useSWR from 'swr';
 import { AxiosError } from 'axios';
-import { Comment } from '../types/records';
+import { CommentRes } from '../types/records';
 
 const useComments = (postId: string) => {
-  const { data, error, mutate } = useSWR<Comment[], AxiosError>(
+  const { data, error, mutate } = useSWR<CommentRes[], AxiosError>(
     `/api/post/${postId}/comments`,
   );
+
+  console.log('comments res', data);
 
   return {
     comments: data,

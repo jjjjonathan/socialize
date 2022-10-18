@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import { Token } from '../types/records';
+import { TokenRecord } from '../types/records';
 
-const TokenSchema = new mongoose.Schema<Token>({
+const TokenSchema = new mongoose.Schema<TokenRecord>({
   token: {
     type: String,
     required: true,
@@ -34,4 +34,4 @@ TokenSchema.set('toJSON', {
 // @ts-ignore
 mongoose.models = {};
 
-export default mongoose.model<Token>('Token', TokenSchema);
+export default mongoose.model<TokenRecord>('Token', TokenSchema);

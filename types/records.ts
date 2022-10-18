@@ -1,11 +1,15 @@
 import { Types } from 'mongoose';
 
-export type Friend = {
+interface Res {
+  id: string;
+}
+
+export interface Friend {
   timestamp: Date;
   user: Types.ObjectId;
-};
+}
 
-export type User = {
+export interface UserRecord {
   name: string;
   username: string;
   email: string;
@@ -17,25 +21,36 @@ export type User = {
   isEmailVerified: boolean;
   friends: Friend[];
   friendRequests: Friend[];
-};
+}
 
-export type Post = {
+export interface UserRes extends Res, Omit<UserRecord, 'userSince'> {
+  userSince: string;
+}
+
+export interface PostRecord {
   body: string;
   timestamp: Date;
   user: Types.ObjectId;
   likes: Types.ObjectId[];
-};
+}
 
-export type Comment = {
+export interface CommentRecord {
   body: string;
   timestamp: Date;
   post: Types.ObjectId;
   user: Types.ObjectId;
-};
+}
 
-export type Token = {
+export interface CommentRes
+  extends Res,
+    Omit<CommentRecord, 'timestamp' | 'post' | 'user'> {
+  timestamp: string;
+  user: Pick<UserRes, 'id' | 'name' | 'username' | 'profilePicture'>;
+}
+
+export interface TokenRecord {
   token: string;
   timestamp: Date;
   user: Types.ObjectId;
   type: string;
-};
+}

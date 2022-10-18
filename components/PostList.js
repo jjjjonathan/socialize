@@ -1,5 +1,5 @@
 import FlatAlert from './ui/FlatAlert';
-import PostCard from './PostCard';
+import PostCard from './post/PostCard';
 
 const PostList = ({ posts, updateLikes, currentUser, removePostFromList }) => {
   if (posts.length === 0)

@@ -7,15 +7,29 @@ import { Formik, Form as FormikForm } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import parse from 'html-react-parser';
-import Image from './ui/Image';
-import { defaultDate } from '../utils/dateHelpers';
+import Image from '../ui/Image';
+import { defaultDate } from '../../utils/dateHelpers';
 import styles from './PostCard.module.css';
-import FlatSpinner from './spinners/FlatSpinner';
-import LikesModal from './LikesModal';
-import Comments from './Comments';
-import useComments from '../hooks/useComments';
+import FlatSpinner from '../spinners/FlatSpinner';
+import LikesModal from '../LikesModal';
+import Comments from '../Comments';
+import useComments from '../../hooks/useComments';
+import { Post } from '../../types/records';
 
-const PostCard = ({ post, updateLikes, currentUser, removePostFromList }) => {
+type Props = {
+  post: Post;
+  // TODO: fix 3 types
+  updateLikes: any;
+  currentUser: any;
+  removePostFromList: any;
+};
+
+const PostCard = ({
+  post,
+  updateLikes,
+  currentUser,
+  removePostFromList,
+}: Props) => {
   const [likeStatus, setLikeStatus] = useState('default');
   const [showModal, setShowModal] = useState(false);
   const [commentsOpen, setCommentsOpen] = useState(false);

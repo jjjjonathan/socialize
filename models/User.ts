@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 import uniqueValidator from 'mongoose-unique-validator';
-import { User } from '../types/records';
+import { UserRecord } from '../types/records';
 import Post from './Post';
 
-const UserSchema = new mongoose.Schema<User>({
+const UserSchema = new mongoose.Schema<UserRecord>({
   name: {
     type: String,
     minLength: 2,
@@ -90,11 +90,20 @@ UserSchema.virtual('requestedFriends', {
   foreignField: 'friendRequests.user',
 });
 
+interface TransformUserRecord
+  extends Omit<UserRecord, 'friendRequests' | 'friends'> {
+  id: string;
+  _id?: Types.ObjectId;
+  __v?: number;
+  friendRequests: any[];
+  friends: any[];
+}
+
 /* eslint-disable no-param-reassign */
 UserSchema.set('toJSON', {
   virtuals: true,
-  transform: (doc, ret) => {
-    ret.id = ret._id.toString();
+  transform: (doc, ret: TransformUserRecord) => {
+    ret.id = ret._id!.toString();
     delete ret._id;
 
     delete ret.__v;
@@ -122,4 +131,4 @@ UserSchema.plugin(uniqueValidator);
 // @ts-ignore
 mongoose.models = {};
 
-export default mongoose.model<User>('User', UserSchema);
+export default mongoose.model<UserRecord>('User', UserSchema);
