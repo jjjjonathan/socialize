@@ -54,3 +54,12 @@ export interface TokenRecord {
   user: Types.ObjectId;
   type: string;
 }
+
+export interface FriendRes extends Res {
+  timestamp: string;
+  user: Pick<UserRecord, 'name' | 'username' | 'profilePicture'> & Res;
+}
+
+export interface FriendRequestsRes extends Res {
+  friendRequests: FriendRes[];
+}

@@ -7,8 +7,6 @@ const useComments = (postId: string) => {
     `/api/post/${postId}/comments`,
   );
 
-  console.log('comments res', data);
-
   return {
     comments: data,
     isCommentsLoading: !error && !data,

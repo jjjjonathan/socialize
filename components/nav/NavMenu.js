@@ -5,7 +5,7 @@ import { signOut } from 'next-auth/react';
 import Image from '../ui/Image';
 import NavDropdown from './NavDropdown';
 import FlatSpinner from '../spinners/FlatSpinner';
-import FriendRequestsMenu from '../FriendRequestsMenu';
+import FriendRequestsMenu from './FriendRequestsMenu';
 import styles from './NavMenu.module.css';
 
 const NavMenu = ({ currentUser }) => {

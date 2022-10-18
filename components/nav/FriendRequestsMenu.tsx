@@ -1,12 +1,11 @@
-import useFriendRequests from '../hooks/useFriendRequests';
-import FlatAlert from './ui/FlatAlert';
-import FlatSpinner from './spinners/FlatSpinner';
-import FriendRequest from './FriendRequest';
+import React from 'react';
+import useFriendRequests from '../../hooks/useFriendRequests';
+import FlatAlert from '../ui/FlatAlert';
+import FlatSpinner from '../spinners/FlatSpinner';
+import FriendRequest from '../FriendRequest';
 
-const Wrapper = ({ children, props }) => (
-  <div className="px-4 py-1 font-weight-normal" {...props}>
-    {children}
-  </div>
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+  <div className="px-4 py-1 font-weight-normal">{children}</div>
 );
 
 const FriendRequestsMenu = () => {
@@ -17,12 +16,13 @@ const FriendRequestsMenu = () => {
     setFriendRequests,
   } = useFriendRequests();
 
-  const onRemove = (userId) => {
+  const onRemove = (userId: string) => {
     const nextState = {
-      ...friendRequests,
-      friendRequests: friendRequests.friendRequests.filter(
-        (friendReq) => userId !== friendReq.user.id,
-      ),
+      id: friendRequests!.id,
+      friendRequests:
+        friendRequests?.friendRequests.filter(
+          (friendReq) => userId !== friendReq.user.id,
+        ) || [],
     };
     setFriendRequests(nextState);
   };
@@ -43,7 +43,7 @@ const FriendRequestsMenu = () => {
     );
   }
 
-  if (friendRequests.friendRequests?.length === 0) {
+  if (friendRequests?.friendRequests?.length === 0) {
     return (
       <Wrapper>
         <FlatAlert>No friend requests</FlatAlert>
@@ -53,7 +53,7 @@ const FriendRequestsMenu = () => {
 
   return (
     <Wrapper>
-      {friendRequests.friendRequests.map((friendReq) => (
+      {friendRequests?.friendRequests.map((friendReq) => (
         <FriendRequest
           friendReq={friendReq}
           onRemove={onRemove}

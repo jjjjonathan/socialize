@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios';
 import useSWR from 'swr';
-import { Friend } from '../types/records';
+import { FriendRequestsRes } from '../types/records';
 
 const useFriendRequests = () => {
-  const { data, error, mutate } = useSWR<Friend[], AxiosError>(
+  const { data, error, mutate } = useSWR<FriendRequestsRes, AxiosError>(
     `/api/user/friend-requests`,
   );
 
