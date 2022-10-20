@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth/next';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import parse from 'html-react-parser';
+import { Session } from 'next-auth';
 import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
@@ -12,23 +14,32 @@ import ProfilePictureUpload from '../components/ProfilePictureUpload';
 import AboutMeUpdate from '../components/AboutMeUpdate';
 import FlatSpinner from '../components/spinners/FlatSpinner';
 
-export async function getServerSideProps({ req, res }) {
+export const getServerSideProps: GetServerSideProps<{
+  currentUser: Session['user'];
+  bio: string | JSX.Element | JSX.Element[] | null;
+  email: string | null;
+}> = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   await connectMongo();
 
-  const fetchedUser = await User.findById(session.user.id, 'bio');
-  const bio = fetchedUser.bio ? parse(fetchedUser.bio) : null;
+  const fetchedUser = await User.findById(session!.user.id, 'bio email');
+
+  const bio = fetchedUser?.bio ? parse(fetchedUser.bio) : null;
+  const email = fetchedUser?.email || null;
 
   return {
     props: {
-      currentUser: session.user,
+      currentUser: session!.user,
       bio,
+      email,
     },
   };
-}
+};
 
-const Settings = ({ currentUser, bio }) => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const Settings = ({ currentUser, bio, email }: Props) => {
   const [passwordStatus, setPasswordStatus] = useState('default');
 
   const handlePasswordReset = async () => {
@@ -53,8 +64,8 @@ const Settings = ({ currentUser, bio }) => {
             <i
               className="bi bi-check h3"
               style={{ position: 'relative', top: 4 }}
-            ></i>
-            Email sent to {currentUser.email}
+            />
+            Email sent to {email}
           </p>
         );
       default:

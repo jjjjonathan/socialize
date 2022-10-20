@@ -2,7 +2,7 @@ import NextImage, { ImageProps } from 'next/image';
 import Link from 'next/link';
 import { Cloudinary } from 'cloudinary-core';
 
-interface Props extends ImageProps {
+interface Props extends Omit<ImageProps, 'src'> {
   publicId: string;
   variant?: 'circle';
   size: string;

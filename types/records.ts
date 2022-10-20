@@ -63,3 +63,7 @@ export interface FriendRes extends Res {
 export interface FriendRequestsRes extends Res {
   friendRequests: FriendRes[];
 }
+
+export interface LikesRes
+  extends Res,
+    Pick<UserRecord, 'name' | 'username' | 'profilePicture'> {}

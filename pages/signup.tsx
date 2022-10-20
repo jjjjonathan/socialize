@@ -4,26 +4,35 @@ import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import Alert from '../components/Alert';
+import { ApiError } from '../types/misc';
+import Alert from '../components/ui/Alert';
 import Splash from '../components/layout/Splash';
 import CircleSpinner from '../components/spinners/CircleSpinner';
 
 const Signup = () => {
   const router = useRouter();
   const [isSigningUp, setIsSigningUp] = useState(false);
-  const [apiErrors, setApiErrors] = useState([]);
+  const [apiErrors, setApiErrors] = useState<ApiError[]>([]);
 
-  const handleSignup = async (values) => {
+  const initialValues = {
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    passwordConf: '',
+  };
+
+  const handleSignup = async (values: typeof initialValues) => {
     try {
       setApiErrors([]);
       setIsSigningUp(true);
       const { data } = await axios.post('/api/user', values);
       const uriEmail = encodeURIComponent(data.email);
       router.push(`/verify-email?email=${uriEmail}`);
-    } catch (error) {
+    } catch (error: any) {
       setIsSigningUp(false);
-      if (error.response?.data?.errors) {
-        setApiErrors(error.response.data.errors);
+      if (error?.response?.data?.errors) {
+        setApiErrors(error.response.data.errors as ApiError[]);
       }
       console.error(error);
     }
@@ -72,13 +81,7 @@ const Signup = () => {
           <h1 className="logo text-center mb-5">socialize</h1>
           {alert()}
           <Formik
-            initialValues={{
-              name: '',
-              username: '',
-              email: '',
-              password: '',
-              passwordConf: '',
-            }}
+            initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSignup}
           >

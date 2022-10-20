@@ -15,5 +15,8 @@
         "allow": ["error"]
       }
     ]
+  },
+  "globals": {
+    "JSX": true
   }
 }

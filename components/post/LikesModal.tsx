@@ -1,13 +1,19 @@
-import { Modal } from 'react-bootstrap';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import Link from 'next/link';
-import { useEffect } from 'react';
-import Image from './ui/Image';
-import useLikes from '../hooks/useLikes';
-import CircleSpinner from './spinners/CircleSpinner';
-import FlatAlert from './ui/FlatAlert';
+import { Modal } from 'react-bootstrap';
+import useLikes from '../../hooks/useLikes';
+import Image from '../ui/Image';
+import CircleSpinner from '../spinners/CircleSpinner';
+import FlatAlert from '../ui/FlatAlert';
 import styles from './LikesModal.module.css';
 
-const LikesModal = ({ postId, setShow, show }) => {
+type Props = {
+  postId: string;
+  setShow: Dispatch<SetStateAction<boolean>>;
+  show: boolean;
+};
+
+const LikesModal = ({ postId, setShow, show }: Props) => {
   const { likes, isLikesError, isLikesLoading, setLikes } = useLikes(postId);
 
   useEffect(() => {
@@ -23,7 +29,7 @@ const LikesModal = ({ postId, setShow, show }) => {
 
     return (
       <ul>
-        {likes.map((like) => (
+        {likes?.map((like) => (
           <div className="d-flex align-items-center mb-2" key={like.id}>
             <Image
               publicId={like.profilePicture}

@@ -11,7 +11,7 @@ import Image from '../ui/Image';
 import { defaultDate } from '../../utils/dateHelpers';
 import styles from './PostCard.module.css';
 import FlatSpinner from '../spinners/FlatSpinner';
-import LikesModal from '../LikesModal';
+import LikesModal from './LikesModal';
 import Comments from '../Comments';
 import useComments from '../../hooks/useComments';
 import { Post } from '../../types/records';
