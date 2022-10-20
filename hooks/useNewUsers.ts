@@ -1,7 +1,8 @@
 import useSWR from 'swr';
+import { NewUserRes } from '../types/records';
 
 const useNewUsers = () => {
-  const { data, error, mutate } = useSWR(`/api/users/new`);
+  const { data, error, mutate } = useSWR<NewUserRes[]>(`/api/users/new`);
 
   return {
     newUsers: data,

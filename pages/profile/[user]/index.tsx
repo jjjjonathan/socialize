@@ -1,3 +1,4 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { unstable_getServerSession } from 'next-auth/next';
@@ -8,21 +9,26 @@ import usePostsByUser from '../../../hooks/usePostsByUser';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import connectMongo from '../../../utils/connectMongo';
-import Image from '../../../components/Image';
+import Image from '../../../components/ui/Image';
 import Layout from '../../../components/layout/Layout';
 import PostList from '../../../components/PostList';
 import CircleSpinner from '../../../components/spinners/CircleSpinner';
 import NewPost from '../../../components/NewPost';
 import ProfileFriendButton from '../../../components/ProfileFriendButton';
-import FriendsList from '../../../components/FriendsList';
-import FlatAlert from '../../../components/FlatAlert';
+import FriendsList from '../../../components/profile/FriendsList';
+import FlatAlert from '../../../components/ui/FlatAlert';
 
-export async function getServerSideProps({ req, res, query }) {
+export const getServerSideProps: GetServerSideProps<{
+  profile: any;
+  currentUser: any;
+  isOwnProfile: boolean;
+  friendStatus: any;
+}> = async ({ req, res, query }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   await connectMongo();
 
-  const sessionUserId = session.user.id;
+  const sessionUserId = session?.user.id;
 
   const sessionUser = await User.findById(sessionUserId);
 
@@ -63,19 +69,25 @@ export async function getServerSideProps({ req, res, query }) {
   }
 
   const isOwnProfile = sessionUserId === user.id;
-  const profile = JSON.parse(JSON.stringify(user));
 
   return {
     props: {
       isOwnProfile,
-      profile,
+      profile: user,
       currentUser: session.user,
       friendStatus,
     },
   };
-}
+};
 
-const Profile = ({ profile, currentUser, isOwnProfile, friendStatus }) => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const Profile = ({
+  profile,
+  currentUser,
+  isOwnProfile,
+  friendStatus,
+}: Props) => {
   const router = useRouter();
   const { user } = router.query;
   const {

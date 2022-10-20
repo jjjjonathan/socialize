@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-interface Res {
+export interface Res {
   id: string;
 }
 
@@ -26,6 +26,12 @@ export interface UserRecord {
 export interface UserRes extends Res, Omit<UserRecord, 'userSince'> {
   userSince: string;
 }
+
+export interface NewUserRes
+  extends Pick<
+    UserRes,
+    'id' | 'name' | 'profilePicture' | 'userSince' | 'username'
+  > {}
 
 export interface PostRecord {
   body: string;
@@ -67,3 +73,15 @@ export interface FriendRequestsRes extends Res {
 export interface LikesRes
   extends Res,
     Pick<UserRecord, 'name' | 'username' | 'profilePicture'> {}
+
+export interface NewsfeedRes extends Res {
+  body: string;
+  timestamp: string;
+  commentCount: number;
+  likes: string[];
+  user: Pick<UserRecord, 'name' | 'username' | 'profilePicture'> & Res;
+}
+
+export interface PostsByUserRes extends Res {
+  posts: NewsfeedRes[];
+}

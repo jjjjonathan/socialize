@@ -4,10 +4,14 @@ import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import FlatSpinner from './spinners/FlatSpinner';
+import FlatSpinner from '../spinners/FlatSpinner';
 
-const AboutMeUpdate = ({ originalBio }) => {
-  const handleUpdateBio = async ({ bio }) => {
+type Props = {
+  originalBio?: string;
+};
+
+const AboutMeUpdate = ({ originalBio = '' }: Props) => {
+  const handleUpdateBio = async ({ bio }: { bio: string }) => {
     try {
       await axios.post('/api/user/bio', { bio });
       toast.success('Successfully updated About Me!');
@@ -23,7 +27,7 @@ const AboutMeUpdate = ({ originalBio }) => {
 
   return (
     <Formik
-      initialValues={{ bio: originalBio || '' }}
+      initialValues={{ bio: originalBio }}
       validationSchema={validationSchema}
       onSubmit={handleUpdateBio}
     >
@@ -63,11 +67,11 @@ const AboutMeUpdate = ({ originalBio }) => {
               </FormikForm>
             </Card.Body>
           </Card>
-          {errors.bio && touched.bio ? (
+          {errors.bio && touched.bio && (
             <div className="invalid-feedback new-post-validation-error">
               {errors.bio}
             </div>
-          ) : null}
+          )}
         </>
       )}
     </Formik>

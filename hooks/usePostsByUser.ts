@@ -1,7 +1,10 @@
 import useSWR from 'swr';
+import { PostsByUserRes } from '../types/records';
 
-const usePostsByUser = (username) => {
-  const { data, error, mutate } = useSWR(`/api/user/${username}/posts`);
+const usePostsByUser = (username: string) => {
+  const { data, error, mutate } = useSWR<PostsByUserRes>(
+    `/api/user/${username}/posts`,
+  );
 
   return {
     postsByUser: data,

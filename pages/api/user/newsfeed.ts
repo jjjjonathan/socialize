@@ -1,19 +1,25 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { unstable_getServerSession } from 'next-auth/next';
 import { authOptions } from '../auth/[...nextauth]';
+import connectMongo from '../../../utils/connectMongo';
 import User from '../../../models/User';
 import Post from '../../../models/Post';
-import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc().get(async (req, res) => {
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.get(async (req, res) => {
   await connectMongo();
 
   const session = await unstable_getServerSession(req, res, authOptions);
   if (!session) return res.status(401).end();
 
   const { id } = session.user;
-  const { friends } = await User.findById(id, 'friends');
-  const friendIds = friends.map((friend) => friend.user);
+  const user = await User.findById(id, 'friends');
+
+  if (!user) return res.status(401).end();
+
+  const friendIds = user.friends.map((friend) => friend.user);
   const allIds = [...friendIds, id];
 
   const posts = await Post.find({
@@ -28,4 +34,4 @@ const handler = nc().get(async (req, res) => {
   return res.json(posts);
 });
 
-export default handler;
+export default router;

@@ -5,7 +5,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/layout/Layout';
-import NewUsers from '../components/NewUsers';
+import NewUsers from '../components/home/NewUsers';
 import PostList from '../components/PostList';
 import NewPost from '../components/NewPost';
 import CircleSpinner from '../components/spinners/CircleSpinner';

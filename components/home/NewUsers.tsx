@@ -1,16 +1,17 @@
 import Link from 'next/link';
-import Image from './ui/Image';
+import Image from '../ui/Image';
 import styles from './NewUsers.module.css';
-import useNewUsers from '../hooks/useNewUsers';
-import FlatSpinner from './spinners/FlatSpinner';
-import FlatAlert from './ui/FlatAlert';
-import AddFriendButton from './AddFriendButton';
+import useNewUsers from '../../hooks/useNewUsers';
+import FlatSpinner from '../spinners/FlatSpinner';
+import FlatAlert from '../ui/FlatAlert';
+import AddFriendButton from '../AddFriendButton';
 
 const NewUsers = () => {
   const { newUsers, isNewUsersLoading, isNewUsersError, setNewUsers } =
     useNewUsers();
 
-  const onRemove = (username) => {
+  const onRemove = (username: string) => {
+    if (!newUsers) return;
     const nextState = newUsers.filter((user) => username !== user.username);
     setNewUsers(nextState);
   };
@@ -18,11 +19,11 @@ const NewUsers = () => {
   if (isNewUsersLoading) return <FlatSpinner size="20" />;
   if (isNewUsersError)
     return <FlatAlert type="error">Could not load new users</FlatAlert>;
-  if (newUsers.length === 0) return <FlatAlert>No more new users</FlatAlert>;
+  if (newUsers?.length === 0) return <FlatAlert>No more new users</FlatAlert>;
 
   return (
     <>
-      {newUsers.map((user) => (
+      {newUsers?.map((user) => (
         <div className="d-flex align-items-center mb-2" key={user.id}>
           <Image
             publicId={user.profilePicture}

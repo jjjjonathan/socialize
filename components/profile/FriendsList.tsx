@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { Card } from 'react-bootstrap';
-import Image from './ui/Image';
-import styles from './NewUsers.module.css';
+import Image from '../ui/Image';
 
 const FriendsList = ({ friends }) => (
   <Card className="gradient-glass-card mb-5">
@@ -19,7 +18,10 @@ const FriendsList = ({ friends }) => (
             href={`/profile/${friend.user.username}`}
           />
           <Link href={`/profile/${friend.user.username}`} passHref>
-            <a className={`h6 ml-3 mb-0 text-secondary ${styles.name}`}>
+            <a
+              className="h6 ml-3 mb-0 text-secondary"
+              style={{ fontWeight: 600 }}
+            >
               {friend.user.name}
             </a>
           </Link>

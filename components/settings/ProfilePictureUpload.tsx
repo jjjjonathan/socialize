@@ -1,25 +1,31 @@
-import { useState } from 'react';
+import { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import axios from 'axios';
 import { Button, Collapse } from 'react-bootstrap';
 import { useRouter } from 'next/router';
-import Image from './ui/Image';
-import FlatSpinner from './spinners/FlatSpinner';
+import Image from '../ui/Image';
+import FlatSpinner from '../spinners/FlatSpinner';
+import { UserRes } from '../../types/records';
 
-const ProfilePictureUpload = ({ currentUser }) => {
+type Props = {
+  currentUser: UserRes;
+};
+
+const ProfilePictureUpload = ({ currentUser }: Props) => {
   const router = useRouter();
 
-  const [changeOpen, setChangeOpen] = useState();
-  const [file, setFile] = useState();
-  const [isSubmitting, setIsSubmitting] = useState();
+  const [changeOpen, setChangeOpen] = useState(false);
+  const [file, setFile] = useState<Blob>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const onFileChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    const newFile = event?.target?.files && event.target.files[0];
+    if (newFile) setFile(newFile);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+    if (!file) return;
 
-    // eslint-disable-next-line no-undef
     const formData = new FormData();
     formData.append('profilePicture', file);
 
