@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Image from '../ui/Image';
-import styles from './NewUsers.module.css';
 import useNewUsers from '../../hooks/useNewUsers';
 import FlatSpinner from '../spinners/FlatSpinner';
 import FlatAlert from '../ui/FlatAlert';
@@ -34,7 +33,7 @@ const NewUsers = () => {
             layout="fixed"
           />
           <Link href={`/profile/${user.username}`} passHref>
-            <a className={`h6 ml-3 mb-0 text-secondary ${styles.name}`}>
+            <a className="h6 ml-3 mb-0 text-secondary font-weight-bold">
               {user.name}
             </a>
           </Link>

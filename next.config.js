@@ -4,4 +4,7 @@ module.exports = {
     domains: ['res.cloudinary.com'],
     dangerouslyAllowSVG: true,
   },
+  compiler: {
+    styledComponents: true,
+  },
 };

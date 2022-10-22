@@ -1,7 +1,7 @@
 @import './custom.scss';
 @import './mixins.scss';
 
-// Global css
+// Global CSS
 
 .medium {
   font-size: 0.86em;
@@ -9,6 +9,10 @@
 
 textarea {
   resize: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .navbar {
@@ -63,7 +67,22 @@ textarea {
   bottom: 10px;
 }
 
-// GLASS CARD STUFF
+.splash-container {
+  @include gradient-bg;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-center {
+  @media (min-width: 600px) {
+    @include glassmorphic;
+    padding: 30px;
+  }
+}
+
+// Glassmorphism
 
 $glass-card-radius: 15px;
 

@@ -1,16 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import parse from 'html-react-parser';
-import FlatSpinner from '../spinners/FlatSpinner';
 import { defaultDate } from '../../utils/dateHelpers';
+import FlatSpinner from '../spinners/FlatSpinner';
 import Image from '../ui/Image';
-import styles from './Comment.module.css';
 import { CommentRes } from '../../types/records';
 import { SessionUser } from '../../types/misc';
+
+const Body = styled.div`
+  border-radius: 10px;
+`;
+
+const NameAnchor = styled.a`
+  font-weight: 700;
+  font-size: 0.87em;
+`;
 
 type Props = {
   comment: CommentRes;
@@ -65,15 +74,13 @@ const Comment = ({ comment, currentUser, removeCommentFromList }: Props) => {
         href={`/profile/${comment.user.username}`}
         layout="fixed"
       />
-      <div
-        className={`d-flex w-100 ml-2 px-3 pt-2 pb-3 bg-light ${styles.body}`}
-      >
+      <Body className="d-flex w-100 ml-2 px-3 pt-2 pb-3 bg-light">
         <div>
           <div>
             <Link href={`/profile/${comment.user.username}`} passHref>
-              <a className={`h6 mb-1 text-dark ${styles.name}`}>
+              <NameAnchor className="h6 mb-1 text-dark">
                 {comment.user.name}
-              </a>
+              </NameAnchor>
             </Link>
             <span className="text-muted small">
               {' '}
@@ -83,7 +90,7 @@ const Comment = ({ comment, currentUser, removeCommentFromList }: Props) => {
           <p className="mb-0 medium">{parse(comment.body)}</p>
         </div>
         {isOwnComment && deleteButton()}
-      </div>
+      </Body>
     </div>
   );
 };

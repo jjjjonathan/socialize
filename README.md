@@ -15,6 +15,7 @@ Live preview at: https://socialize-now.herokuapp.com/
 - NextAuth.js
 - Formik
 - Sass
+- Styled Components
 - Cloudinary
 - Sendgrid Mail
 

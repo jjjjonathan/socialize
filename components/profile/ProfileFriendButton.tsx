@@ -1,11 +1,29 @@
-import axios from 'axios';
 import { useState, useEffect, DetailedHTMLProps, HTMLAttributes } from 'react';
+import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
-import styles from './ProfileFriendButton.module.css';
+import axios from 'axios';
+import { FriendStatus } from '../../types/misc';
 import FlatSpinner from '../spinners/FlatSpinner';
 import FriendRequestButtons from './FriendRequestButtons';
-import { FriendStatus } from '../../types/misc';
+
+const StyledButton = styled(Button)`
+  padding: 6px 16px;
+  font-weight: 500;
+  font-size: 1em;
+  height: 24px;
+  box-sizing: content-box;
+`;
+
+const RequestedDiv = styled.div`
+  font-weight: 600;
+  font-size: 0.95em;
+`;
+
+const FriendsDiv = styled.div`
+  font-weight: 700;
+  font-size: 1.05em;
+`;
 
 type FriendButtonStatus = 'default' | 'submitting' | FriendStatus;
 
@@ -54,20 +72,20 @@ const ProfileFriendButton = ({
     switch (status) {
       case 'submitting':
         return (
-          <Button disabled variant="secondary" className={styles.button}>
+          <StyledButton disabled variant="secondary">
             <FlatSpinner
               size="20"
               color="white"
               style={{ marginTop: '-1px' }}
             />
-          </Button>
+          </StyledButton>
         );
       case 'requested':
         return (
-          <div className={`text-secondary h6 ${styles.requested}`}>
-            <i className="bi bi-check-lg text-secondary mr-1"></i> Friend
+          <RequestedDiv className="text-secondary h6">
+            <i className="bi bi-check-lg text-secondary mr-1" /> Friend
             Requested
-          </div>
+          </RequestedDiv>
         );
       case 'request':
         return (
@@ -82,19 +100,15 @@ const ProfileFriendButton = ({
         );
       case 'friends':
         return (
-          <div className={`text-secondary h6 ${styles.friends}`}>
-            <i className="bi bi-check-lg text-secondary mr-1"></i> Friends
-          </div>
+          <FriendsDiv className="text-secondary h6">
+            <i className="bi bi-check-lg text-secondary mr-1" /> Friends
+          </FriendsDiv>
         );
       default:
         return (
-          <Button
-            onClick={onAddFriend}
-            variant="secondary"
-            className={styles.button}
-          >
-            <i className="bi bi-person-plus"></i> Add Friend
-          </Button>
+          <StyledButton onClick={onAddFriend} variant="secondary">
+            <i className="bi bi-person-plus" /> Add Friend
+          </StyledButton>
         );
     }
   };

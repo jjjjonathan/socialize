@@ -5,7 +5,6 @@ import useLikes from '../../hooks/useLikes';
 import Image from '../ui/Image';
 import CircleSpinner from '../spinners/CircleSpinner';
 import FlatAlert from '../ui/FlatAlert';
-import styles from './LikesModal.module.css';
 
 type Props = {
   postId: string;
@@ -40,7 +39,7 @@ const LikesModal = ({ postId, setShow, show }: Props) => {
               layout="fixed"
             />
             <Link href={`/profile/${like.username}`} passHref>
-              <a className={`h6 ml-3 mb-1 text-secondary ${styles.name}`}>
+              <a className="h6 ml-3 mb-1 text-secondary font-weight-bold">
                 {like.name}
               </a>
             </Link>

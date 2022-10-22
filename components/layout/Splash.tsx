@@ -1,7 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from './Splash.module.scss';
 
 type Props = {
   pageTitle: string;
@@ -24,9 +23,9 @@ const Splash = ({
         <title>{title}</title>
       </Head>
       <main>
-        <div className={styles.container}>
-          <div className={styles.sheen}>
-            <div className={useGlassmorphicBox ? styles.center : ''}>
+        <div className="splash-container">
+          <div>
+            <div className={useGlassmorphicBox ? 'splash-center' : ''}>
               {children}
             </div>
             {withPrivacyPolicy && (
