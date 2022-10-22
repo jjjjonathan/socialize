@@ -9,14 +9,16 @@
   "globals": { "JSX": true },
   "parserOptions": { "project": "./tsconfig.json" },
   "rules": {
-    "import/prefer-default-export": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "class-methods-use-this": "off",
-    "no-underscore-dangle": "off",
-    "react/display-name": "off",
-    "jsx-a11y/alt-text": "off",
-    "import/extensions": "off",
     "camelcase": "off",
-    "no-console": ["warn", { "allow": ["error"] }]
+    "class-methods-use-this": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/alt-text": "off",
+    "no-console": ["warn", { "allow": ["error"] }],
+    "no-underscore-dangle": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/display-name": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }
