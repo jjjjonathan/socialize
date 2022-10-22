@@ -6,8 +6,8 @@ import { authOptions } from './api/auth/[...nextauth]';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/layout/Layout';
 import NewUsers from '../components/home/NewUsers';
-import PostList from '../components/PostList';
-import NewPost from '../components/NewPost';
+import PostList from '../components/post/PostList';
+import NewPost from '../components/post/NewPost';
 import CircleSpinner from '../components/spinners/CircleSpinner';
 import FlatAlert from '../components/ui/FlatAlert';
 

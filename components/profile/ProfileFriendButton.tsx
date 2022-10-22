@@ -1,10 +1,21 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, DetailedHTMLProps, HTMLAttributes } from 'react';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import styles from './ProfileFriendButton.module.css';
-import FlatSpinner from './spinners/FlatSpinner';
-import FriendRequestButtons from './FriendRequestButtons';
+import FlatSpinner from '../spinners/FlatSpinner';
+import FriendRequestButtons from '../FriendRequestButtons';
+import { FriendStatus } from '../../types/misc';
+
+type FriendButtonStatus = 'default' | 'submitting' | FriendStatus;
+
+interface Props
+  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  friendStatus: FriendStatus | null;
+  name: string;
+  username: string;
+  id: string;
+}
 
 const ProfileFriendButton = ({
   friendStatus,
@@ -12,8 +23,8 @@ const ProfileFriendButton = ({
   username,
   id,
   ...props
-}) => {
-  const [status, setStatus] = useState('default');
+}: Props) => {
+  const [status, setStatus] = useState<FriendButtonStatus>('default');
 
   useEffect(() => {
     if (friendStatus) setStatus(friendStatus);

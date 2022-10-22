@@ -1,6 +1,16 @@
-import FlatSpinner from './spinners/FlatSpinner';
-import FlatAlert from './ui/FlatAlert';
+import FlatSpinner from '../spinners/FlatSpinner';
+import FlatAlert from '../ui/FlatAlert';
 import Comment from './Comment';
+import { CommentRes, UserRes } from '../../types/records';
+
+type Props = {
+  comments: CommentRes[];
+  isCommentsLoading: boolean;
+  isCommentsError: any;
+  setComments: () => void;
+  currentUser: UserRes;
+  decreaseCommentCount: () => void;
+};
 
 const Comments = ({
   comments,
@@ -9,8 +19,8 @@ const Comments = ({
   setComments,
   currentUser,
   decreaseCommentCount,
-}) => {
-  const removeCommentFromList = (commentId) => {
+}: Props) => {
+  const removeCommentFromList = (commentId: string) => {
     const nextState = comments.filter((comment) => comment.id !== commentId);
     setComments(nextState);
     decreaseCommentCount();

@@ -4,12 +4,19 @@ import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import parse from 'html-react-parser';
-import FlatSpinner from './spinners/FlatSpinner';
-import { defaultDate } from '../utils/dateHelpers';
-import Image from './ui/Image';
+import FlatSpinner from '../spinners/FlatSpinner';
+import { defaultDate } from '../../utils/dateHelpers';
+import Image from '../ui/Image';
 import styles from './Comment.module.css';
+import { CommentRes, UserRes } from '../../types/records';
 
-const Comment = ({ comment, currentUser, removeCommentFromList }) => {
+type Props = {
+  comment: CommentRes;
+  currentUser: UserRes;
+  removeCommentFromList: (id: string) => void;
+};
+
+const Comment = ({ comment, currentUser, removeCommentFromList }: Props) => {
   const [deleting, setDeleting] = useState(false);
 
   const isOwnComment = comment.user.id === currentUser.id;

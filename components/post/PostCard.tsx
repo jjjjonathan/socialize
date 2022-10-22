@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
 import { ButtonGroup, Button, Card, Collapse, Form } from 'react-bootstrap';
 import Link from 'next/link';
@@ -12,16 +13,17 @@ import { defaultDate } from '../../utils/dateHelpers';
 import styles from './PostCard.module.css';
 import FlatSpinner from '../spinners/FlatSpinner';
 import LikesModal from './LikesModal';
-import Comments from '../Comments';
+import Comments from './Comments';
 import useComments from '../../hooks/useComments';
 import { Post } from '../../types/records';
+import { SessionUser } from '../../types/misc';
 
 type Props = {
   post: Post;
   // TODO: fix 3 types
   updateLikes: any;
-  currentUser: any;
-  removePostFromList: any;
+  currentUser: SessionUser;
+  removePostFromList: (postId: string) => void;
 };
 
 const PostCard = ({

@@ -1,54 +1,56 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { unstable_getServerSession } from 'next-auth/next';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import parse from 'html-react-parser';
+import { Document, Types } from 'mongoose';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import usePostsByUser from '../../../hooks/usePostsByUser';
 import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import connectMongo from '../../../utils/connectMongo';
+import { FriendStatus, SessionUser } from '../../../types/misc';
+import { UserRecord, UserRes } from '../../../types/records';
 import Image from '../../../components/ui/Image';
 import Layout from '../../../components/layout/Layout';
-import PostList from '../../../components/PostList';
+import PostList from '../../../components/post/PostList';
 import CircleSpinner from '../../../components/spinners/CircleSpinner';
-import NewPost from '../../../components/NewPost';
-import ProfileFriendButton from '../../../components/ProfileFriendButton';
+import NewPost from '../../../components/post/NewPost';
+import ProfileFriendButton from '../../../components/profile/ProfileFriendButton';
 import FriendsList from '../../../components/profile/FriendsList';
 import FlatAlert from '../../../components/ui/FlatAlert';
 
 export const getServerSideProps: GetServerSideProps<{
-  profile: any;
-  currentUser: any;
+  profile: UserRes;
+  currentUser: SessionUser;
   isOwnProfile: boolean;
-  friendStatus: any;
+  friendStatus: FriendStatus | null;
+  username: string;
 }> = async ({ req, res, query }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
-
   await connectMongo();
 
   const sessionUserId = session?.user.id;
+  const sessionUser = await User.findById(sessionUserId).populate<{
+    requestedFriends: Array<Document<Types.ObjectId> & UserRecord>;
+  }>('requestedFriends');
 
-  const sessionUser = await User.findById(sessionUserId);
+  const username = query.user as string | undefined;
 
-  const { user: username } = query;
   const user = await User.findOne({ username }, '-friendRequests').populate(
     'friends.user',
     'name username profilePicture',
   );
 
-  if (!user) {
+  if (!user || !username) {
     return {
       notFound: true,
     };
   }
 
-  const { requestedFriends } = await User.findById(sessionUserId).populate(
-    'requestedFriends',
-  );
+  const requestedFriends = sessionUser?.requestedFriends || [];
 
-  let friendStatus = null;
+  let friendStatus: FriendStatus | null = null;
 
   if (
     user.friends.find((friend) => friend.user.id.toString() === sessionUserId)
@@ -56,12 +58,12 @@ export const getServerSideProps: GetServerSideProps<{
     friendStatus = 'friends';
   } else if (
     requestedFriends.find(
-      (reqFriend) => reqFriend._id.toString() === user.id.toString(),
+      (reqFriend) => reqFriend._id!.toString() === user.id.toString(),
     )
   ) {
     friendStatus = 'requested';
   } else if (
-    sessionUser.friendRequests.find(
+    sessionUser?.friendRequests.find(
       (friendReq) => friendReq.user.toString() === user.id.toString(),
     )
   ) {
@@ -70,12 +72,15 @@ export const getServerSideProps: GetServerSideProps<{
 
   const isOwnProfile = sessionUserId === user.id;
 
+  const profile = JSON.parse(JSON.stringify(user));
+
   return {
     props: {
       isOwnProfile,
-      profile: user,
-      currentUser: session.user,
+      profile,
+      currentUser: session!.user,
       friendStatus,
+      username,
     },
   };
 };
@@ -87,40 +92,40 @@ const Profile = ({
   currentUser,
   isOwnProfile,
   friendStatus,
+  username,
 }: Props) => {
-  const router = useRouter();
-  const { user } = router.query;
   const {
     postsByUser,
     isPostsByUserError,
     isPostsByUserLoading,
     setPostsByUser,
-  } = usePostsByUser(user);
+  } = usePostsByUser(username);
 
   const addNewPostToFeed = () => {
     setPostsByUser();
   };
 
-  const removePostFromFeed = (postId) => {
+  const removePostFromFeed = (postId: string) => {
     const nextState = {
-      ...postsByUser,
-      posts: postsByUser.posts.filter((post) => post.id !== postId),
+      ...postsByUser!,
+      posts: postsByUser?.posts.filter((post) => post.id !== postId) || [],
     };
     setPostsByUser(nextState);
   };
 
-  const updateLikes = (postId, likes) => {
+  const updateLikes = (postId: string, likes: string[]) => {
     const nextState = {
-      ...postsByUser,
-      posts: postsByUser.posts.map((post) => {
-        if (post.id === postId) {
-          return {
-            ...post,
-            likes,
-          };
-        }
-        return post;
-      }),
+      ...postsByUser!,
+      posts:
+        postsByUser?.posts.map((post) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              likes,
+            };
+          }
+          return post;
+        }) || [],
     };
     setPostsByUser(nextState);
   };
@@ -140,7 +145,7 @@ const Profile = ({
       );
     return (
       <PostList
-        posts={postsByUser.posts}
+        posts={postsByUser!.posts}
         updateLikes={updateLikes}
         currentUser={currentUser}
         removePostFromList={removePostFromFeed}
@@ -160,7 +165,7 @@ const Profile = ({
         />
         <div className="ml-3">
           <h2 className="mb-1">{profile.name}</h2>
-          <h3 className="text-muted h6">@{user}</h3>
+          <h3 className="text-muted h6">@{username}</h3>
         </div>
         {!isOwnProfile && (
           <ProfileFriendButton
@@ -204,9 +209,7 @@ const Profile = ({
           <FriendsList friends={profile.friends} />
         </Col>
         <Col>
-          {isOwnProfile ? (
-            <NewPost addNewPostToFeed={addNewPostToFeed} />
-          ) : null}
+          {isOwnProfile && <NewPost addNewPostToFeed={addNewPostToFeed} />}
           {postArea()}
         </Col>
       </Row>

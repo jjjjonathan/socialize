@@ -5,17 +5,17 @@ import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import parse from 'html-react-parser';
-import { Session } from 'next-auth';
 import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
 import Layout from '../components/layout/Layout';
-import ProfilePictureUpload from '../components/ProfilePictureUpload';
-import AboutMeUpdate from '../components/AboutMeUpdate';
+import ProfilePictureUpload from '../components/settings/ProfilePictureUpload';
+import AboutMeUpdate from '../components/settings/AboutMeUpdate';
 import FlatSpinner from '../components/spinners/FlatSpinner';
+import { SessionUser } from '../types/misc';
 
 export const getServerSideProps: GetServerSideProps<{
-  currentUser: Session['user'];
+  currentUser: SessionUser;
   bio: string | JSX.Element | JSX.Element[] | null;
   email: string | null;
 }> = async ({ req, res }) => {
