@@ -152,7 +152,6 @@ const Profile = ({
     );
   };
 
-  console.log('profile friends', profile.friends);
   return (
     <Layout pageTitle={profile.name} currentUser={currentUser}>
       <div className="mb-4 d-flex align-items-center">
