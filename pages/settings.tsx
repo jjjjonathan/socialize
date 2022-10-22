@@ -4,35 +4,30 @@ import { unstable_getServerSession } from 'next-auth/next';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import parse from 'html-react-parser';
 import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
+import { SessionUser } from '../types/misc';
 import Layout from '../components/layout/Layout';
 import ProfilePictureUpload from '../components/settings/ProfilePictureUpload';
 import AboutMeUpdate from '../components/settings/AboutMeUpdate';
 import FlatSpinner from '../components/spinners/FlatSpinner';
-import { SessionUser } from '../types/misc';
 
 export const getServerSideProps: GetServerSideProps<{
   currentUser: SessionUser;
-  bio: string | JSX.Element | JSX.Element[] | null;
-  email: string | null;
+  bio?: string;
+  email?: string;
 }> = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
-
   await connectMongo();
 
   const fetchedUser = await User.findById(session!.user.id, 'bio email');
 
-  const bio = fetchedUser?.bio ? parse(fetchedUser.bio) : null;
-  const email = fetchedUser?.email || null;
-
   return {
     props: {
       currentUser: session!.user,
-      bio,
-      email,
+      bio: fetchedUser?.bio,
+      email: fetchedUser?.email,
     },
   };
 };

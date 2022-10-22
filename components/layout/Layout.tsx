@@ -4,12 +4,12 @@ import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
 import NavMenu from '../nav/NavMenu';
 import styles from './Layout.module.css';
+import { SessionUser } from '../../types/misc';
 
 type Props = {
   pageTitle: string;
   children: React.ReactNode;
-  // TODO: fix this any type
-  currentUser: any;
+  currentUser: SessionUser;
 };
 
 const Layout = ({ pageTitle, children, currentUser }: Props) => {

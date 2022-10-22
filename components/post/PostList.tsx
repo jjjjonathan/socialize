@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { SessionUser } from '../../types/misc';
+import { NewsfeedRes } from '../../types/records';
 import FlatAlert from '../ui/FlatAlert';
 import PostCard from './PostCard';
 
 type Props = {
-  posts: any;
-  updateLikes: (postId: string, likes) => void;
+  posts: NewsfeedRes[];
+  updateLikes: (postId: string, likes: string[]) => void;
   currentUser: SessionUser;
   removePostFromList: (postId: string) => void;
 };

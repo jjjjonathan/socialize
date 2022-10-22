@@ -1,5 +1,5 @@
 import { Card, Form, Button } from 'react-bootstrap';
-import { Formik, Form as FormikForm } from 'formik';
+import { Formik, Form as FormikForm, FormikHelpers } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -11,7 +11,12 @@ type Props = {
 };
 
 const NewPost = ({ addNewPostToFeed }: Props) => {
-  const handleNewPost = async ({ newPost }, { resetForm }) => {
+  type NewPostValues = { newPost: string };
+
+  const handleNewPost = async (
+    { newPost }: NewPostValues,
+    { resetForm }: FormikHelpers<NewPostValues>,
+  ) => {
     try {
       await axios.post('/api/post', { body: newPost });
       addNewPostToFeed();

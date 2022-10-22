@@ -13,7 +13,6 @@ Live preview at: https://socialize-now.herokuapp.com/
 - React Bootstrap
 - MongoDB/Mongoose
 - NextAuth.js
-- SWR
 - Formik
 - Sass
 - Cloudinary
@@ -21,7 +20,7 @@ Live preview at: https://socialize-now.herokuapp.com/
 
 ## Features
 
-- Sign up and log in with email or Facebook
+- Sign up and log in with email
 - Email confirmation
 - Send friend requests and approve or delete them
 - Make text-only posts

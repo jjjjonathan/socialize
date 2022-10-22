@@ -5,6 +5,7 @@ export type ApiError = {
 export type SessionUser = {
   id: string;
   username: string;
+  name: string;
   isEmailVerified: string;
   profilePicture: string;
 };

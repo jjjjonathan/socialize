@@ -4,7 +4,7 @@ import { ButtonGroup, Button, Card, Collapse, Form } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { Formik, Form as FormikForm } from 'formik';
+import { Formik, Form as FormikForm, FormikHelpers } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import parse from 'html-react-parser';
@@ -15,13 +15,14 @@ import FlatSpinner from '../spinners/FlatSpinner';
 import LikesModal from './LikesModal';
 import Comments from './Comments';
 import useComments from '../../hooks/useComments';
-import { Post } from '../../types/records';
+import { NewsfeedRes } from '../../types/records';
 import { SessionUser } from '../../types/misc';
 
+type LikeStatus = 'default' | 'liking' | 'liked';
+
 type Props = {
-  post: Post;
-  // TODO: fix 3 types
-  updateLikes: any;
+  post: NewsfeedRes;
+  updateLikes: (postId: string, likes: string[]) => void;
   currentUser: SessionUser;
   removePostFromList: (postId: string) => void;
 };
@@ -32,7 +33,7 @@ const PostCard = ({
   currentUser,
   removePostFromList,
 }: Props) => {
-  const [likeStatus, setLikeStatus] = useState('default');
+  const [likeStatus, setLikeStatus] = useState<LikeStatus>('default');
   const [showModal, setShowModal] = useState(false);
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [newCommentOpen, setNewCommentOpen] = useState(false);
@@ -77,7 +78,12 @@ const PostCard = ({
     }
   };
 
-  const handleNewComment = async ({ newComment }, { resetForm }) => {
+  type NewCommentValues = { newComment: string };
+
+  const handleNewComment = async (
+    { newComment }: NewCommentValues,
+    { resetForm }: FormikHelpers<NewCommentValues>,
+  ) => {
     try {
       const response = await axios.post(`/api/post/${post.id}/add-comment`, {
         body: newComment,
@@ -86,7 +92,7 @@ const PostCard = ({
 
       setNewCommentOpen(false);
       setCommentCount(commentCount + 1);
-      setComments([...comments, savedComment]);
+      setComments([...comments!, savedComment]);
       setCommentsOpen(true);
       resetForm();
 
@@ -226,7 +232,7 @@ const PostCard = ({
                 <Collapse in={commentsOpen}>
                   <div id="collapse-comments">
                     <Comments
-                      comments={comments}
+                      comments={comments || []}
                       isCommentsError={isCommentsError}
                       isCommentsLoading={isCommentsLoading}
                       setComments={setComments}

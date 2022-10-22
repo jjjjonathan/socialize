@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 import FlatSpinner from '../spinners/FlatSpinner';
 import FlatAlert from '../ui/FlatAlert';
 import Comment from './Comment';
-import { CommentRes, UserRes } from '../../types/records';
+import { CommentRes } from '../../types/records';
+import { SessionUser } from '../../types/misc';
 
 type Props = {
   comments: CommentRes[];
   isCommentsLoading: boolean;
   isCommentsError: any;
-  setComments: () => void;
-  currentUser: UserRes;
+  setComments: (comments: CommentRes[]) => void;
+  currentUser: SessionUser;
   decreaseCommentCount: () => void;
 };
 

@@ -7,8 +7,13 @@ import NavDropdown from './NavDropdown';
 import FlatSpinner from '../spinners/FlatSpinner';
 import FriendRequestsMenu from './FriendRequestsMenu';
 import styles from './NavMenu.module.css';
+import { SessionUser } from '../../types/misc';
 
-const NavMenu = ({ currentUser }) => {
+type Props = {
+  currentUser: SessionUser;
+};
+
+const NavMenu = ({ currentUser }: Props) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {

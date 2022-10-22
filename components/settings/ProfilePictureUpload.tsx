@@ -4,10 +4,10 @@ import { Button, Collapse } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import Image from '../ui/Image';
 import FlatSpinner from '../spinners/FlatSpinner';
-import { UserRes } from '../../types/records';
+import { SessionUser } from '../../types/misc';
 
 type Props = {
-  currentUser: UserRes;
+  currentUser: SessionUser;
 };
 
 const ProfilePictureUpload = ({ currentUser }: Props) => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
@@ -8,11 +9,12 @@ import FlatSpinner from '../spinners/FlatSpinner';
 import { defaultDate } from '../../utils/dateHelpers';
 import Image from '../ui/Image';
 import styles from './Comment.module.css';
-import { CommentRes, UserRes } from '../../types/records';
+import { CommentRes } from '../../types/records';
+import { SessionUser } from '../../types/misc';
 
 type Props = {
   comment: CommentRes;
-  currentUser: UserRes;
+  currentUser: SessionUser;
   removeCommentFromList: (id: string) => void;
 };
 

@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import { Card } from 'react-bootstrap';
+import { FriendRes } from '../../types/records';
 import Image from '../ui/Image';
 
-const FriendsList = ({ friends }) => (
+type Props = {
+  friends: FriendRes[];
+};
+
+const FriendsList = ({ friends }: Props) => (
   <Card className="gradient-glass-card mb-5">
     <Card.Header>
       <h4 className="h5 mb-0">Friends</h4>

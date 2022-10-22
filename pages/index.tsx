@@ -90,12 +90,12 @@ const Home = ({ currentUser }: Props) => {
   );
 
   const removePostFromFeed = (postId: string) => {
-    const nextState = newsfeed.filter((post) => post.id !== postId);
+    const nextState = newsfeed!.filter((post) => post.id !== postId);
     setNewsfeed(nextState);
   };
 
-  const updateLikes = (postId: string, likes) => {
-    const nextState = newsfeed.map((post) => {
+  const updateLikes = (postId: string, likes: string[]) => {
+    const nextState = newsfeed!.map((post) => {
       if (post.id === postId) {
         return {
           ...post,
@@ -123,7 +123,7 @@ const Home = ({ currentUser }: Props) => {
 
     return (
       <PostList
-        posts={newsfeed}
+        posts={newsfeed || []}
         updateLikes={updateLikes}
         currentUser={currentUser}
         removePostFromList={removePostFromFeed}

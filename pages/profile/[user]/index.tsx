@@ -10,7 +10,7 @@ import User from '../../../models/User';
 import { monthYear } from '../../../utils/dateHelpers';
 import connectMongo from '../../../utils/connectMongo';
 import { FriendStatus, SessionUser } from '../../../types/misc';
-import { UserRecord, UserRes } from '../../../types/records';
+import { FriendRes, UserRecord, UserRes } from '../../../types/records';
 import Image from '../../../components/ui/Image';
 import Layout from '../../../components/layout/Layout';
 import PostList from '../../../components/post/PostList';
@@ -21,7 +21,7 @@ import FriendsList from '../../../components/profile/FriendsList';
 import FlatAlert from '../../../components/ui/FlatAlert';
 
 export const getServerSideProps: GetServerSideProps<{
-  profile: UserRes;
+  profile: Omit<UserRes, 'friends'> & { friends: FriendRes[] };
   currentUser: SessionUser;
   isOwnProfile: boolean;
   friendStatus: FriendStatus | null;
@@ -37,10 +37,9 @@ export const getServerSideProps: GetServerSideProps<{
 
   const username = query.user as string | undefined;
 
-  const user = await User.findOne({ username }, '-friendRequests').populate(
-    'friends.user',
-    'name username profilePicture',
-  );
+  const user = await User.findOne({ username }, '-friendRequests').populate<{
+    friends: FriendRes[];
+  }>('friends.user', 'name username profilePicture');
 
   if (!user || !username) {
     return {
@@ -153,6 +152,7 @@ const Profile = ({
     );
   };
 
+  console.log('profile friends', profile.friends);
   return (
     <Layout pageTitle={profile.name} currentUser={currentUser}>
       <div className="mb-4 d-flex align-items-center">
