@@ -11,6 +11,10 @@ textarea {
   resize: none;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .navbar {
   @include drop-shadow-lg;
   font-family: $headings-font-family;

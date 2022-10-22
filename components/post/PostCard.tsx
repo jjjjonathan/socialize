@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 import { ButtonGroup, Button, Card, Collapse, Form } from 'react-bootstrap';
 import Link from 'next/link';
 import axios from 'axios';
@@ -8,15 +9,43 @@ import { Formik, Form as FormikForm, FormikHelpers } from 'formik';
 import TextareaAutosize from 'react-textarea-autosize';
 import * as yup from 'yup';
 import parse from 'html-react-parser';
-import Image from '../ui/Image';
 import { defaultDate } from '../../utils/dateHelpers';
-import styles from './PostCard.module.css';
-import FlatSpinner from '../spinners/FlatSpinner';
-import LikesModal from './LikesModal';
-import Comments from './Comments';
 import useComments from '../../hooks/useComments';
 import { NewsfeedRes } from '../../types/records';
 import { SessionUser } from '../../types/misc';
+import Image from '../ui/Image';
+import FlatSpinner from '../spinners/FlatSpinner';
+import LikesModal from './LikesModal';
+import Comments from './Comments';
+
+const FooterButtons = styled(ButtonGroup)`
+  width: 100%;
+  height: 38px;
+
+  button {
+    width: 50%;
+    font-size: 0.85em;
+    border-width: 0;
+
+    &.left {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 15px;
+      border-right-width: 3px;
+      border-right-color: white;
+    }
+
+    &.right {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 15px;
+      transition: border-bottom-right-radius 0.2s;
+    }
+
+    &.open {
+      border-radius: 0 !important;
+      transition: border-radius 0.2s;
+    }
+  }
+`;
 
 type LikeStatus = 'default' | 'liking' | 'liked';
 
@@ -128,10 +157,7 @@ const PostCard = ({
   const likeText = () => {
     if (post.likes.length > 0)
       return (
-        <a
-          className={`text-dark ${styles.pointer}`}
-          onClick={() => setShowModal(true)}
-        >
+        <a className="text-dark pointer" onClick={() => setShowModal(true)}>
           {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
         </a>
       );
@@ -143,7 +169,7 @@ const PostCard = ({
     if (commentCount > 0)
       return (
         <a
-          className={`ml-auto text-dark ${styles.pointer}`}
+          className="ml-auto text-dark pointer"
           onClick={() => setCommentsOpen(!commentsOpen)}
           aria-expanded={commentsOpen}
           aria-controls="collapse-comments"
@@ -209,7 +235,7 @@ const PostCard = ({
                 />
                 <div className="ml-2 mb-1">
                   <Link href={`/profile/${post.user.username}`} passHref>
-                    <a className={`h6 text-dark ${styles.name}`}>
+                    <a className="h6 text-dark font-weight-bold">
                       {post.user.name}
                     </a>
                   </Link>
@@ -246,14 +272,10 @@ const PostCard = ({
               ) : null}
             </Card.Body>
             <Card.Footer className="p-0">
-              <ButtonGroup className={styles.footerButtonGroup}>
+              <FooterButtons>
                 <Button
                   variant="outline-dark"
-                  className={
-                    newCommentOpen
-                      ? `py-2 ${styles.footerButton} ${styles.footerButtonLeft} ${styles.footerButtonOpen}`
-                      : `py-2 ${styles.footerButton} ${styles.footerButtonLeft}`
-                  }
+                  className={`py-2 left ${newCommentOpen ? 'open' : ''}`}
                   onClick={handleLike}
                   disabled={likeStatus === 'liking'}
                 >
@@ -261,18 +283,14 @@ const PostCard = ({
                 </Button>
                 <Button
                   variant="outline-dark"
-                  className={
-                    newCommentOpen
-                      ? `py-2 ${styles.footerButton} ${styles.footerButtonRight} ${styles.footerButtonOpen}`
-                      : `py-2 ${styles.footerButton} ${styles.footerButtonRight}`
-                  }
+                  className={`py-2 right ${newCommentOpen ? 'open' : ''}`}
                   onClick={() => setNewCommentOpen(!newCommentOpen)}
                   aria-expanded={newCommentOpen}
                   aria-controls="collapse-add-new-comment"
                 >
                   Comment
                 </Button>
-              </ButtonGroup>
+              </FooterButtons>
               <Collapse in={newCommentOpen}>
                 <div id="collapse-add-new-comment">
                   <FormikForm noValidate>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from 'styled-components';
 import Link from 'next/link';
 import { Navbar, Container, Dropdown } from 'react-bootstrap';
 import { signOut } from 'next-auth/react';
@@ -6,8 +7,12 @@ import Image from '../ui/Image';
 import NavDropdown from './NavDropdown';
 import FlatSpinner from '../spinners/FlatSpinner';
 import FriendRequestsMenu from './FriendRequestsMenu';
-import styles from './NavMenu.module.css';
 import { SessionUser } from '../../types/misc';
+
+const NavbarText = styled(Navbar.Text)`
+  font-weight: 600;
+  font-size: 0.97em;
+`;
 
 type Props = {
   currentUser: SessionUser;
@@ -46,12 +51,12 @@ const NavMenu = ({ currentUser }: Props) => {
               className="ml-auto"
             />
             <Link href={`/profile/${currentUser.username}`} passHref>
-              <Navbar.Text
+              <NavbarText
                 as="a"
-                className={`d-none d-md-block mx-3 text-dark mb-1 ${styles.name}`}
+                className="d-none d-md-block mx-3 text-dark mb-1"
               >
                 {currentUser.name}
-              </Navbar.Text>
+              </NavbarText>
             </Link>
             <NavDropdown
               className="ml-4"
