@@ -36,7 +36,10 @@ router.post(async (req, res) => {
 
   await sendEmail({
     to: email,
-    from: { name: 'Jonathan at Socialize', email: process.env.EMAIL_FROM },
+    from: {
+      name: 'Jonathan at Socialize',
+      email: process.env.EMAIL_FROM || '',
+    },
     subject: 'Password reset request',
     text: `Hello, ${name}! Please follow this link to reset your password: ${verificationLink} (Link will expire in 20 minutes)`,
     html: `

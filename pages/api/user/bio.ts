@@ -1,11 +1,14 @@
-import { body, validationResult } from 'express-validator';
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { unstable_getServerSession } from 'next-auth/next';
+import { body, validationResult } from 'express-validator';
 import User from '../../../models/User';
 import { authOptions } from '../auth/[...nextauth]';
 import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc().post(
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.post(
   body('bio')
     .trim()
     .isLength({ min: 3, max: 1000 })
@@ -30,4 +33,4 @@ const handler = nc().post(
   },
 );
 
-export default handler;
+export default router;

@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import nc from 'next-connect';
 import { v2 as cloudinary } from 'cloudinary';
 import { unstable_getServerSession } from 'next-auth/next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import User from '../../../models/User';
 import { defaultProfilePicture } from '../../../utils/profileDefaults';
 import { authOptions } from '../auth/[...nextauth]';
@@ -14,9 +15,9 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const handler = nc();
+const router = nc<NextApiRequest, NextApiResponse>();
 
-handler.post(
+router.post(
   body('name')
     .trim()
     .isLength({ min: 2, max: 50 })
@@ -106,10 +107,10 @@ handler.post(
   },
 );
 
-handler.get(async (req, res) => {
+router.get(async (req, res) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   if (!session) return res.json({ user: null });
   return res.json(session.user);
 });
 
-export default handler;
+export default router;

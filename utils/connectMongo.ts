@@ -1,13 +1,18 @@
 import mongoose from 'mongoose';
 
-// eslint-disable-next-line prefer-destructuring
-const MONGODB_URI = process.env.MONGODB_URI;
+interface GlobalMongoose {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+}
+
+declare const global: { mongoose: GlobalMongoose };
+
+const { MONGODB_URI } = process.env;
 
 if (!MONGODB_URI) {
   throw new Error('MONGODB_URI not set');
 }
 
-// Maintain cached connection across hot reloads
 let cached = global.mongoose;
 
 if (!cached) {
@@ -21,13 +26,8 @@ const connectMongo = async () => {
   }
 
   if (!cached.promise) {
-    const options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    };
-
     cached.promise = mongoose
-      .connect(MONGODB_URI, options)
+      .connect(MONGODB_URI)
       .then((mongooseConn) => mongooseConn);
   }
   cached.conn = await cached.promise;

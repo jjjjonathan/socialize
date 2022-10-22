@@ -1,14 +1,12 @@
 import nc from 'next-connect';
-import { unstable_getServerSession } from 'next-auth/next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import User from '../../../../models/User';
-import { authOptions } from '../../auth/[...nextauth]';
 import connectMongo from '../../../../utils/connectMongo';
 
-const handler = nc().get(async (req, res) => {
-  await connectMongo();
+const router = nc<NextApiRequest, NextApiResponse>();
 
-  const session = await unstable_getServerSession(req, res, authOptions);
-  if (!session) return res.status(401).end();
+router.get(async (req, res) => {
+  await connectMongo();
 
   const { username } = req.query;
 
@@ -31,4 +29,4 @@ const handler = nc().get(async (req, res) => {
   return res.json(posts);
 });
 
-export default handler;
+export default router;

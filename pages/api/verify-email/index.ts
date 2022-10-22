@@ -34,7 +34,10 @@ router.post(async (req, res) => {
 
   await sendEmail({
     to: email,
-    from: { name: 'Jonathan at Socialize', email: process.env.EMAIL_FROM },
+    from: {
+      name: 'Jonathan at Socialize',
+      email: process.env.EMAIL_FROM || '',
+    },
     subject: 'Please verify your email with socialize!',
     text: `Hello, ${user.name}! Please follow this link to confirm your email: ${verificationLink} (Link will expire in 20 minutes)`,
     html: `
