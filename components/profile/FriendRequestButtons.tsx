@@ -1,10 +1,14 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import FlatSpinner from '../spinners/FlatSpinner';
-import styles from './FriendRequestButtons.module.css';
+
+const StyledButton = styled(Button)`
+  font-size: 0.9em;
+`;
 
 type Props = {
   id: string;
@@ -64,16 +68,10 @@ const FriendRequestButtons = ({ id, onApprove, onDelete }: Props) => {
       default:
         return (
           <ButtonGroup aria-label="Group of friend request buttons">
-            <Button className={styles.button} onClick={handleApprove}>
-              Approve
-            </Button>
-            <Button
-              variant="danger"
-              className={styles.button}
-              onClick={handleDelete}
-            >
+            <StyledButton onClick={handleApprove}>Approve</StyledButton>
+            <StyledButton variant="danger" onClick={handleDelete}>
               Delete
-            </Button>
+            </StyledButton>
           </ButtonGroup>
         );
     }

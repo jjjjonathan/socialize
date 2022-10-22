@@ -36,6 +36,7 @@ const Home = ({ currentUser }: Props) => {
 
   const topMenu = () => (
     <>
+      <CircleSpinner />
       <div className="d-md-none w-100">
         <div className="mb-4 d-flex justify-content-center w-100">
           <ButtonGroup className="special w-100">
