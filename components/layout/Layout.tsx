@@ -1,10 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
+import styled from 'styled-components';
 import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
 import NavMenu from '../nav/NavMenu';
-import styles from './Layout.module.css';
 import { SessionUser } from '../../types/misc';
+
+const Main = styled.main`
+  margin-top: 7em;
+`;
 
 type Props = {
   pageTitle: string;
@@ -23,9 +27,9 @@ const Layout = ({ pageTitle, children, currentUser }: Props) => {
       <header>
         <NavMenu currentUser={currentUser} />
       </header>
-      <main className={styles.mainContainer}>
+      <Main>
         <Container>{children}</Container>
-      </main>
+      </Main>
       <Toaster position="top-center" />
     </>
   );

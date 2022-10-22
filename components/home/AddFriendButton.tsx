@@ -1,10 +1,17 @@
 /* eslint-disable no-unused-vars */
-import axios from 'axios';
 import { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
+import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
+import axios from 'axios';
 import toast from 'react-hot-toast';
-import styles from './AddFriendButton.module.css';
 import CircleSpinner from '../spinners/CircleSpinner';
+
+const StyledButton = styled(Button)`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border-width: 0;
+`;
 
 interface Props
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -38,13 +45,9 @@ const AddFriendButton = ({ username, onRemove, ...props }: Props) => {
         return <i className="bi bi-check-lg text-secondary"></i>;
       default:
         return (
-          <Button
-            onClick={onClick}
-            variant="outline-secondary"
-            className={styles.button}
-          >
+          <StyledButton onClick={onClick} variant="outline-secondary">
             <i className="bi bi-person-plus-fill"></i>
-          </Button>
+          </StyledButton>
         );
     }
   };
