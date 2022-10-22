@@ -1,10 +1,13 @@
+import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { body, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
-import nc from 'next-connect';
 import User from '../../../../models/User';
 import connectMongo from '../../../../utils/connectMongo';
 
-const handler = nc().post(
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.post(
   body('password')
     .isLength({ min: 8, max: 40 })
     .withMessage('Password must be between 8 and 40 characters'),
@@ -33,4 +36,4 @@ const handler = nc().post(
   },
 );
 
-export default handler;
+export default router;

@@ -5,18 +5,25 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import Splash from '../../components/layout/Splash';
 import CircleSpinner from '../../components/spinners/CircleSpinner';
-import Alert from '../../components/Alert';
+import Alert from '../../components/ui/Alert';
+
+type ForgotPasswordStatus =
+  | 'default'
+  | 'sending'
+  | 'sent'
+  | 'invalid'
+  | 'error';
 
 const ForgotPassword = () => {
-  const [status, setStatus] = useState('default');
+  const [status, setStatus] = useState<ForgotPasswordStatus>('default');
 
-  const handleSubmit = async ({ email }) => {
+  const handleSubmit = async ({ email }: { email: string }) => {
     try {
       setStatus('sending');
       await axios.post('/api/user/change-password/request', { email });
       setStatus('sent');
-    } catch (error) {
-      if (error.response?.data?.error === 'Email not found') {
+    } catch (error: any) {
+      if (error?.response?.data?.error === 'Email not found') {
         setStatus('invalid');
       } else {
         setStatus('error');

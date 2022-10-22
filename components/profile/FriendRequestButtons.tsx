@@ -1,11 +1,18 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import axios from 'axios';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
-import FlatSpinner from './spinners/FlatSpinner';
+import FlatSpinner from '../spinners/FlatSpinner';
 import styles from './FriendRequestButtons.module.css';
 
-const FriendRequestButtons = ({ id, onApprove, onDelete }) => {
+type Props = {
+  id: string;
+  onApprove: (userId?: string) => void;
+  onDelete: (userId?: string) => void;
+};
+
+const FriendRequestButtons = ({ id, onApprove, onDelete }: Props) => {
   const [status, setStatus] = useState('default');
 
   const handleApprove = async () => {
@@ -45,13 +52,13 @@ const FriendRequestButtons = ({ id, onApprove, onDelete }) => {
       case 'approved':
         return (
           <p className="text-center mb-0">
-            <i className="bi bi-check-lg"></i> Approved!
+            <i className="bi bi-check-lg" /> Approved!
           </p>
         );
       case 'deleted':
         return (
           <p className="text-center mb-0">
-            <i className="bi bi-check-lg"></i> Deleted!
+            <i className="bi bi-check-lg" /> Deleted!
           </p>
         );
       default:

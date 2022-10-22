@@ -1,11 +1,14 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { nanoid } from 'nanoid';
 import Token from '../../../models/Token';
+import User from '../../../models/User';
 import sendEmail from '../../../utils/sendEmail';
 import connectMongo from '../../../utils/connectMongo';
-import User from '../../../models/User';
 
-const handler = nc().post(async (req, res) => {
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.post(async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).end();
 
@@ -47,4 +50,4 @@ const handler = nc().post(async (req, res) => {
   return res.end();
 });
 
-export default handler;
+export default router;

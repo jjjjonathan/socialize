@@ -2,7 +2,7 @@ import React from 'react';
 import useFriendRequests from '../../hooks/useFriendRequests';
 import FlatAlert from '../ui/FlatAlert';
 import FlatSpinner from '../spinners/FlatSpinner';
-import FriendRequest from '../FriendRequest';
+import FriendRequest from './FriendRequest';
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div className="px-4 py-1 font-weight-normal">{children}</div>
@@ -16,7 +16,7 @@ const FriendRequestsMenu = () => {
     setFriendRequests,
   } = useFriendRequests();
 
-  const onRemove = (userId: string) => {
+  const onRemove = (userId?: string) => {
     const nextState = {
       id: friendRequests!.id,
       friendRequests:

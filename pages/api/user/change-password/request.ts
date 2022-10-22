@@ -1,35 +1,23 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { nanoid } from 'nanoid';
-import { unstable_getServerSession } from 'next-auth/next';
 import Token from '../../../../models/Token';
-import sendEmail from '../../../../utils/sendEmail';
 import User from '../../../../models/User';
-import { authOptions } from '../../auth/[...nextauth]';
+import sendEmail from '../../../../utils/sendEmail';
 import connectMongo from '../../../../utils/connectMongo';
 
-const handler = nc().post(async (req, res) => {
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.post(async (req, res) => {
   await connectMongo();
 
-  const session = await unstable_getServerSession(req, res, authOptions);
-  if (!session && !req.body?.email) return res.status(401).end();
+  if (!req.body?.email) return res.status(401).end();
+  const { email } = req.body;
 
-  let email;
-  let userId;
-  let name;
+  const user = await User.findOne({ email });
+  if (!user) return res.status(400).json({ error: 'Email not found' });
 
-  if (req.body?.email) {
-    email = req.body.email;
-    const user = await User.findOne({ email });
-
-    if (!user) return res.status(400).json({ error: 'Email not found' });
-
-    userId = user.id;
-    name = user.name;
-  } else {
-    email = session.user.email;
-    userId = session.user.id;
-    name = session.user.name;
-  }
+  const { id, name } = user;
 
   // Create token for email verification
 
@@ -37,7 +25,7 @@ const handler = nc().post(async (req, res) => {
   const tokenObject = new Token({
     token: verificationToken,
     type: 'changePassword',
-    user: userId,
+    user: id,
   });
 
   await tokenObject.save();
@@ -64,4 +52,4 @@ const handler = nc().post(async (req, res) => {
   return res.end();
 });
 
-export default handler;
+export default router;

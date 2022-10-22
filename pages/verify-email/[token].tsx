@@ -1,22 +1,27 @@
 import { useEffect, useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Splash from '../../components/layout/Splash';
 import CircleSpinner from '../../components/spinners/CircleSpinner';
-import Alert from '../../components/Alert';
+import Alert from '../../components/ui/Alert';
 
-export async function getServerSideProps({ query }) {
-  const { token } = query;
+type VerifyEmailStatus = 'default' | 'verified' | 'error';
+
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const token = query.token as string | undefined;
 
   return {
     props: { token },
   };
-}
+};
 
-const VerifyToken = ({ token }) => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const VerifyToken = ({ token }: Props) => {
   const router = useRouter();
 
-  const [status, setStatus] = useState('default');
+  const [status, setStatus] = useState<VerifyEmailStatus>('default');
 
   useEffect(() => {
     (async () => {

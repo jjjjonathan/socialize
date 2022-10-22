@@ -1,9 +1,12 @@
 import nc from 'next-connect';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Token from '../../../models/Token';
 import User from '../../../models/User';
 import connectMongo from '../../../utils/connectMongo';
 
-const handler = nc().post(async (req, res) => {
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.post(async (req, res) => {
   await connectMongo();
 
   const { token } = req.query;
@@ -22,6 +25,9 @@ const handler = nc().post(async (req, res) => {
   }
 
   const user = await User.findById(tokenObject.user);
+
+  if (!user) return res.status(400).end();
+
   user.isEmailVerified = true;
   await user.save();
 
@@ -30,4 +36,4 @@ const handler = nc().post(async (req, res) => {
   return res.status(202).end();
 });
 
-export default handler;
+export default router;

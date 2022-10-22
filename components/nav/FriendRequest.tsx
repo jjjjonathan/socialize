@@ -1,9 +1,16 @@
+/* eslint-disable no-unused-vars */
 import Link from 'next/link';
-import Image from './ui/Image';
-import { defaultDate } from '../utils/dateHelpers';
-import FriendRequestButtons from './FriendRequestButtons';
+import Image from '../ui/Image';
+import { defaultDate } from '../../utils/dateHelpers';
+import FriendRequestButtons from '../profile/FriendRequestButtons';
+import { FriendRes } from '../../types/records';
 
-const FriendRequest = ({ friendReq, onRemove }) => (
+type Props = {
+  friendReq: FriendRes;
+  onRemove: (userId?: string) => void;
+};
+
+const FriendRequest = ({ friendReq, onRemove }: Props) => (
   <div className="mb-4" style={{ width: 200 }}>
     <div className="d-flex align-items-center mb-2">
       <Image

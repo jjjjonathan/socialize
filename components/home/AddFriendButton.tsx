@@ -1,11 +1,18 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
-import { useState } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import styles from './AddFriendButton.module.css';
-import CircleSpinner from './spinners/CircleSpinner';
+import CircleSpinner from '../spinners/CircleSpinner';
 
-const AddFriendButton = ({ username, onRemove, ...props }) => {
+interface Props
+  extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  username: string;
+  onRemove: (username: string) => void;
+}
+
+const AddFriendButton = ({ username, onRemove, ...props }: Props) => {
   const [status, setStatus] = useState('default');
 
   const onClick = async () => {

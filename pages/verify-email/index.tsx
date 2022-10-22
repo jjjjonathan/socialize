@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth/next';
 import axios from 'axios';
 import { authOptions } from '../api/auth/[...nextauth]';
 import Splash from '../../components/layout/Splash';
 import CircleSpinner from '../../components/spinners/CircleSpinner';
-import Alert from '../../components/Alert';
+import Alert from '../../components/ui/Alert';
 
-export async function getServerSideProps({ req, res, query }) {
+type VerifyEmailRequestStatus = 'default' | 'sent' | 'error';
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  query,
+}) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (session?.user?.isEmailVerified) {
@@ -32,10 +39,12 @@ export async function getServerSideProps({ req, res, query }) {
       permanent: false,
     },
   };
-}
+};
 
-const VerifyEmail = ({ email }) => {
-  const [status, setStatus] = useState('default');
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const VerifyEmail = ({ email }: Props) => {
+  const [status, setStatus] = useState<VerifyEmailRequestStatus>('default');
 
   useEffect(() => {
     (async () => {

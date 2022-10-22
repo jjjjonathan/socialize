@@ -1,9 +1,12 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 import Token from '../../../../models/Token';
 import User from '../../../../models/User';
 import connectMongo from '../../../../utils/connectMongo';
 
-const handler = nc().post(async (req, res) => {
+const router = nc<NextApiRequest, NextApiResponse>();
+
+router.post(async (req, res) => {
   await connectMongo();
 
   const { token } = req.query;
@@ -26,4 +29,4 @@ const handler = nc().post(async (req, res) => {
   return res.status(200).json(user);
 });
 
-export default handler;
+export default router;

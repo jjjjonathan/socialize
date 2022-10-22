@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import styles from './ProfileFriendButton.module.css';
 import FlatSpinner from '../spinners/FlatSpinner';
-import FriendRequestButtons from '../FriendRequestButtons';
+import FriendRequestButtons from './FriendRequestButtons';
 import { FriendStatus } from '../../types/misc';
 
 type FriendButtonStatus = 'default' | 'submitting' | FriendStatus;

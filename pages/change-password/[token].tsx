@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
@@ -7,22 +8,36 @@ import * as yup from 'yup';
 import { Form, Button } from 'react-bootstrap';
 import Splash from '../../components/layout/Splash';
 import CircleSpinner from '../../components/spinners/CircleSpinner';
-import Alert from '../../components/Alert';
+import Alert from '../../components/ui/Alert';
+import { ApiError } from '../../types/misc';
+import { UserRes } from '../../types/records';
 
-export async function getServerSideProps({ query }) {
-  const { token } = query;
+type ChangePasswordStatus =
+  | 'default'
+  | 'changing'
+  | 'changed'
+  | 'verified'
+  | 'expired'
+  | 'invalid';
+
+export const getServerSideProps: GetServerSideProps<{
+  token?: string;
+}> = async ({ query }) => {
+  const token = query.token as string | undefined;
 
   return {
     props: { token },
   };
-}
+};
 
-const ChangePassword = ({ token }) => {
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+
+const ChangePassword = ({ token }: Props) => {
   const router = useRouter();
 
-  const [status, setStatus] = useState('default');
-  const [user, setUser] = useState({});
-  const [apiErrors, setApiErrors] = useState([]);
+  const [status, setStatus] = useState<ChangePasswordStatus>('default');
+  const [user, setUser] = useState<UserRes | null>(null);
+  const [apiErrors, setApiErrors] = useState<ApiError[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -30,9 +45,10 @@ const ChangePassword = ({ token }) => {
         const { data } = await axios.post(`/api/user/change-password/${token}`);
         setUser(data);
         setStatus('verified');
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        if (error.response?.data?.error === 'expired') {
+
+        if (error?.response?.data?.error === 'expired') {
           setStatus('expired');
         } else {
           setStatus('invalid');
@@ -41,8 +57,17 @@ const ChangePassword = ({ token }) => {
     })();
   }, []);
 
-  const handleSubmit = async ({ password, passwordConf }) => {
+  const initialValues = {
+    password: '',
+    passwordConf: '',
+  };
+
+  const handleSubmit = async ({
+    password,
+    passwordConf,
+  }: typeof initialValues) => {
     try {
+      if (!user) return;
       setStatus('changing');
       setApiErrors([]);
       await axios.post('/api/user/change-password', {
@@ -54,10 +79,10 @@ const ChangePassword = ({ token }) => {
       setTimeout(() => {
         router.push('/login');
       }, 3000);
-    } catch (error) {
+    } catch (error: any) {
       setStatus('verified');
-      if (error.response?.data?.errors) {
-        setApiErrors(error.response.data.errors);
+      if (error?.response?.data?.errors) {
+        setApiErrors(error.response.data.errors as ApiError[]);
       }
       console.error(error);
     }
@@ -88,16 +113,13 @@ const ChangePassword = ({ token }) => {
     <div className="auth-form">
       {alert()}
       <p className="medium">
-        <strong>Email address:</strong> {user.email}
+        <strong>Email address:</strong> {user!.email}
       </p>
       <p className="medium">
-        <strong>Username:</strong> {user.username}
+        <strong>Username:</strong> {user!.username}
       </p>
       <Formik
-        initialValues={{
-          password: '',
-          passwordConf: '',
-        }}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
