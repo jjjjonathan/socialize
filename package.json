@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "cypress": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test-serve": "npm run build && NODE_ENV=test PORT=3333 npm start",
+    "test:e2e": "start-server-and-test test-serve http://localhost:3333 cy:open"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
@@ -54,10 +57,12 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "start-server-and-test": "^1.14.0",
     "typescript": "^4.8.4"
   }
 }
