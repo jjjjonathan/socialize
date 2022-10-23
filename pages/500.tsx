@@ -1,3 +1,4 @@
+import React from 'react';
 import Splash from '../components/layout/Splash';
 
 const Custom500 = () => (

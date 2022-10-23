@@ -156,9 +156,13 @@ const PostCard = ({
   const likeText = () => {
     if (post.likes.length > 0)
       return (
-        <a className="text-dark pointer" onClick={() => setShowModal(true)}>
+        <button
+          type="button"
+          className="btn btn-link text-dark rounded-sm p-0 mb-1 text-button"
+          onClick={() => setShowModal(true)}
+        >
           {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
-        </a>
+        </button>
       );
 
     return <p className="text-dark mb-0">0 Likes</p>;
@@ -167,14 +171,15 @@ const PostCard = ({
   const commentText = () => {
     if (commentCount > 0)
       return (
-        <a
-          className="ml-auto text-dark pointer"
+        <button
+          type="button"
+          className="ml-auto btn btn-link text-dark rounded-sm p-0 mb-1 text-button"
           onClick={() => setCommentsOpen(!commentsOpen)}
           aria-expanded={commentsOpen}
           aria-controls="collapse-comments"
         >
           {commentCount} {commentCount === 1 ? 'Comment' : 'Comments'}
-        </a>
+        </button>
       );
 
     return <p className="ml-auto text-dark mb-0">0 Comments</p>;

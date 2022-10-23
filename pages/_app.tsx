@@ -1,3 +1,4 @@
+import React from 'react';
 import { AppProps } from 'next/app';
 import { Session } from 'next-auth';
 import { SWRConfig } from 'swr';
