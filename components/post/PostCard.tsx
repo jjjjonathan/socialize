@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ButtonGroup, Button, Card, Collapse, Form } from 'react-bootstrap';
 import Link from 'next/link';
@@ -210,7 +209,7 @@ const PostCard = ({
         variant="outline-danger"
         onClick={handleDeletePost}
       >
-        <i className="bi bi-trash"></i>
+        <i className="bi bi-trash" />
       </Button>
     );
   };

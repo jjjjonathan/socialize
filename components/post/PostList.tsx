@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+import React from 'react';
 import { SessionUser } from '../../types/misc';
 import { NewsfeedRes } from '../../types/records';
 import FlatAlert from '../ui/FlatAlert';

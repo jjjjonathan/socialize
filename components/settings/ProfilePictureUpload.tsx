@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
 import axios from 'axios';
 import { Button, Collapse } from 'react-bootstrap';
 import { useRouter } from 'next/router';

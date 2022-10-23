@@ -10,7 +10,7 @@ interface Props extends DropdownProps {
 const NavDropdown = ({ children, icon, id, ...props }: Props) => (
   <Dropdown {...props}>
     <Dropdown.Toggle as={CustomToggle} id={id}>
-      <i className={`bi ${icon}`}></i>
+      <i className={`bi ${icon}`} />
     </Dropdown.Toggle>
     <Dropdown.Menu align="right">{children}</Dropdown.Menu>
   </Dropdown>

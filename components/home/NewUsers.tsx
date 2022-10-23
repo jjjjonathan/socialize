@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import Image from '../ui/Image';
 import useNewUsers from '../../hooks/useNewUsers';
@@ -20,32 +21,28 @@ const NewUsers = () => {
     return <FlatAlert type="error">Could not load new users</FlatAlert>;
   if (newUsers?.length === 0) return <FlatAlert>No more new users</FlatAlert>;
 
-  return (
-    <>
-      {newUsers?.map((user) => (
-        <div className="d-flex align-items-center mb-2" key={user.id}>
-          <Image
-            publicId={user.profilePicture}
-            size="40"
-            variant="circle"
-            profilePicName={user.name}
-            href={`/profile/${user.username}`}
-            layout="fixed"
-          />
-          <Link href={`/profile/${user.username}`} passHref>
-            <a className="h6 ml-3 mb-0 text-secondary font-weight-bold">
-              {user.name}
-            </a>
-          </Link>
-          <AddFriendButton
-            username={user.username}
-            className="ml-auto"
-            onRemove={onRemove}
-          />
-        </div>
-      ))}
-    </>
-  );
+  return newUsers?.map((user) => (
+    <div className="d-flex align-items-center mb-2" key={user.id}>
+      <Image
+        publicId={user.profilePicture}
+        size="40"
+        variant="circle"
+        profilePicName={user.name}
+        href={`/profile/${user.username}`}
+        layout="fixed"
+      />
+      <Link href={`/profile/${user.username}`} passHref>
+        <a className="h6 ml-3 mb-0 text-secondary font-weight-bold">
+          {user.name}
+        </a>
+      </Link>
+      <AddFriendButton
+        username={user.username}
+        className="ml-auto"
+        onRemove={onRemove}
+      />
+    </div>
+  ));
 };
 
 export default NewUsers;

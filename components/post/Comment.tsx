@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
@@ -59,7 +58,7 @@ const Comment = ({ comment, currentUser, removeCommentFromList }: Props) => {
         variant="outline-danger"
         onClick={handleDelete}
       >
-        <i className="bi bi-trash"></i>
+        <i className="bi bi-trash" />
       </Button>
     );
   };

@@ -1,3 +1,4 @@
+import React from 'react';
 import NextImage, { ImageProps } from 'next/image';
 import Link from 'next/link';
 import { Cloudinary } from 'cloudinary-core';
