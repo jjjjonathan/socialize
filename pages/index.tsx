@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
 import { unstable_getServerSession } from 'next-auth/next';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -35,52 +35,49 @@ const Home = ({ currentUser }: Props) => {
   };
 
   const topMenu = () => (
-    <>
-      <CircleSpinner />
-      <div className="d-md-none w-100">
-        <div className="mb-4 d-flex justify-content-center w-100">
-          <ButtonGroup className="special w-100">
-            <Button
-              variant={newUsersOpen ? 'primary' : 'outline-dark'}
-              onClick={() => {
-                setNewUsersOpen(!newUsersOpen);
-                setNewPostOpen(false);
-              }}
-              aria-expanded={newUsersOpen}
-              aria-controls="collapse-new-users"
-            >
-              <i className="bi bi-file-earmark-person"></i> New Users
-            </Button>
-            <Button
-              variant={newPostOpen ? 'primary' : 'outline-dark'}
-              onClick={() => {
-                setNewPostOpen(!newPostOpen);
-                setNewUsersOpen(false);
-              }}
-              aria-expanded={newPostOpen}
-              aria-controls="collapse-new-post"
-            >
-              <i className="bi bi-file-earmark-plus-fill"></i> New Post
-            </Button>
-          </ButtonGroup>
-        </div>
-        <Collapse in={newUsersOpen}>
-          <div id="collapse-new-users">
-            <div className="mb-4 mx-5">
-              <h4 className="mb-3 text-center">New users</h4>
-              <NewUsers />
-            </div>
-          </div>
-        </Collapse>
-        <Collapse in={newPostOpen}>
-          <div>
-            <div id="collapse-new-post">
-              <NewPost addNewPostToFeed={addNewPostToFeed} />
-            </div>
-          </div>
-        </Collapse>
+    <div className="d-md-none w-100">
+      <div className="mb-4 d-flex justify-content-center w-100">
+        <ButtonGroup className="special w-100">
+          <Button
+            variant={newUsersOpen ? 'primary' : 'outline-dark'}
+            onClick={() => {
+              setNewUsersOpen(!newUsersOpen);
+              setNewPostOpen(false);
+            }}
+            aria-expanded={newUsersOpen}
+            aria-controls="collapse-new-users"
+          >
+            <i className="bi bi-file-earmark-person" /> New Users
+          </Button>
+          <Button
+            variant={newPostOpen ? 'primary' : 'outline-dark'}
+            onClick={() => {
+              setNewPostOpen(!newPostOpen);
+              setNewUsersOpen(false);
+            }}
+            aria-expanded={newPostOpen}
+            aria-controls="collapse-new-post"
+          >
+            <i className="bi bi-file-earmark-plus-fill" /> New Post
+          </Button>
+        </ButtonGroup>
       </div>
-    </>
+      <Collapse in={newUsersOpen}>
+        <div id="collapse-new-users">
+          <div className="mb-4 mx-5">
+            <h4 className="mb-3 text-center">New users</h4>
+            <NewUsers />
+          </div>
+        </div>
+      </Collapse>
+      <Collapse in={newPostOpen}>
+        <div>
+          <div id="collapse-new-post">
+            <NewPost addNewPostToFeed={addNewPostToFeed} />
+          </div>
+        </div>
+      </Collapse>
+    </div>
   );
 
   const sidebar = () => (

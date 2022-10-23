@@ -1,3 +1,5 @@
+import React from 'react';
+
 const PrivacyPolicy = () => (
   <div style={{ margin: 20 }}>
     <h1>Privacy Policy</h1>

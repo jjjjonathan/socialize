@@ -1,4 +1,9 @@
-import { useState, useEffect, DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, {
+  useState,
+  useEffect,
+  DetailedHTMLProps,
+  HTMLAttributes,
+} from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import Link from 'next/link';
 import { unstable_getServerSession } from 'next-auth/next';
@@ -188,7 +189,7 @@ const Profile = ({
                     as="a"
                     className="ml-auto circle-button-small"
                   >
-                    <i className="bi bi-pencil-fill"></i>
+                    <i className="bi bi-pencil-fill" />
                   </Button>
                 </Link>
               )}

@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
+import React, { DetailedHTMLProps, HTMLAttributes, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
@@ -42,11 +41,11 @@ const AddFriendButton = ({ username, onRemove, ...props }: Props) => {
       case 'submitting':
         return <CircleSpinner size="25" color="secondary" />;
       case 'success':
-        return <i className="bi bi-check-lg text-secondary"></i>;
+        return <i className="bi bi-check-lg text-secondary" />;
       default:
         return (
           <StyledButton onClick={onClick} variant="outline-secondary">
-            <i className="bi bi-person-plus-fill"></i>
+            <i className="bi bi-person-plus-fill" />
           </StyledButton>
         );
     }

@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import Image from '../ui/Image';
 import useNewUsers from '../../hooks/useNewUsers';
@@ -21,6 +22,7 @@ const NewUsers = () => {
   if (newUsers?.length === 0) return <FlatAlert>No more new users</FlatAlert>;
 
   return (
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {newUsers?.map((user) => (
         <div className="d-flex align-items-center mb-2" key={user.id}>

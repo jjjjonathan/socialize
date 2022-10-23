@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import Link from 'next/link';
 import { Modal } from 'react-bootstrap';
 import useLikes from '../../hooks/useLikes';

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
@@ -59,8 +59,8 @@ const Signup = () => {
       return (
         <Alert type="error">
           <ul className="mb-0">
-            {apiErrors.map((error, index) => (
-              <li key={index}>{error.msg}</li>
+            {apiErrors.map((error) => (
+              <li key={error.msg}>{error.msg}</li>
             ))}
           </ul>
         </Alert>

@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+import React from 'react';
 import FlatSpinner from '../spinners/FlatSpinner';
 import FlatAlert from '../ui/FlatAlert';
 import Comment from './Comment';

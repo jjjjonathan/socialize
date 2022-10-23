@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 
 type Props = {
+  children: React.ReactNode;
   onClick: React.MouseEventHandler<HTMLElement>;
 };
 

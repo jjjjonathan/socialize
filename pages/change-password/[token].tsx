@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -100,8 +100,8 @@ const ChangePassword = ({ token }: Props) => {
       return (
         <Alert type="error">
           <ul className="mb-0">
-            {apiErrors.map((error, index) => (
-              <li key={index}>{error.msg}</li>
+            {apiErrors.map((error) => (
+              <li key={error.msg}>{error.msg}</li>
             ))}
           </ul>
         </Alert>

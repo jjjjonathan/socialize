@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
@@ -57,8 +56,7 @@ export const authOptions: NextAuthOptions = {
         },
       },
       authorize: async (credentials) => {
-        const username = credentials!.username;
-        const password = credentials!.password;
+        const { username, password } = credentials!;
 
         await connectMongo();
 
