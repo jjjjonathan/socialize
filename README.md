@@ -18,6 +18,7 @@ Live preview at: https://socialize-now.herokuapp.com/
 - Styled Components
 - Cloudinary
 - Sendgrid Mail
+- Cypress
 
 ## Features
 
