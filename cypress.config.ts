@@ -9,7 +9,7 @@ export default defineConfig({
     env: {
       name: 'Cypress Tester',
       username: 'cypresstester',
-      email: 'example@example.com',
+      email: 'cypress@example.com',
       password: 'password',
     },
   },

@@ -8,7 +8,9 @@
     "prettier"
   ],
   "globals": { "JSX": true },
-  "parserOptions": { "project": "./tsconfig.json" },
+  "parserOptions": {
+    "project": ["./tsconfig.json", "./cypress/tsconfig.json"]
+  },
   "rules": {
     "camelcase": "off",
     "class-methods-use-this": "off",
