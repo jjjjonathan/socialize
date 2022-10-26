@@ -18,9 +18,9 @@ describe('Sign up page', () => {
       cy.exec('npm run seed');
 
       // Fill username and password fields and click login button
-      cy.get('[name=name]').type(Cypress.env('name'));
-      cy.get('[name=username]').type(Cypress.env('username'));
-      cy.get('[name=email]').type(Cypress.env('email'));
+      cy.get('[name=name]').type(Cypress.env('signupName'));
+      cy.get('[name=username]').type(Cypress.env('signupUsername'));
+      cy.get('[name=email]').type(Cypress.env('signupEmail'));
       cy.get('[name=password]').type(Cypress.env('password'));
       cy.get('[name=passwordConf]').type(Cypress.env('password'));
       cy.contains('button', 'Sign up').click();
@@ -30,8 +30,8 @@ describe('Sign up page', () => {
 
     it('displays error message if email is invalid', () => {
       // Fill with invalid email address
-      cy.get('[name=name]').type(Cypress.env('name'));
-      cy.get('[name=username]').type(Cypress.env('username'));
+      cy.get('[name=name]').type(Cypress.env('signupName'));
+      cy.get('[name=username]').type(Cypress.env('signupUsername'));
       cy.get('[name=email]').type('bademail@.');
       cy.get('[name=password]').type(Cypress.env('password'));
       cy.get('[name=passwordConf]').type(Cypress.env('password'));
@@ -44,8 +44,8 @@ describe('Sign up page', () => {
       cy.exec('npm run seed');
 
       // Fill with existing email address
-      cy.get('[name=name]').type(Cypress.env('name'));
-      cy.get('[name=username]').type(Cypress.env('username'));
+      cy.get('[name=name]').type(Cypress.env('signupName'));
+      cy.get('[name=username]').type(Cypress.env('signupUsername'));
       cy.get('[name=email]').type('example@example.com');
       cy.get('[name=password]').type(Cypress.env('password'));
       cy.get('[name=passwordConf]').type(Cypress.env('password'));
@@ -58,21 +58,21 @@ describe('Sign up page', () => {
       cy.exec('npm run seed');
 
       // Fill with existing username
-      cy.get('[name=name]').type(Cypress.env('name'));
-      cy.get('[name=username]').type('seedperson');
-      cy.get('[name=email]').type(Cypress.env('email'));
+      cy.get('[name=name]').type(Cypress.env('signupName'));
+      cy.get('[name=username]').type('jonathanseed');
+      cy.get('[name=email]').type(Cypress.env('signupEmail'));
       cy.get('[name=password]').type(Cypress.env('password'));
       cy.get('[name=passwordConf]').type(Cypress.env('password'));
       cy.contains('button', 'Sign up').click();
 
-      cy.contains('Username seedperson is already in use').should('exist');
+      cy.contains('Username jonathanseed is already in use').should('exist');
     });
 
     it("displays error message if password doesn't meet requirements", () => {
       // Fill with password that's too short
-      cy.get('[name=name]').type(Cypress.env('name'));
-      cy.get('[name=username]').type(Cypress.env('username'));
-      cy.get('[name=email]').type(Cypress.env('email'));
+      cy.get('[name=name]').type(Cypress.env('signupName'));
+      cy.get('[name=username]').type(Cypress.env('signupUsername'));
+      cy.get('[name=email]').type(Cypress.env('signupEmail'));
       cy.get('[name=password]').type('123');
       cy.get('[name=passwordConf]').type('123');
       cy.contains('button', 'Sign up').click();
@@ -82,9 +82,9 @@ describe('Sign up page', () => {
 
     it("displays error message if passwords don't match", () => {
       // Fill with unmatching passwords
-      cy.get('[name=name]').type(Cypress.env('name'));
-      cy.get('[name=username]').type(Cypress.env('username'));
-      cy.get('[name=email]').type(Cypress.env('email'));
+      cy.get('[name=name]').type(Cypress.env('signupName'));
+      cy.get('[name=username]').type(Cypress.env('signupUsername'));
+      cy.get('[name=email]').type(Cypress.env('signupEmail'));
       cy.get('[name=password]').type('12345678');
       cy.get('[name=passwordConf]').type('password');
       cy.contains('button', 'Sign up').click();

@@ -29,28 +29,26 @@ async function seed() {
       Comment.deleteMany({}),
     ]);
 
-    console.log('Hashing passwords...');
-    const [examplePasswordHash, seedPasswordHash] = await Promise.all([
-      bcrypt.hash('examplePassword', 11),
-      bcrypt.hash('password', 11),
-    ]);
-
     console.log('Seeding users...');
+
+    const passwordHash = await bcrypt.hash('password', 11);
 
     const exampleUser = new User({
       name: 'Example Test',
       email: 'example@example.com',
-      username: 'exampletest',
-      passwordHash: examplePasswordHash,
+      username: 'example',
+      passwordHash,
       profilePicture: 'tckqw4nglwleb7ngz8qz',
+      isEmailVerified: true,
     });
 
     const seedUser = new User({
-      name: 'Seed Person',
-      email: 'seedy@example.com',
-      username: 'seedperson',
-      passwordHash: seedPasswordHash,
+      name: 'Jonathan Seed',
+      email: 'seed@example.com',
+      username: 'jonathanseed',
+      passwordHash,
       profilePicture: 'bhfuf041l0daetumeaxj',
+      isEmailVerified: true,
     });
 
     // Save seeded users
