@@ -151,11 +151,6 @@ const Login = () => {
             </Link>
           </div>
 
-          <Link href="/api/auth/facebook" passHref>
-            <Button variant="outline-dark" className="mt-4 auth-button" as="a">
-              Log in with Facebook
-            </Button>
-          </Link>
           <Link href="/api/auth/example-login" passHref>
             <Button variant="outline-dark" className="mt-2 auth-button" as="a">
               Log in as Example User
