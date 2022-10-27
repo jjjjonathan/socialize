@@ -56,10 +56,38 @@ describe('Log in page', () => {
     //   cy.contains('button', 'Log in as Example User').click();
     // });
 
-    it('log in fails with non-existent user');
-    it('log in fails with incorrect password');
-    it("shows error message if password doesn't meet requirements");
-    it('shows error message if username is omitted');
-    it('shows error message if password is omitted');
+    // it('log in fails with non-existent user', () => {
+    //   cy.get('[name=username]').type('barackobama');
+    //   cy.get('[name=password]').type(Cypress.env('password'));
+    //   cy.contains('button', 'Log in').click();
+    // });
+
+    // it('log in fails with incorrect password', () => {
+    //   cy.get('[name=username]').type(Cypress.env('loginUsername'));
+    //   cy.get('[name=password]').type(Cypress.env('password'));
+    //   cy.contains('button', 'Log in').click();
+    // });
+
+    it("shows error message if password doesn't meet requirements", () => {
+      cy.get('[name=username]').type(Cypress.env('loginUsername'));
+      cy.get('[name=password]').type('pass');
+      cy.contains('button', 'Log in').click();
+
+      cy.contains('Password must be at least 8 characters').should('exist');
+    });
+
+    it('shows error message if username is omitted', () => {
+      cy.get('[name=password]').type(Cypress.env('password'));
+      cy.contains('button', 'Log in').click();
+
+      cy.contains('Username is a required field').should('exist');
+    });
+
+    it('shows error message if password is omitted', () => {
+      cy.get('[name=username]').type(Cypress.env('loginUsername'));
+      cy.contains('button', 'Log in').click();
+
+      cy.contains('Password is a required field').should('exist');
+    });
   });
 });
