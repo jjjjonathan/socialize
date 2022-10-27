@@ -1,6 +1,10 @@
 describe('Forgot password page', () => {
   context('Navigation', () => {
-    it('is navigable via link on login page');
+    it('is navigable via link on login page', () => {
+      cy.visit('/login');
+      cy.contains('Forgot your password?').click();
+      cy.location('pathname').should('equal', '/change-password/forgot');
+    });
   });
 
   context('Functionality', () => {
