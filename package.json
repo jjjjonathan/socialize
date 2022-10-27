@@ -12,8 +12,9 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test-serve": "NODE_ENV=test PORT=3333 npm start",
-    "test": "start-server-and-test test-serve http://localhost:3333 cy:open",
-    "build-and-test": "npm run build && npm test"
+    "test": "start-server-and-test test-serve http://localhost:3333 cy:run",
+    "test:open": "start-server-and-test test-serve http://localhost:3333 cy:open",
+    "build-and-test": "npm run build && npm run test:open"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
