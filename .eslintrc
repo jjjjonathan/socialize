@@ -3,24 +3,27 @@
     "airbnb",
     "airbnb/hooks",
     "airbnb-typescript",
+    "plugin:cypress/recommended",
     "plugin:@next/next/recommended",
     "prettier"
   ],
   "globals": { "JSX": true },
-  "parserOptions": { "project": "./tsconfig.json" },
+  "parserOptions": {
+    "project": ["./tsconfig.json", "./cypress/tsconfig.json"]
+  },
   "rules": {
     "camelcase": "off",
     "class-methods-use-this": "off",
     "import/extensions": "off",
     "import/prefer-default-export": "off",
     "jsx-a11y/alt-text": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "no-console": ["warn", { "allow": ["error"] }],
     "no-underscore-dangle": "off",
     "react-hooks/exhaustive-deps": "off",
     "react/display-name": "off",
     "react/function-component-definition": "off",
     "react/jsx-props-no-spreading": "off",
-    "jsx-a11y/anchor-is-valid": "off",
     "react/require-default-props": "off"
   }
 }
