@@ -103,26 +103,23 @@ interface TransformUserRecord
 UserSchema.set('toJSON', {
   virtuals: true,
   transform: (doc, ret: TransformUserRecord) => {
-    console.log('in user schema to json');
-    console.log('ret', ret);
-    console.log('before toString');
-    if (ret._id) ret.id = ret._id.toString();
-    console.log('after toString');
-    delete ret._id;
+    if (!ret.id && ret._id) ret.id = ret._id.toString();
 
+    delete ret._id;
     delete ret.__v;
     delete ret.passwordHash;
 
     if (ret.friendRequests) {
       ret.friendRequests.forEach((friendReq) => {
-        friendReq.id = friendReq._id.toString();
+        if (!friendReq.id && friendReq._id)
+          friendReq.id = friendReq._id.toString();
         delete friendReq._id;
       });
     }
 
     if (ret.friends) {
       ret.friends.forEach((friend) => {
-        friend.id = friend._id.toString();
+        if (!friend.id && friend._id) friend.id = friend._id.toString();
         delete friend._id;
       });
     }

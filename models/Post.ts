@@ -43,7 +43,7 @@ PostSchema.virtual('commentCount', {
 PostSchema.set('toJSON', {
   virtuals: true,
   transform: (doc, ret) => {
-    ret.id = ret._id.toString();
+    if (!ret.id && ret._id) ret.id = ret._id.toString();
     delete ret._id;
     delete ret.__v;
   },
