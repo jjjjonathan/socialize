@@ -103,6 +103,8 @@ interface TransformUserRecord
 UserSchema.set('toJSON', {
   virtuals: true,
   transform: (doc, ret: TransformUserRecord) => {
+    console.log('in user schema to json');
+    console.log('ret', ret);
     ret.id = ret._id!.toString();
     delete ret._id;
 
