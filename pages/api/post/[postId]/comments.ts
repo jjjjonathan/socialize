@@ -6,19 +6,23 @@ import connectMongo from '../../../../utils/connectMongo';
 const router = nc<NextApiRequest, NextApiResponse>();
 
 router.get(async (req, res) => {
-  await connectMongo();
-  console.log('mongo connected');
+  try {
+    await connectMongo();
+    console.log('mongo connected');
 
-  const postId = req.query.postId as string | undefined;
-  console.log('post id', postId);
+    const postId = req.query.postId as string | undefined;
+    console.log('post id', postId);
 
-  const comments = await Comment.find({ post: postId }, '-post').populate(
-    'user',
-    'name username profilePicture',
-  );
+    const comments = await Comment.find({ post: postId }, '-post').populate(
+      'user',
+      'name username profilePicture',
+    );
 
-  console.log('comments', comments);
-  return res.json(comments);
+    console.log('comments', comments);
+    return res.json(comments);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 export default router;
