@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import nc from 'next-connect';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Comment from '../../../../models/Comment';
@@ -5,6 +6,7 @@ import connectMongo from '../../../../utils/connectMongo';
 
 const router = nc<NextApiRequest, NextApiResponse>();
 
+// eslint-disable-next-line consistent-return
 router.get(async (req, res) => {
   try {
     await connectMongo();
