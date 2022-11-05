@@ -106,7 +106,7 @@ UserSchema.set('toJSON', {
     console.log('in user schema to json');
     console.log('ret', ret);
     console.log('before toString');
-    ret.id = ret._id!.toString();
+    if (ret._id) ret.id = ret._id.toString();
     console.log('after toString');
     delete ret._id;
 
