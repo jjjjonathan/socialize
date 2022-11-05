@@ -105,7 +105,9 @@ UserSchema.set('toJSON', {
   transform: (doc, ret: TransformUserRecord) => {
     console.log('in user schema to json');
     console.log('ret', ret);
+    console.log('before toString');
     ret.id = ret._id!.toString();
+    console.log('after toString');
     delete ret._id;
 
     delete ret.__v;
