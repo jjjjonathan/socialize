@@ -29,6 +29,7 @@ router.get(async (req, res) => {
       ],
     });
     console.log('posts', posts);
+    console.log('json posts', JSON.stringify(posts));
 
     if (!posts) return res.status(404).json({ error: 'User not found' });
 
