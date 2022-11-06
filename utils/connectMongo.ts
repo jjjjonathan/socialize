@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+import '../models/Comment';
+import '../models/Post';
+import '../models/Token';
+import '../models/User';
+
 interface GlobalMongoose {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;

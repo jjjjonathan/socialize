@@ -24,7 +24,7 @@ const TokenSchema = new mongoose.Schema<TokenRecord>({
 /* eslint-disable no-param-reassign */
 TokenSchema.set('toJSON', {
   transform: (doc, ret) => {
-    ret.id = ret._id.toString();
+    if (!ret.id && ret._id) ret.id = ret._id.toString();
     delete ret._id;
     delete ret.__v;
   },
