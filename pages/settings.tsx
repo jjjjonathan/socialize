@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps<{
   return {
     props: {
       currentUser: session!.user,
-      bio: fetchedUser?.bio,
+      bio: fetchedUser?.bio || '',
       email: fetchedUser?.email,
     },
   };
