@@ -4,6 +4,7 @@ import { unstable_getServerSession } from 'next-auth/next';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import parse from 'html-react-parser';
 import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
@@ -26,10 +27,12 @@ export const getServerSideProps: GetServerSideProps<{
     'bio profilePicture',
   );
 
+  const bio = fetchedUser?.bio ? (parse(fetchedUser.bio) as string) : '';
+
   return {
     props: {
       currentUser: session!.user,
-      bio: fetchedUser?.bio || '',
+      bio,
       profilePicture: fetchedUser?.profilePicture || '',
     },
   };
