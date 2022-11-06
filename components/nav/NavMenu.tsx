@@ -16,9 +16,10 @@ const NavbarText = styled(Navbar.Text)`
 
 type Props = {
   currentUser: SessionUser;
+  profilePicture: string;
 };
 
-const NavMenu = ({ currentUser }: Props) => {
+const NavMenu = ({ currentUser, profilePicture }: Props) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -43,7 +44,7 @@ const NavMenu = ({ currentUser }: Props) => {
         ) : (
           <>
             <Image
-              publicId={currentUser.profilePicture}
+              publicId={profilePicture}
               size="40"
               profilePicName={currentUser.name}
               variant="circle"
