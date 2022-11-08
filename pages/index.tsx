@@ -3,6 +3,7 @@ import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
 import { unstable_getServerSession } from 'next-auth/next';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
+import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/layout/Layout';
@@ -15,6 +16,7 @@ import FlatAlert from '../components/ui/FlatAlert';
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
+  await connectMongo();
   const sessionUser = await User.findById(session!.user.id);
 
   return {
