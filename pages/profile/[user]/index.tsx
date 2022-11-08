@@ -24,6 +24,7 @@ import FlatAlert from '../../../components/ui/FlatAlert';
 export const getServerSideProps: GetServerSideProps<{
   profile: Omit<UserRes, 'friends'> & { friends: FriendRes[] };
   currentUser: SessionUser;
+  currentUserProfilePicture: string;
   isOwnProfile: boolean;
   friendStatus: FriendStatus | null;
   username: string;
@@ -79,6 +80,7 @@ export const getServerSideProps: GetServerSideProps<{
       isOwnProfile,
       profile,
       currentUser: session!.user,
+      currentUserProfilePicture: sessionUser?.profilePicture || '',
       friendStatus,
       username,
     },
@@ -90,6 +92,7 @@ type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 const Profile = ({
   profile,
   currentUser,
+  currentUserProfilePicture,
   isOwnProfile,
   friendStatus,
   username,
@@ -154,7 +157,11 @@ const Profile = ({
   };
 
   return (
-    <Layout pageTitle={profile.name} currentUser={currentUser}>
+    <Layout
+      pageTitle={profile.name}
+      currentUser={currentUser}
+      profilePicture={currentUserProfilePicture}
+    >
       <div className="mb-4 d-flex align-items-center">
         <Image
           publicId={profile.profilePicture}

@@ -8,9 +8,10 @@ import { SessionUser } from '../../types/misc';
 
 type Props = {
   currentUser: SessionUser;
+  profilePicture: string;
 };
 
-const ProfilePictureUpload = ({ currentUser }: Props) => {
+const ProfilePictureUpload = ({ currentUser, profilePicture }: Props) => {
   const router = useRouter();
 
   const [changeOpen, setChangeOpen] = useState(false);
@@ -44,7 +45,7 @@ const ProfilePictureUpload = ({ currentUser }: Props) => {
     <>
       <div className="d-flex align-items-center">
         <Image
-          publicId={currentUser.profilePicture}
+          publicId={profilePicture}
           profilePicName={currentUser.name}
           size="60"
         />

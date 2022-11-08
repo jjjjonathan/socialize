@@ -3,6 +3,7 @@ import { Row, Col, ButtonGroup, Button, Collapse } from 'react-bootstrap';
 import { unstable_getServerSession } from 'next-auth/next';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { authOptions } from './api/auth/[...nextauth]';
+import User from '../models/User';
 import useNewsfeed from '../hooks/useNewsfeed';
 import Layout from '../components/layout/Layout';
 import NewUsers from '../components/home/NewUsers';
@@ -14,16 +15,19 @@ import FlatAlert from '../components/ui/FlatAlert';
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
 
+  const sessionUser = await User.findById(session!.user.id);
+
   return {
     props: {
       currentUser: session?.user,
+      profilePicture: sessionUser?.profilePicture || '',
     },
   };
 };
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const Home = ({ currentUser }: Props) => {
+const Home = ({ currentUser, profilePicture }: Props) => {
   const [newUsersOpen, setNewUsersOpen] = useState(false);
   const [newPostOpen, setNewPostOpen] = useState(false);
 
@@ -130,7 +134,11 @@ const Home = ({ currentUser }: Props) => {
   };
 
   return (
-    <Layout pageTitle="Home" currentUser={currentUser}>
+    <Layout
+      pageTitle="Home"
+      currentUser={currentUser}
+      profilePicture={profilePicture}
+    >
       <Row>
         <Col md={{ span: 4, order: 'last' }}>
           {topMenu()}

@@ -4,6 +4,7 @@ import { unstable_getServerSession } from 'next-auth/next';
 import { Button } from 'react-bootstrap';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import parse from 'html-react-parser';
 import connectMongo from '../utils/connectMongo';
 import User from '../models/User';
 import { authOptions } from './api/auth/[...nextauth]';
@@ -15,26 +16,31 @@ import FlatSpinner from '../components/spinners/FlatSpinner';
 
 export const getServerSideProps: GetServerSideProps<{
   currentUser: SessionUser;
-  bio?: string;
-  email?: string;
+  bio: string;
+  profilePicture: string;
 }> = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   await connectMongo();
 
-  const fetchedUser = await User.findById(session!.user.id, 'bio email');
+  const fetchedUser = await User.findById(
+    session!.user.id,
+    'bio profilePicture',
+  );
+
+  const bio = fetchedUser?.bio ? (parse(fetchedUser.bio) as string) : '';
 
   return {
     props: {
       currentUser: session!.user,
-      bio: fetchedUser?.bio,
-      email: fetchedUser?.email,
+      bio,
+      profilePicture: fetchedUser?.profilePicture || '',
     },
   };
 };
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-const Settings = ({ currentUser, bio, email }: Props) => {
+const Settings = ({ currentUser, bio, profilePicture }: Props) => {
   const [passwordStatus, setPasswordStatus] = useState('default');
 
   const handlePasswordReset = async () => {
@@ -60,7 +66,7 @@ const Settings = ({ currentUser, bio, email }: Props) => {
               className="bi bi-check h3"
               style={{ position: 'relative', top: 4 }}
             />
-            Email sent to {email}
+            Email sent to {currentUser.email}
           </p>
         );
       default:
@@ -69,12 +75,19 @@ const Settings = ({ currentUser, bio, email }: Props) => {
   };
 
   return (
-    <Layout pageTitle="Settings" currentUser={currentUser}>
+    <Layout
+      pageTitle="Settings"
+      currentUser={currentUser}
+      profilePicture={profilePicture}
+    >
       <div className="d-flex justify-content-center">
         <div style={{ width: 600, maxWidth: 600 }}>
           <h2 className="mb-5">Settings</h2>
           <h4 className="h6 mb-3">Profile Picture</h4>
-          <ProfilePictureUpload currentUser={currentUser} />
+          <ProfilePictureUpload
+            currentUser={currentUser}
+            profilePicture={profilePicture}
+          />
           <h4 className="h6 mb-3 mt-5">About Me</h4>
           <AboutMeUpdate originalBio={bio} />
           {currentUser.username !== 'example' && (

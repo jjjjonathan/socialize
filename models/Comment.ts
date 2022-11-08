@@ -27,7 +27,7 @@ const CommentSchema = new mongoose.Schema<CommentRecord>({
 /* eslint-disable no-param-reassign */
 CommentSchema.set('toJSON', {
   transform: (doc, ret) => {
-    ret.id = ret._id.toString();
+    if (!ret.id && ret._id) ret.id = ret._id.toString();
     delete ret._id;
     delete ret.__v;
   },

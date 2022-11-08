@@ -14,9 +14,15 @@ type Props = {
   pageTitle: string;
   children: React.ReactNode;
   currentUser: SessionUser;
+  profilePicture: string;
 };
 
-const Layout = ({ pageTitle, children, currentUser }: Props) => {
+const Layout = ({
+  pageTitle,
+  children,
+  currentUser,
+  profilePicture,
+}: Props) => {
   const title = `socialize | ${pageTitle}`;
 
   return (
@@ -25,7 +31,7 @@ const Layout = ({ pageTitle, children, currentUser }: Props) => {
         <title>{title}</title>
       </Head>
       <header>
-        <NavMenu currentUser={currentUser} />
+        <NavMenu currentUser={currentUser} profilePicture={profilePicture} />
       </header>
       <Main>
         <Container>{children}</Container>
